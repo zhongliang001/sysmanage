@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<form>			
-			<zl-f-table>
+		<form>
+			<zl-f-table :column="column">
 				<slot></slot>
 			</zl-f-table>
 		</form>
@@ -22,8 +22,8 @@
 		},
 		methods:{
 			slots: function(){
-				
-				
+
+
 			}
 		}
 	}
