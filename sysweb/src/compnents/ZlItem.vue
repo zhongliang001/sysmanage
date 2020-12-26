@@ -6,8 +6,20 @@
 		name: 'ZlItem',
 		props:{
 			type:{
-				type:String
-			}			
+				type: String
+			},
+            fieldName:{
+			    type: String
+            },
+            name:{
+                type: String
+            },
+            dataType:{
+                type: String
+            },
+            maxlength:{
+			    type: Number
+            }
 		}
 	}
 </script>

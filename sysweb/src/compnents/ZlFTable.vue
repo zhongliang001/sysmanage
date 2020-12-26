@@ -1,27 +1,48 @@
 <template>
 	<table>
-		<tr>
-			<td>bi</td>
+		<tr v-for="i in rows">
+			<zl-td v-for="field in fields[i - 1]" :field="field"/>
 		</tr>
 		<slot></slot>
 	</table>
 </template>
 
 <script>
+	import ZlTd from "./ZlTd.vue";
 	export default{
 		name: 'ZlTable',
-		props:['tableInfo'],
+		props:['column'],
+		components: {ZlTd},
 		data: function(){
 			return {
-				rows: 0
+				rows: 0,
+				fields:[]
 			}
 		},
 		mounted: function(){
 			let children = this.$children
-			for(let i = 0; i< children.length; i++){
-				console.log(this.$children[i].type)
+			this.rows = Math.ceil(children.length / this.column)
+			let i = 0
+			for(let j = 0; j < this.rows; j ++){
+				let n= 0
+				for(; i< children.length; i++, n++){
+					if(this.fields[j] == undefined){
+						this.fields[j] =[]
+					}
+					let field ={}
+					field.fieldName = this.$children[i].fieldName + ':'
+					this.fields[j][n] = field
+					n++
+					let field2 ={}
+					field2 = this.$children[i]
+					this.fields[j][n] = field2
+					if((i+1) % this.column == 0){
+						i ++
+						break
+					}
+				}
 			}
-			this.$forceUpdate() 
+			this.$forceUpdate()
 		}
 	}
 </script>
