@@ -1,14 +1,14 @@
 <template>
 	<div>
-		<h1>{{msg}}</h1>
-		<zl-form column="2">
-			<zl-item type="password" fieldName="t1" name="test1"></zl-item>
-			<zl-item type="text" fieldName="t2" name="test2"></zl-item>
-			<zl-item type="password" fieldName="t3" name="test3"></zl-item>
-			<zl-item type="text" fieldName="t4" name="test4"></zl-item>
-			<zl-item type="password" fieldName="t5"  name="test5"></zl-item>
-			<zl-item type="text" fieldName="t6" dataType="Number"  name="test6"></zl-item>
+		<zl-form ref="test" column="2">
+			<zl-item type="text" fieldName="t1" name="test1"/>
+			<zl-item type="text" fieldName="t2" name="test2"/>
+			<zl-item type="text" fieldName="t3" name="test3"/>
+			<zl-item type="text" fieldName="t4" name="test4"/>
+			<zl-item type="text" fieldName="t5" name="test5"/>
+			<zl-item type="text" fieldName="t6" dataType="Number" name="test6" defaultValue="6"/>
 		</zl-form>
+		<button @click="submit">submit</button>
 	</div>
 </template>
 
@@ -21,6 +21,13 @@
 		data: function(){
 			return {
 				msg: 'hi'
+			}
+		},
+		methods:{
+			submit: function () {
+				let form = this.common.getForm(this,'test')
+				let reqData = form.reqData
+				this.$children[0].checkAll()
 			}
 		}
 	}

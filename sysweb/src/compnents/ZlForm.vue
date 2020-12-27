@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<form>
-			<zl-f-table :column="column">
+			<zl-f-table :column="column" :reqData="reqData">
 				<slot></slot>
 			</zl-f-table>
 		</form>
-		<button @click="slots">hi</button>
+
 	</div>
 </template>
 
@@ -17,11 +17,36 @@
 		components:{ZlFTable},
 		data: function(){
 			return {
-				tableInfo:{}
+				reqData: {}
 			}
 		},
 		methods:{
-			slots: function(){
+			getData: function(name){
+				return this.reqData[name]
+			},
+			setData: function (name,val) {
+				this.reqData[name] = val
+			},
+			checkAll: function () {
+				let children = this.$children
+				if(children){
+					this.check(children)
+				}
+
+			},
+			check: function (obs) {
+				for(let i = 0; i < obs.length; i ++){
+					let ob = obs[i]
+					if(ob){
+						if(ob.validate){
+							ob.validate()
+						}
+						let children = ob.$children
+						if(children){
+							this.check(children)
+						}
+					}
+				}
 
 
 			}
