@@ -19,7 +19,9 @@
             },
             maxlength:{
 			    type: Number
-            }
+            },
+            defaultValue:{}
+
 		}
 	}
 </script>

@@ -4,7 +4,7 @@
             {{field.fieldName}}
         </template>
         <template v-else>
-            <zl-input :field="field"/>
+            <zl-input :field="field" :reqData="reqData"/>
         </template>
     </td>
 
@@ -14,7 +14,7 @@
     import ZlInput from "./ZlInput.vue";
     export default {
         name: "ZlTd",
-        props:['field'],
+        props:['field','reqData'],
         components:{ZlInput},
         data: function () {
             return {

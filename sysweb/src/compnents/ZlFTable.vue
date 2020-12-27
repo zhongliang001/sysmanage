@@ -1,7 +1,7 @@
 <template>
 	<table>
 		<tr v-for="i in rows">
-			<zl-td v-for="field in fields[i - 1]" :field="field"/>
+			<zl-td v-for="field in fields[i - 1]" :field="field" :reqData="reqData"/>
 		</tr>
 		<slot></slot>
 	</table>
@@ -11,7 +11,7 @@
 	import ZlTd from "./ZlTd.vue";
 	export default{
 		name: 'ZlTable',
-		props:['column'],
+		props:['column','reqData'],
 		components: {ZlTd},
 		data: function(){
 			return {
