@@ -20,7 +20,10 @@
             maxlength:{
 			    type: Number
             },
-            defaultValue:{}
+            defaultValue:{},
+            required:{
+			    type: String
+            }
 
 		}
 	}

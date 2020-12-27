@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<zl-form ref="test" column="2">
-			<zl-item type="text" fieldName="t1" name="test1"/>
+			<zl-item type="select" fieldName="t1" name="test1" required="true"/>
 			<zl-item type="text" fieldName="t2" name="test2"/>
 			<zl-item type="text" fieldName="t3" name="test3"/>
 			<zl-item type="text" fieldName="t4" name="test4"/>

@@ -21,6 +21,9 @@
 		},
 		mounted: function(){
 			let children = this.$children
+			if(!children){
+				return
+			}
 			this.rows = Math.ceil(children.length / this.column)
 			let i = 0
 			for(let j = 0; j < this.rows; j ++){
