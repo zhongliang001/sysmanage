@@ -30,24 +30,36 @@
 			checkAll: function () {
 				let children = this.$children
 				if(children){
-					this.check(children)
+					let result = this.check(children)
+					console.log(result)
+					return result
 				}
 
 			},
 			check: function (obs) {
+				let flag = true
+				if(obs.length == 0){
+					return flag
+				}
 				for(let i = 0; i < obs.length; i ++){
 					let ob = obs[i]
 					if(ob){
 						if(ob.validate){
-							ob.validate()
+							let result = ob.validate()
+							if(!result){
+								flag = result
+							}
 						}
 						let children = ob.$children
 						if(children){
-							this.check(children)
+							let result = this.check(children)
+							if(!result){
+								flag = result
+							}
 						}
 					}
 				}
-
+				return flag
 
 			}
 		}

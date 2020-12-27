@@ -1,15 +1,9 @@
 <template>
-    <div >
-        <template v-if="field.type.toLowerCase() == 'select'">
-        </template>
-        <template v-else-if="field.type.toLowerCase() == 'textarea'">
-        </template>
-        <template v-else="field.type.toLowerCase() != 'select' &&field.type.toLowerCase() != 'textarea'">
-            <input  :type="field.type" v-model="value" :name="field.name" @input="inputData" :reqData="reqData">
-            <div :class="{error:isActive}">
-                {{msg}}
-            </div>
-        </template>
+    <div>
+        <input  :type="field.type" v-model="value" :name="field.name" @input="inputData" :reqData="reqData" :hidden="field.hidden">
+        <div :class="{error:isActive}">
+            {{msg}}
+        </div>
     </div>
 </template>
 
@@ -45,13 +39,12 @@
                 this.reqData[this.field.name] = this.value
             },
             validate: function () {
-                console.log(this.field.name)
+                if((this.field.required == 'true' || this.field.required == 'required')&& !this.value){
+                    this.msg = this.field.fieldName + '不能为空'
+                    this.isActive = true
+                    return false
+                }
             }
         }
-
     }
 </script>
-
-<style>
-
-</style>
