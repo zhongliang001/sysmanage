@@ -24,7 +24,7 @@
         },
         methods:{
             inputData: function () {
-                if(this.field.dataType == 'Number' || this.field.dataType == 'Currency'){
+                if(this.field.dataType === 'Number' || this.field.dataType === 'Currency'){
                     if(isNaN(this.value)){
                         this.msg = '请输入数字'
                         this.value = ''
@@ -39,7 +39,7 @@
                 this.reqData[this.field.name] = this.value
             },
             validate: function () {
-                if((this.field.required == 'true' || this.field.required == 'required')&& !this.value){
+                if((this.field.required === 'true' || this.field.required === 'required')&& !this.value){
                     this.msg = this.field.fieldName + '不能为空'
                     this.isActive = true
                     return false

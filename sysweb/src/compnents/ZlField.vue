@@ -1,9 +1,9 @@
 <template>
     <div >
-        <template v-if="field.type.toLowerCase() == 'select'">
+        <template v-if="field.type.toLowerCase() === 'select'">
             <zl-select  :field="field" :reqData="reqData"/>
         </template>
-        <template v-else-if="field.type.toLowerCase() == 'textarea'">
+        <template v-else-if="field.type.toLowerCase() === 'textarea'">
         </template>
         <template v-else="field.type.toLowerCase() != 'select' &&field.type.toLowerCase() != 'textarea'">
             <zl-input :field="field" :reqData="reqData"/>

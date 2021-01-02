@@ -23,6 +23,9 @@
             defaultValue:{},
             required:{
 			    type: String
+            },
+            dictName:{
+			    type: String
             }
 
 		}
