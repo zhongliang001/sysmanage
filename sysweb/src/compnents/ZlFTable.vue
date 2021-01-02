@@ -1,7 +1,7 @@
 <template>
 	<table>
 		<tr v-for="i in rows">
-			<zl-td v-for="field in fields[i - 1]" :field="field" :reqData="reqData"/>
+			<zl-td v-for="(field, index) in fields[i - 1]" :key="index" :field="field" :reqData="reqData"/>
 		</tr>
 		<slot></slot>
 	</table>
@@ -29,7 +29,7 @@
 			for(let j = 0; j < this.rows; j ++){
 				let n= 0
 				for(; i< children.length; i++, n++){
-					if(this.fields[j] == undefined){
+					if(this.fields[j] === undefined){
 						this.fields[j] =[]
 					}
 					let field ={}
@@ -39,7 +39,7 @@
 					let field2 ={}
 					field2 = this.$children[i]
 					this.fields[j][n] = field2
-					if((i+1) % this.column == 0){
+					if((i+1) % this.column === 0){
 						i ++
 						break
 					}

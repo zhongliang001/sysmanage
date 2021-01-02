@@ -1,17 +1,8 @@
 <template>
     <div>
-        <div>
-            <div class="select">
-                <span class="select">a</span><span class="selIcon" @click="pull"></span>
-                <zl-input :field="hidfield" :reqData="reqData"/>
-            </div>
-            <div class="option">
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                </ul>
-            </div>
-        </div>
+        <select :name="field.name"  @change="change" v-model="value">
+            <option v-for="(cname, ename) in options" :value="ename">{{cname}}</option>
+        </select>
     </div>
 </template>
 
@@ -23,17 +14,19 @@
         props:['field','reqData'],
         data: function () {
             return {
-                hidfield: {}
+                options:{},
+                value:''
             }
         },
-        created: function () {
-           this.hidfield=JSON.parse(JSON.stringify(this.field._props));
-           this.hidfield['hidden'] = true
-           this.hidfield.type = 'text'
+        mounted: function () {
+            Object.assign(this.options,{'':"请选择一个选项"}, this.dictData[this.field.dictName])
+            this.reqData[this.field.name] = this.value
+            this.$forceUpdate()
+            this.value = ''
         },
         methods:{
-            pull: function () {
-
+            change: function () {
+                this.reqData[this.field.name] = this.value
             }
         }
 
