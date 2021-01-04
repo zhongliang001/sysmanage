@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<form>
+		<form :action="url" :method="method">
 			<zl-f-table :column="column" :reqData="reqData">
 				<slot></slot>
 			</zl-f-table>
@@ -13,7 +13,7 @@
 	import ZlFTable from './ZlFTable.vue'
 	export default {
 		name: 'ZlForm',
-		props:['column'],
+		props:['column','url', 'method'],
 		components:{ZlFTable},
 		data: function(){
 			return {
@@ -38,7 +38,7 @@
 			},
 			check: function (obs) {
 				let flag = true
-				if(obs.length == 0){
+				if(obs.length === 0){
 					return flag
 				}
 				for(let i = 0; i < obs.length; i ++){
