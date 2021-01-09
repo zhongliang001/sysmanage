@@ -13,11 +13,11 @@
 </template>
 
 <script>
-	import ZlForm from './compnents/ZlForm.vue'
-	import ZlItem from './compnents/ZlItem.vue'
+	//import ZlForm from './compnents/ZlForm.vue'
+	//import ZlItem from './compnents/ZlItem.vue'
 	export default {
 		name: 'App',
-		components:{ZlForm,ZlItem},
+	//	components:{ZlForm,ZlItem},
 		data: function(){
 			return {
 				msg: 'hi'
