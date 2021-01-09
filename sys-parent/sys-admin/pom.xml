@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>sys-admin-service</module>
+        <module>sys-admin-dto</module>
     </modules>
 
     <artifactId>sys-admin</artifactId>
