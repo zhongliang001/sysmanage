@@ -21,7 +21,14 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, '../dist')
   },
-  module: {
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            '@': path.resolve('src')
+        }
+
+    },
+    module: {
   	rules: [{
   			test: /\.css$/,
   			use: [
@@ -47,7 +54,7 @@ module.exports = {
 					presets: ['es2015']
 				}
 			}],
-			exclude: /node_modules/	
+			exclude: /node_modules/
 		}
   	]
   }
