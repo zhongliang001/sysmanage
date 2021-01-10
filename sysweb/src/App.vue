@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<zl-form ref="test" column="2" method="post" url="sub.do">
+		<zl-form ref="test" column="2" method="post" :url="url">
 			<zl-item type="select" fieldName="t1" name="test1" required="true" dict-name="sex"/>
 			<zl-item type="textarea" fieldName="t2" name="test2"/>
 			<zl-item type="text" fieldName="t3" name="test3"/>
@@ -20,7 +20,7 @@
 	//	components:{ZlForm,ZlItem},
 		data: function(){
 			return {
-				msg: 'hi'
+				url: '/sdict/sdictTree'
 			}
 		},
 		methods:{
@@ -28,7 +28,7 @@
 				let form = this.common.getForm(this,'test')
 				let reqData = form.reqData
 				this.$children[0].checkAll()
-				this.zlaxios.request(this.url)
+				this.axios.request(this.url)
 			}
 		}
 	}

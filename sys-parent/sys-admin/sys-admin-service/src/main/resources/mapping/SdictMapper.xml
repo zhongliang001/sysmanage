@@ -11,6 +11,7 @@
     </resultMap>
     <select id="selectSdict" resultMap="sdict" parameterType="com.zl.domain.Sdict">
         select
+            id,
             dict_type,
             cn_name,
             en_name,
@@ -20,22 +21,35 @@
             s_dict
         <where>
             <if test="id != null">
-                id = #{id},
+                id = #{id}
             </if>
             <if test="dictType != null">
-                dict_type = #{dictType},
+                dict_type = #{dictType}
             </if>
             <if test="cnName != null">
-                cn_name = #{cnName},
+                cn_name = #{cnName}
             </if>
             <if test="enName != null">
-                en_name = #{enName},
+                en_name = #{enName}
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time = #{createTime}
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime},
+                update_time = #{updateTime}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selctSdictByType" resultType="java.lang.String" parameterType="java.lang.String">
+        select
+        dict_type
+        from
+        s_dict
+        <where>
+            <if test="dictType != null">
+                dict_type = #{dictType},
             </if>
         </where>
         order by id desc

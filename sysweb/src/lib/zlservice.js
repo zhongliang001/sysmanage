@@ -1,4 +1,4 @@
 let zlService={
-    baseUrl: 'http://localhost:8080/api'
+    baseUrl: 'http://localhost:80/sys-admin-service'
 }
 export default zlService

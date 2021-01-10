@@ -9,4 +9,6 @@ import java.util.List;
 public interface SdictService {
 
     List<Sdict> selectSdict(Sdict sdict);
+
+    List<String> selctSdictByType(String sdictType);
 }
