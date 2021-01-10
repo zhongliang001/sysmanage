@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SdictMapper {
     List<Sdict> selectSdict(Sdict sdict);
+
+    List<String> selctSdictByType(String dictType);
 }

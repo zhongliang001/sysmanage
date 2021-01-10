@@ -19,7 +19,7 @@ request.interceptors.request.use(config => {
 let zlaxios = {
     request: function (url) {
         url =  zlService.baseUrl + url
-        return request.post(url)
+        return request.get(url)
     }
 }
 

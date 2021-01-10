@@ -17,4 +17,10 @@ public class SdictServiceImpl implements SdictService {
     public List<Sdict> selectSdict(Sdict sdict) {
         return sdictMapper.selectSdict(sdict);
     }
+
+    @Override
+    public List<String> selctSdictByType(String sdictType) {
+        return sdictMapper.selctSdictByType(sdictType);
+    }
+
 }

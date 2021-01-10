@@ -1,8 +1,10 @@
 server:
   port: 80
+  servlet:
+    context-path: /sys-admin-service
 spring:
   datasource:
-    username: root
+    username: zhongliang
     password: 123456
     url: jdbc:mysql://localhost:3306/sysmanage?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
