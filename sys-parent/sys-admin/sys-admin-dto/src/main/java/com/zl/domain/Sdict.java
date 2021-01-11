@@ -35,6 +35,11 @@ public class Sdict implements Serializable {
      */
     private String updateTime;
 
+    /**
+     * 排序编号
+     */
+    private String orderId;
+
     public String getId() {
         return id;
     }
@@ -81,5 +86,26 @@ public class Sdict implements Serializable {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    @Override
+    public String toString() {
+        return "Sdict{" +
+                "id='" + id + '\'' +
+                ", dictType='" + dictType + '\'' +
+                ", cnName='" + cnName + '\'' +
+                ", enName='" + enName + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", orderId='" + orderId + '\'' +
+                '}';
     }
 }
