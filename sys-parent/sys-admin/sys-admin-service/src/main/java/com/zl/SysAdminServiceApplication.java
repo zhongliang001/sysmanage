@@ -1,4 +1,4 @@
-package com.zl.sysadminservice;
+package com.zl;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

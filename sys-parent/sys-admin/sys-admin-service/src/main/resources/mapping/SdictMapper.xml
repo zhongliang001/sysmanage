@@ -8,6 +8,7 @@
         <result column="en_name" jdbcType="VARCHAR" property="enName"/>
         <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
     </resultMap>
     <select id="selectSdict" resultMap="sdict" parameterType="com.zl.domain.Sdict">
         select
@@ -16,7 +17,8 @@
             cn_name,
             en_name,
             create_time,
-            update_time
+            update_time,
+            order_id
         from
             s_dict
         <where>
@@ -39,7 +41,7 @@
                 update_time = #{updateTime}
             </if>
         </where>
-        order by id desc
+        order by dict_type, order_id
     </select>
 
     <select id="selctSdictByType" resultType="java.lang.String" parameterType="java.lang.String">
@@ -52,6 +54,6 @@
                 dict_type = #{dictType},
             </if>
         </where>
-        order by id desc
+        group by dict_type
     </select>
 </mapper>
