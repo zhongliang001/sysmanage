@@ -16,10 +16,30 @@ request.interceptors.request.use(config => {
             }, 2000, config)
         });
     });
+request.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    return response;
+}, function (error) {
+    // 对响应错误做点什么
+    return error;
+});
+
+// let requestInfo = {
+//     url:'',
+//     success:
+// }
+
 let zlaxios = {
-    request: function (url) {
-        url =  zlService.baseUrl + url
-        return request.get(url)
+    request: function (requestInfo) {
+        let url =  zlService.baseUrl + requestInfo.url
+        request.get(url).then(reseponse=>{
+            if(reseponse.code === 'ECONNABORTED'){
+                requestInfo.error(reseponse)
+            }else{
+                requestInfo.success(reseponse)
+            }
+
+        })
     }
 }
 
