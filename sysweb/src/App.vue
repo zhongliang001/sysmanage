@@ -3,8 +3,8 @@
 		<zl-form ref="test" column="2" method="post" :url="url">
 			<zl-item type="select" fieldName="t1" name="test1" required="true" dict-name="sex"/>
 			<zl-item type="textarea" fieldName="t2" name="test2"/>
-			<zl-item type="text" fieldName="t3" name="test3"/>
-			<zl-item type="text" fieldName="t4" name="test4"/>
+			<zl-item type="radio" fieldName="t3" name="test3" required="true" dict-name="sex"/>
+			<zl-item type="checkbox" fieldName="t4" name="test4" required="true" dict-name="sex"/>
 			<zl-item type="text" fieldName="t5" name="test5"/>
 			<zl-item type="text" fieldName="t6" dataType="Number" name="test6" defaultValue="6"/>
 		</zl-form>
