@@ -24,19 +24,15 @@ public class SdictController {
     }
 
     @GetMapping("/sdictTree")
-    public Map<String, Map<String,String>> selectSdictTree(String sdictType){
+    public Map<String, List<Sdict>> selectSdictTree(String sdictType){
         List<String> sdictTypes = sdictService.selctSdictByType(sdictType);
-        Map<String, Map<String,String>> result = new HashMap<>();
+        Map<String, List<Sdict>> dictData = new HashMap<String, List<Sdict>>();
         for(String type : sdictTypes){
             Sdict sdict = new Sdict();
             sdict.setDictType(type);
             List<Sdict> sdicts = sdictService.selectSdict(sdict);
-            Map<String, String> map = new HashMap<>();
-            sdicts.forEach(sdict1 -> {
-                map.put(sdict1.getEnName(),sdict1.getCnName());
-            });
-            result.put(type, map);
+            dictData.put(type, sdicts);
         }
-        return result;
+        return dictData;
     }
 }

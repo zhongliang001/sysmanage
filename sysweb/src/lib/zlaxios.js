@@ -7,7 +7,7 @@ let request = axios.create({
     timeoutErrorMessage: '请求超时',
     token: ''
 });
-request.defaults.headers = {'Content-Type':'application/x-www-form-urlencoded'}
+//request.defaults.headers = {'Content-Type':'application/x-www-form-urlencoded'}
 request.interceptors.request.use(config => {
         return new Promise(resolve => {
             // 模拟等待refresh_token
@@ -32,14 +32,28 @@ request.interceptors.response.use(function (response) {
 let zlaxios = {
     request: function (requestInfo) {
         let url =  zlService.baseUrl + requestInfo.url
-        request.get(url).then(reseponse=>{
-            if(reseponse.code === 'ECONNABORTED'){
-                requestInfo.error(reseponse)
-            }else{
-                requestInfo.success(reseponse)
-            }
+        let method = requestInfo.method
+        if(method === undefined || method === 'get'){
+            request.get(url).then(reseponse=>{
+                if(reseponse.request.status !== 200){
+                    requestInfo.error(reseponse)
+                }else{
+                    requestInfo.success(reseponse)
+                }
 
-        })
+            })
+        }else{
+            request.post(url,requestInfo.data).then(reseponse=> {
+                if(reseponse.request.status !== 200){
+                        requestInfo.error(reseponse)
+                    } else {
+                        requestInfo.success(reseponse)
+                    }
+                }
+
+            )
+        }
+
     }
 }
 

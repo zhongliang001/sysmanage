@@ -6,11 +6,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-//@RestController
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan
-@MapperScan("com.zl.sysadminservice.sdict.mapper")
+@MapperScan("com.zl.sysadminservice.*.mapper")
 public class SysAdminServiceApplication {
 
     public static void main(String[] args) {

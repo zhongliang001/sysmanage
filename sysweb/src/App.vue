@@ -1,37 +1,16 @@
 <template>
-	<div>
-		<zl-form ref="test" column="2" method="post" :url="url">
-			<zl-item type="select" fieldName="t1" name="test1" required="true" dict-name="sex"/>
-			<zl-item type="textarea" fieldName="t2" name="test2"/>
-			<zl-item type="radio" fieldName="t3" name="test3" required="true" dict-name="sex"/>
-			<zl-item type="checkbox" fieldName="t4" name="test4" required="true" dict-name="sex"/>
-			<zl-item type="text" fieldName="t5" name="test5"/>
-			<zl-item type="text" fieldName="t6" dataType="Number" name="test6" defaultValue="6"/>
-		</zl-form>
-		<button @click="submit">submit</button>
-	</div>
+    <router-view></router-view>
 </template>
 
 <script>
-	//import ZlForm from './compnents/ZlForm.vue'
-	//import ZlItem from './compnents/ZlItem.vue'
-	export default {
-		name: 'App',
-	//	components:{ZlForm,ZlItem},
-		data: function(){
-			return {
-				url: '/sdict/sdictTree'
-			}
-		},
-		methods:{
-			submit: function () {
-				let form = this.common.getForm(this,'test')
-				let reqData = form.reqData
-				this.$children[0].checkAll()
-				this.axios.request(this.url)
-			}
-		}
-	}
+    //import ZlForm from './compnents/ZlForm.vue'
+    //import ZlItem from './compnents/ZlItem.vue'
+    export default {
+        name: 'App',
+        mounted: function () {
+			this.$router.push({name:"Login"})
+        }
+    }
 </script>
 
 <style>
