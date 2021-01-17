@@ -1,6 +1,9 @@
 package com.zl.sysadminservice.suser.controller;
 
+import com.zl.common.dto.ResultDto;
+import com.zl.common.error.ErrDict;
 import com.zl.common.util.MD5Util;
+import com.zl.common.util.ResultUtil;
 import com.zl.domain.SUser;
 import com.zl.sysadminservice.suser.service.SUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +28,10 @@ public class SUserController {
     }
 
     @PostMapping("/register")
-    public int register(@RequestBody SUser sUser){
-        return sUserService.addSUSer(sUser);
+    public ResultDto<Integer> register(@RequestBody SUser sUser){
+        int i = 0;
+        i = sUserService.addSUSer(sUser);
+        return ResultUtil.genenrate(i, ErrDict.SUCCESS_QUERRY_CODE);
     }
 
 }

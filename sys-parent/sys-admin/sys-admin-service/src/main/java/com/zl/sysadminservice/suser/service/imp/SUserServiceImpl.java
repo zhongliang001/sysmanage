@@ -1,11 +1,14 @@
 package com.zl.sysadminservice.suser.service.imp;
 
+import com.zl.common.Exception.ZlException;
+import com.zl.common.error.ErrDict;
 import com.zl.common.util.MD5Util;
 import com.zl.domain.SUser;
 import com.zl.sysadminservice.suser.mapper.SUerMapper;
 import com.zl.sysadminservice.suser.service.SUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -34,11 +37,19 @@ public class SUserServiceImpl implements SUserService {
         return null;
     }
 
+    @Transactional
     @Override
     public int addSUSer(SUser sUser) {
         String id = UUID.randomUUID().toString().replaceAll("-","");
         sUser.setId(id);
         sUser.setPassword(MD5Util.encryption(sUser.getPassword()));
-        return sUerMapper.addSUSer(sUser);
+        int i = 0;
+        try{
+            i =sUerMapper.addSUSer(sUser);
+
+        }catch (Exception e){
+            throw new ZlException(ErrDict.FAILED_ADD_CODE);
+        }
+        return i;
     }
 }

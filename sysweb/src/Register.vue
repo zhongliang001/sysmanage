@@ -36,10 +36,10 @@
                     data: reqData,
                     method: _this.method,
                     success: function (response) {
-                        console.log(response)
+                        alert(response.msg)
                     },
                     error: function (error) {
-                        console.log(error)
+                        alert(error.msg)
                     }
                 })
             }

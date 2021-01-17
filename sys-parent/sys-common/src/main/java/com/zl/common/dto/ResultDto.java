@@ -5,29 +5,29 @@ import java.io.Serializable;
 /**
  * @author zhongliang
  * @version 1.0.1
- * @param <T>
+ * @param <Data>
  */
-public class ResultDto<T> implements Serializable {
+public class ResultDto<Data> implements Serializable {
 
-    private T t;
+    private Data data;
 
-    private int code;
+    private String code;
 
     private String msg;
 
-    public T getT() {
-        return t;
+    public Data getData() {
+        return data;
     }
 
-    public void setT(T t) {
-        this.t = t;
+    public void setData(Data data) {
+        this.data = data;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -42,7 +42,7 @@ public class ResultDto<T> implements Serializable {
     @Override
     public String toString() {
         return "ResultDto{" +
-                "t=" + t +
+                "data=" + data +
                 ", code=" + code +
                 ", msg='" + msg + '\'' +
                 '}';
