@@ -1,5 +1,8 @@
 package com.zl.sysadminservice.sdict.controller;
 
+import com.zl.common.dto.ResultDto;
+import com.zl.common.error.ErrDict;
+import com.zl.common.util.ResultUtil;
 import com.zl.domain.Sdict;
 import com.zl.sysadminservice.sdict.service.SdictService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +22,13 @@ public class SdictController {
     private SdictService sdictService;
 
     @GetMapping("/")
-    public List<Sdict> selectSdict(Sdict sdict) {
-        return sdictService.selectSdict(sdict);
+    public ResultDto<List<Sdict>> selectSdict(Sdict sdict) {
+        List<Sdict> sdicts = sdictService.selectSdict(sdict);
+        return ResultUtil.genenrate(sdicts, ErrDict.SUCCESS_QUERRY_CODE);
     }
 
     @GetMapping("/sdictTree")
-    public Map<String, List<Sdict>> selectSdictTree(String sdictType){
+    public ResultDto<Map<String, List<Sdict>>> selectSdictTree(String sdictType){
         List<String> sdictTypes = sdictService.selctSdictByType(sdictType);
         Map<String, List<Sdict>> dictData = new HashMap<String, List<Sdict>>();
         for(String type : sdictTypes){
@@ -33,6 +37,6 @@ public class SdictController {
             List<Sdict> sdicts = sdictService.selectSdict(sdict);
             dictData.put(type, sdicts);
         }
-        return dictData;
+        return ResultUtil.genenrate(dictData, ErrDict.SUCCESS_QUERRY_CODE);
     }
 }

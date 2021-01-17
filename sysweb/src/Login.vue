@@ -32,7 +32,7 @@
                     data: reqData,
                     method: _this.method,
                     success: function (response) {
-                       console.log(response)
+                      alert(response.message)
                     },
                     error: function (error) {
                         console.log(error)

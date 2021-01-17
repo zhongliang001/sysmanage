@@ -3,7 +3,7 @@ import zlService from "./zlservice";
 
 let request = axios.create({
     responseType: 'json',
-    timeout: 3000,
+    timeout: 300000,
     timeoutErrorMessage: '请求超时',
     token: ''
 });
@@ -38,20 +38,28 @@ let zlaxios = {
                 if(reseponse.request.status !== 200){
                     requestInfo.error(reseponse)
                 }else{
-                    requestInfo.success(reseponse)
+                    let code = reseponse.data.code;
+                    if(code == '000000'){
+                        requestInfo.success(reseponse.data)
+                    }else{
+                        requestInfo.error(reseponse.data)
+                    }
                 }
 
             })
         }else{
             request.post(url,requestInfo.data).then(reseponse=> {
                 if(reseponse.request.status !== 200){
-                        requestInfo.error(reseponse)
-                    } else {
-                        requestInfo.success(reseponse)
+                    requestInfo.error(reseponse)
+                }else{
+                    let code = reseponse.data.code;
+                    if(code == '000000'){
+                        requestInfo.success(reseponse.data)
+                    }else{
+                        requestInfo.error(reseponse.data)
                     }
                 }
-
-            )
+            })
         }
 
     }
