@@ -23,15 +23,16 @@ public class SUserController {
     private MD5Util MD5Util;
 
     @PostMapping("/login")
-    public SUser login(@RequestBody SUser sUser){
-        return sUserService.selectForLogin(sUser);
+    public ResultDto<SUser> login(@RequestBody SUser sUser){
+        sUser = sUserService.selectForLogin(sUser);
+        return ResultUtil.genenrate(sUser, ErrDict.SUCCESS_QUERRY_CODE);
     }
 
     @PostMapping("/register")
     public ResultDto<Integer> register(@RequestBody SUser sUser){
         int i = 0;
         i = sUserService.addSUSer(sUser);
-        return ResultUtil.genenrate(i, ErrDict.SUCCESS_QUERRY_CODE);
+        return ResultUtil.genenrate(i, ErrDict.SUCCESS_ADD_CODE);
     }
 
 }

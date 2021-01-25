@@ -27,6 +27,9 @@ public class SUserServiceImpl implements SUserService {
         String username = loginUser.getUsername();
         String password = loginUser.getPassword();
         SUser sUser = sUerMapper.selectForLogin(username);
+        if(sUser == null){
+            throw new ZlException(ErrDict.FAILED_LOGIN_FAILED);
+        }
         String password1  =sUser.getPassword();
         String enPassword = MD5Util.encryption(password);
         if(enPassword.equals(password1)){
