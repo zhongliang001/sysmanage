@@ -11,8 +11,6 @@
     </div>
 </template>
 <script>
-    import zlaxios from "./lib/zlaxios";
-    import Vue from "vue";
 
     export default {
         name: 'Login',
@@ -27,8 +25,8 @@
                 let _this = this
                 let form = _this.common.getForm(this,'login')
                 let reqData = form.reqData
-                zlaxios.request({
-                    url: _this.url,
+                this.zlaxios.request({
+                    url: this.zlService.baseUrl + _this.url,
                     data: reqData,
                     method: _this.method,
                     success: function (response) {
