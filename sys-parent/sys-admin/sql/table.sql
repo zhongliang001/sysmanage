@@ -31,4 +31,16 @@ create table s_user(
     last_modify_pwd varchar(20) comment '上次修改密码时间'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户信息表';
 
-select * from s_user
+create table s_menu(
+    id varchar(32) not null primary key comment '菜单id',
+    name varchar(64) comment '菜单名',
+    path varchar(256) comment '菜单路由',
+    component varchar(32) comment '菜单组件',
+    parent_id varchar(32) comment '父菜单id'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '菜单表';
+
+select id, name, path, file_path, parent_id from s_menu;
+
+update s_menu set parent_id = null where id in('1','2','3');
+
+alter table s_menu change component file_path varchar(32) comment '组件文件';
