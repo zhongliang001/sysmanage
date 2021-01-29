@@ -2,8 +2,8 @@
     <div>
         <h1>登录</h1>
         <zl-form ref="login" column="1" :method="method" :url="url">
-            <zl-item type="text" fieldName="用户名" name="username"/>
-            <zl-item type="password" fieldName="密码" name="password"/>
+            <zl-item type="text" field-name="用户名" name="username"/>
+            <zl-item type="password" field-name="密码" name="password"/>
         </zl-form>
         <zl-button type="submit"  name="登录" @click.native="onclick"></zl-button>
         <zl-button type="submit"  name="注册" @click.native="onRegister"></zl-button>
@@ -30,7 +30,7 @@
                     data: reqData,
                     method: _this.method,
                     success: function (response) {
-                      alert(response.message)
+                        _this.$router.push({name:"Welcome"})
                     },
                     error: function (error) {
                         console.log(error)

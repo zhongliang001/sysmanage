@@ -35,9 +35,9 @@ public class SUserServiceImpl implements SUserService {
         if(enPassword.equals(password1)){
             sUser.setPassword("");
             return sUser;
+        }else{
+            throw new ZlException(ErrDict.FAILED_LOGIN_FAILED);
         }
-
-        return null;
     }
 
     @Transactional
