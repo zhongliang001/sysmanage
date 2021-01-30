@@ -1,0 +1,23 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: sys-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8082/eureka
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: debug
+
