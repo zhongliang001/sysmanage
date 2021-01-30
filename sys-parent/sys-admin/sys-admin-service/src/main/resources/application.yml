@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /sys-admin-service
 spring:
+  application:
+    name: sys-admin-service
   datasource:
     username: zhongliang
     password: 123456
@@ -12,6 +14,11 @@ spring:
   devtools:
     restart:
       enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8082/eureka
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml

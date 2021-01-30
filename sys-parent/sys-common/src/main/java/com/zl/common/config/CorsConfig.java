@@ -14,7 +14,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //1,允许任何来源
-        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
         //2,允许任何请求头
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
         //3,允许任何方法

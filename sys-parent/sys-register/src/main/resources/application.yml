@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: sys-regsiter
+eureka:
+  client:
+    allow-redirects: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:${server.port}/eureka
