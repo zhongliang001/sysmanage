@@ -7,7 +7,6 @@
         <groupId>com.zl</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.zl</groupId>
     <artifactId>sys-admin-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sys-admin-service</name>
@@ -30,6 +29,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
         <dependency>
