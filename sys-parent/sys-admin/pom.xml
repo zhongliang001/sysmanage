@@ -12,8 +12,8 @@
         <module>sys-admin-service</module>
         <module>sys-admin-dto</module>
     </modules>
-
+    <version>0.0.1-SNAPSHOT</version>
     <artifactId>sys-admin</artifactId>
-
+    <packaging>pom</packaging>
 
 </project>
