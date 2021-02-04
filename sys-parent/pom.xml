@@ -18,52 +18,52 @@
         <module>sys-admin</module>
         <module>sys-common</module>
         <module>sys-register</module>
+        <module>sys-uua</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
-        <mybatis.version>2.1.2</mybatis.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
         <eureka.version>2.2.6.RELEASE</eureka.version>
+        <swagger.version>1.7.1.RELEASE</swagger.version>
+        <sys-common.version>0.0.1-SNAPSHOT</sys-common.version>
+        <sys-admin-dto.version>0.0.1-SNAPSHOT</sys-admin-dto.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+        <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
     </properties>
 
-    <!--<dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>-->
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.spring4all</groupId>
+                <artifactId>swagger-spring-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zl</groupId>
+                <artifactId>sys-common</artifactId>
+                <version>${sys-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zl</groupId>
+                <artifactId>sys-admin-dto</artifactId>
+                <version>${sys-admin-dto.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
