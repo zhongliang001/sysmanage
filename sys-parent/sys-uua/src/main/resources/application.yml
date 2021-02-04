@@ -1,0 +1,23 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: sys-uua
+  datasource:
+    username: zhongliang
+    password: 123456
+    url: jdbc:mysql://localhost:3306/sysmanage?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8082/eureka
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+
+logging:
+  level:
+    root: debug
+
