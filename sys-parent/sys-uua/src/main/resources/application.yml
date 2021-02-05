@@ -3,21 +3,12 @@ server:
 spring:
   application:
     name: sys-uua
-  datasource:
-    username: zhongliang
-    password: 123456
-    url: jdbc:mysql://localhost:3306/sysmanage?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    driver-class-name: com.mysql.jdbc.Driver
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8082/eureka
-
-mybatis:
-  mapper-locations: classpath:mapping/*Mapper.xml
-
-logging:
-  level:
-    root: debug
+app:
+  id: sys-uua #apollo配置中心应用名
+apollo:
+  meta: http://localhost:8080 #apollo地址
+  bootstrap:
+    enabled: true #是否启用apollo, 不使用apollo 请剔除该包
+    namespaces: application.yml
 

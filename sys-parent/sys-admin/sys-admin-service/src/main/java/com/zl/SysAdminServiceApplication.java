@@ -1,5 +1,6 @@
 package com.zl;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableEurekaClient
 @Configuration
 @ComponentScan
+@EnableApolloConfig
 @MapperScan("com.zl.sysadminservice.*.mapper")
 public class SysAdminServiceApplication {
 
