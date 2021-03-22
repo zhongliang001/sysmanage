@@ -24,8 +24,8 @@
             <artifactId>spring-cloud-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
+            <groupId>com.zl</groupId>
+            <artifactId>sys-common-base</artifactId>
         </dependency>
     </dependencies>
 

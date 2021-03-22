@@ -54,10 +54,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer security) {
-//        security.authenticationManager(authorizationAuthenticationManager()).userDetailsService(userDetailsService);
         security.accessTokenConverter(jwtAccessTokenConverter);
-//        security.tokenStore(tokenStore()).allowedTokenEndpointRequestMethods(HttpMethod.POST);
-        security.authenticationManager(authorizationAuthenticationManager())//使用oauth2的密码模式时需要配置authenticationManager
+        security.authenticationManager(authorizationAuthenticationManager())//使用oauth2的密码模式时需要配置
                 .userDetailsService(userDetailsService);
     }
 
@@ -67,8 +65,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("permitAll()")
                 .allowFormAuthenticationForClients();
-
-        //	oauthServer.allowFormAuthenticationForClients();
     }
 
     @Override
@@ -88,7 +84,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
                 //获取的token里有refresh_token
                 .authorizedGrantTypes("password", "refresh_token", "authorization_code", "client_credentials")
                 .scopes("all")
-                .accessTokenValiditySeconds(36000);
+                .accessTokenValiditySeconds(36000)
+        ;
     }
 
     private PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {

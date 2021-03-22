@@ -19,6 +19,7 @@
         <module>sys-common</module>
         <module>sys-register</module>
         <module>sys-uua</module>
+        <module>sys-common-base</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
@@ -49,6 +50,11 @@
             <dependency>
                 <groupId>com.zl</groupId>
                 <artifactId>sys-common</artifactId>
+                <version>${sys-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zl</groupId>
+                <artifactId>sys-common-base</artifactId>
                 <version>${sys-common.version}</version>
             </dependency>
             <dependency>

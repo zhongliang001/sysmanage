@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <hi>登录</hi>
+    <form action="/user/oauth/token" method="get">
+        账号：<input type="text" name="username">
+        密码：<input type="password" name="password">
+        <input type="text" name="grant_type" value="password" hidden="true">
+        <input type="submit" name="登录">
+    </form>
+</body>
+</html>

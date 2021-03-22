@@ -50,6 +50,10 @@
         </dependency>
         <dependency>
             <groupId>com.zl</groupId>
+            <artifactId>sys-common-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zl</groupId>
             <artifactId>sys-admin-dto</artifactId>
         </dependency>
     </dependencies>
