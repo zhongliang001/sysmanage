@@ -39,8 +39,12 @@ create table s_menu(
     parent_id varchar(32) comment '父菜单id'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '菜单表';
 
+select * from s_user;
+
 select id, name, path, file_path, parent_id from s_menu;
 
 update s_menu set parent_id = null where id in('1','2','3');
 
 alter table s_menu change component file_path varchar(32) comment '组件文件';
+
+select *from user;
