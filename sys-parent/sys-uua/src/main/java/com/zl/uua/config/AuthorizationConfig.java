@@ -2,7 +2,9 @@ package com.zl.uua.config;
 
 import com.zl.uua.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -18,12 +20,12 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@ConditionalOnProperty(name = "tokenStore", havingValue = "jwt")
+@Configuration
 @EnableAuthorizationServer
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
@@ -74,10 +76,10 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
                 //Spring Boot1.x版本中不需要加密的，但2.x版本需要加密
                 .secret(bCryptPasswordEncoder.encode("123456"))
                 //这样写的话，获取的token里不会有refresh_token
-                .authorizedGrantTypes("password")
+                .authorizedGrantTypes("password","refresh_token")
                 .scopes("all")
                 //Token有效时间
-                .accessTokenValiditySeconds(36000)
+                .accessTokenValiditySeconds(40000).refreshTokenValiditySeconds(720000)
                 .and()
                 .withClient("web")
                 .secret(bCryptPasswordEncoder.encode("123456"))
