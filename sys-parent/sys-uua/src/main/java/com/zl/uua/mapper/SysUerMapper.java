@@ -1,23 +1,23 @@
-package com.zl.sysadminservice.suser.mapper;
+package com.zl.uua.mapper;
 
-import com.zl.domain.SUser;
+import com.zl.uua.domain.SysUser;
 
 /**
  * @author zhongliang
  */
-public interface SUerMapper {
+public interface SysUerMapper {
 
     /**
      * 根据用户名查询用户
      * @param username 用户名
      * @return 用户
      */
-    SUser selectForLogin(String username);
+    SysUser selectForLogin(String username);
 
     /**
      * 新增用户
      * @param sUser 用户
      * @return 插入数据量
      */
-    int addSUSer(SUser sUser);
+    int addSysUSer(SysUser sUser);
 }

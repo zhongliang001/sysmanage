@@ -58,6 +58,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
         //使用oauth2的密码模式时需要配置
         security.authenticationManager(authorizationAuthenticationManager())
                 .userDetailsService(userDetailsServiceImpl);
+
     }
 
     @Override

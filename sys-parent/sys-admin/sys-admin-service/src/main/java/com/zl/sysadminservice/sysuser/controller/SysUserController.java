@@ -1,11 +1,11 @@
-package com.zl.sysadminservice.suser.controller;
+package com.zl.sysadminservice.sysuser.controller;
 
 import com.zl.common.dto.ResultDto;
 import com.zl.common.error.ErrDict;
 import com.zl.common.util.MD5Util;
 import com.zl.common.util.ResultUtil;
-import com.zl.domain.SUser;
-import com.zl.sysadminservice.suser.service.SUserService;
+import com.zl.domain.SysUser;
+import com.zl.sysadminservice.sysuser.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,23 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/suser")
-public class SUserController {
+public class SysUserController {
 
     @Autowired
-    private SUserService sUserService;
+    private SysUserService sysUserService;
 
     @Autowired
     private MD5Util MD5Util;
 
     @PostMapping("/login")
-    public ResultDto<SUser> login(@RequestBody SUser sUser){
-        sUser = sUserService.selectForLogin(sUser);
-        return ResultUtil.genenrate(sUser, ErrDict.SUCCESS_QUERRY_CODE);
+    public ResultDto<SysUser> login(@RequestBody SysUser sysUser){
+        sysUser = sysUserService.selectForLogin(sysUser);
+        return ResultUtil.genenrate(sysUser, ErrDict.SUCCESS_QUERRY_CODE);
     }
 
     @PostMapping("/register")
-    public ResultDto<Integer> register(@RequestBody SUser sUser){
-        int i = sUserService.addSUSer(sUser);
+    public ResultDto<Integer> register(@RequestBody SysUser sUser){
+        int i = sysUserService.addSysUSer(sUser);
         return ResultUtil.genenrate(i, ErrDict.SUCCESS_ADD_CODE);
     }
 

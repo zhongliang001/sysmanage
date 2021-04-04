@@ -1,11 +1,11 @@
-package com.zl.sysadminservice.suser.service.imp;
+package com.zl.sysadminservice.sysuser.service.imp;
 
-import com.zl.common.exception.ZlException;
 import com.zl.common.error.ErrDict;
+import com.zl.common.exception.ZlException;
 import com.zl.common.util.MD5Util;
-import com.zl.domain.SUser;
-import com.zl.sysadminservice.suser.mapper.SUerMapper;
-import com.zl.sysadminservice.suser.service.SUserService;
+import com.zl.domain.SysUser;
+import com.zl.sysadminservice.sysuser.mapper.SysUerMapper;
+import com.zl.sysadminservice.sysuser.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,27 +17,27 @@ import java.util.UUID;
  */
 
 @Service
-public class SUserServiceImpl implements SUserService {
+public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
-    private SUerMapper sUerMapper;
+    private SysUerMapper sysUerMapper;
 
     @Autowired
     private MD5Util MD5Util;
 
     @Override
-    public SUser selectForLogin(SUser loginUser) {
+    public SysUser selectForLogin(SysUser loginUser) {
         String username = loginUser.getUsername();
         String password = loginUser.getPassword();
-        SUser sUser = sUerMapper.selectForLogin(username);
-        if(sUser == null){
+        SysUser sysUser = sysUerMapper.selectForLogin(username);
+        if(sysUser == null){
             throw new ZlException(ErrDict.FAILED_LOGIN_FAILED);
         }
-        String password1  =sUser.getPassword();
+        String password1  =sysUser.getPassword();
         String enPassword = MD5Util.encryption(password);
         if(enPassword.equals(password1)){
-            sUser.setPassword("");
-            return sUser;
+            sysUser.setPassword("");
+            return sysUser;
         }else{
             throw new ZlException(ErrDict.FAILED_LOGIN_FAILED);
         }
@@ -45,13 +45,13 @@ public class SUserServiceImpl implements SUserService {
 
     @Transactional(rollbackFor = ZlException.class)
     @Override
-    public int addSUSer(SUser sUser) {
+    public int addSysUSer(SysUser sysUser) {
         String id = UUID.randomUUID().toString().replaceAll("-","");
-        sUser.setId(id);
-        sUser.setPassword(MD5Util.encryption(sUser.getPassword()));
+        sysUser.setId(id);
+        sysUser.setPassword(MD5Util.encryption(sysUser.getPassword()));
         int i;
         try{
-            i =sUerMapper.addSUSer(sUser);
+            i =sysUerMapper.addSysUSer(sysUser);
 
         }catch (Exception e){
             throw new ZlException(ErrDict.FAILED_ADD_CODE);

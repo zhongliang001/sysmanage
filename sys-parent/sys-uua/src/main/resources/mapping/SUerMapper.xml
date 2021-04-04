@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zl.uua.mapper.SUerMapper">
-    <resultMap id="suser" type="com.zl.uua.domain.SUser">
+<mapper namespace="com.zl.uua.mapper.SysUerMapper">
+    <resultMap id="sysUser" type="com.zl.uua.domain.SysUser">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -19,15 +19,15 @@
         <result column="lastModifyPwd" jdbcType="VARCHAR" property="last_modify_pwd"/>
     </resultMap>
 
-    <select id="selectForLogin" parameterType="java.lang.String" resultMap="suser">
+    <select id="selectForLogin" parameterType="java.lang.String" resultMap="sysUser">
         select id, username, password, phone_no, real_name,sex, phone_no,cert_type,cert_no,birthday,last_login_time,err_login_times,
                forbidden_login_period,forbidden_login_time,forbidden_reason,last_modify_pwd
-        from s_user
+        from sys_user
         where username = #{username} limit 1
     </select>
 
-    <insert id="addSUSer" parameterType="com.zl.uua.domain.SUser">
-        insert into s_user (id,
+    <insert id="addSysUSer" parameterType="com.zl.uua.domain.SysUser">
+        insert into sys_user (id,
                             username,
                             password,
                             real_name,

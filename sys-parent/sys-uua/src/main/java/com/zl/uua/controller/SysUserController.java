@@ -1,7 +1,7 @@
 package com.zl.uua.controller;
 
-import com.zl.uua.domain.SUser;
-import com.zl.uua.service.SUserService;
+import com.zl.uua.domain.SysUser;
+import com.zl.uua.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-public class SUserController {
+public class SysUserController {
 
     @Autowired
-    private SUserService sUserService;
+    private SysUserService sysUserService;
 
 //    @PostMapping("/login")
 //    public SUser login(@RequestBody SUser sUser){
@@ -26,8 +26,8 @@ public class SUserController {
 //    }
 
     @PostMapping("/register")
-    public Integer register(@RequestBody SUser sUser){
-        return sUserService.addSUSer(sUser);
+    public Integer register(@RequestBody SysUser sysUser){
+        return sysUserService.addSysUSer(sysUser);
     }
 
 }

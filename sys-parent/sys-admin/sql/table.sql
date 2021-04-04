@@ -13,7 +13,7 @@ create table s_dict(
 select * from s_dict;
 
 
-create table s_user(
+create table sys_user(
     id varchar(32) not null primary key comment '用户id',
     username varchar(32) comment '用户名',
     password varchar(64) comment '密码',
@@ -39,12 +39,9 @@ create table s_menu(
     parent_id varchar(32) comment '父菜单id'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '菜单表';
 
-select * from s_user;
-
 select id, name, path, file_path, parent_id from s_menu;
 
 update s_menu set parent_id = null where id in('1','2','3');
 
 alter table s_menu change component file_path varchar(32) comment '组件文件';
 
-select *from user;

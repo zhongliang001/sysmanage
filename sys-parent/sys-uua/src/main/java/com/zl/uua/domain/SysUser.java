@@ -1,13 +1,16 @@
-package com.zl.domain;
+package com.zl.uua.domain;
 
-import java.io.Serializable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 /**
  * 用户实体类
  * @author zhongliang
  * @version 1.0.1
  */
-public class SUser implements Serializable {
+public class SysUser implements UserDetails {
 
     private String id;
     private String username;
@@ -33,6 +36,7 @@ public class SUser implements Serializable {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -41,6 +45,7 @@ public class SUser implements Serializable {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -143,6 +148,31 @@ public class SUser implements Serializable {
 
     public void setLastModifyPwd(String lastModifyPwd) {
         this.lastModifyPwd = lastModifyPwd;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override
