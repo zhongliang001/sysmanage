@@ -1,6 +1,6 @@
 package com.zl.uua.config;
 
-import com.zl.uua.UserSecurityService;
+import com.zl.uua.UserSecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
+/**
+ * @author zhongliang
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -33,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserDetailsService UserSecurityService(){
-        return new UserSecurityService();
+        return new UserSecurityServiceImpl();
     }
 
     @Override

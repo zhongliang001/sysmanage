@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
+/**
+ * @author zhongliang
+ */
 @Component
 public class MD5Util {
 
@@ -12,7 +15,6 @@ public class MD5Util {
 
     public String encryption(String password){
         String base = password +"/"+password;
-        String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
-        return md5;
+        return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 }

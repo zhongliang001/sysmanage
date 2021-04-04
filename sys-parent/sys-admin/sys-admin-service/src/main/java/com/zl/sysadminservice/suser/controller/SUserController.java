@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+/**
+ * @author zhongliang
+ */
 @RestController
 @RequestMapping("/suser")
 public class SUserController {
@@ -30,8 +32,7 @@ public class SUserController {
 
     @PostMapping("/register")
     public ResultDto<Integer> register(@RequestBody SUser sUser){
-        int i = 0;
-        i = sUserService.addSUSer(sUser);
+        int i = sUserService.addSUSer(sUser);
         return ResultUtil.genenrate(i, ErrDict.SUCCESS_ADD_CODE);
     }
 

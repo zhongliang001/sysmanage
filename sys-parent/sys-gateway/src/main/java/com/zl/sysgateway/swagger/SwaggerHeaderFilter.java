@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 
+/**
+ * @author zhongliang
+ */
+
 @Component
 public class SwaggerHeaderFilter<C> extends AbstractGatewayFilterFactory<C> {
     private static final String HEADER_NAME = "X-Forwarded-Prefix";

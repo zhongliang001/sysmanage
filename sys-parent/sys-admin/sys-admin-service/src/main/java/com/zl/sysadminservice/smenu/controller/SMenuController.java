@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+/**
+ * @author zhongliang
+ */
 @RestController
 @RequestMapping("/smenu")
 public class SMenuController {
@@ -20,7 +22,7 @@ public class SMenuController {
     private SMenuService sMenuService;
 
     @PostMapping("/selectMenu")
-    public ResultDto<List> selectMenu(){
+    public ResultDto<List<SMenu>> selectMenu(){
         List<SMenu> sMenus = sMenuService.selectSMenu(null);
         return ResultUtil.genenrate(sMenus, ErrDict.SUCCESS_QUERRY_CODE);
     }

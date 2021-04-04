@@ -20,6 +20,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author zhongliang
+ */
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -32,11 +36,9 @@ public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
-        String name = applicationProperties.getName();
-        List<RequestParameter> pars = new ArrayList<RequestParameter>();
+        List<RequestParameter> pars = new ArrayList<>();
         RequestParameterBuilder rb = new RequestParameterBuilder();
         rb.name("real_source_ip").description("本机局域网IP").in(ParameterType.HEADER).name("Token").required(true);
-//                .modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(rb.build());
         return new Docket(DocumentationType.SWAGGER_2).pathMapping("/")
                 .apiInfo(apiInfo())

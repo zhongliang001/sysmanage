@@ -1,6 +1,6 @@
 package com.zl.uua.config;
 
-import com.zl.uua.UserSecurityService;
+import com.zl.uua.UserSecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,9 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * @author zhongliang
+ */
 @ConditionalOnProperty(name = "tokenStore", havingValue = "mysql")
 @Configuration
 @EnableAuthorizationServer
@@ -46,7 +48,7 @@ public class AuthorizationMysqlConfig extends AuthorizationServerConfigurerAdapt
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserSecurityService userDetailsService;
+    private UserSecurityServiceImpl userDetailsServiceImpl;
 
     @Bean
     public TokenStore tokenStore() {
@@ -59,7 +61,7 @@ public class AuthorizationMysqlConfig extends AuthorizationServerConfigurerAdapt
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.authenticationManager(authorizationAuthenticationManager());
         endpoints.tokenStore(tokenStore());
         DefaultTokenServices tokenServices = new DefaultTokenServices();
@@ -72,7 +74,7 @@ public class AuthorizationMysqlConfig extends AuthorizationServerConfigurerAdapt
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer security){
         security.checkTokenAccess("permitAll()");
         security.allowFormAuthenticationForClients();
     }
@@ -85,7 +87,7 @@ public class AuthorizationMysqlConfig extends AuthorizationServerConfigurerAdapt
     private AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
         return daoAuthenticationProvider;
     }
 
@@ -98,7 +100,7 @@ public class AuthorizationMysqlConfig extends AuthorizationServerConfigurerAdapt
 
     private PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
         PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider = new PreAuthenticatedAuthenticationProvider();
-        preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper(userDetailsService));
+        preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsServiceImpl));
         return preAuthenticatedAuthenticationProvider;
     }
 }

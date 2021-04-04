@@ -1,5 +1,8 @@
 package com.zl.common.error;
 
+/**
+ * @author zhongliang
+ */
 public class ErrDict {
 
     public static final String SUCCESS_QUERRY_CODE = "SUCCESS_QUERRY_CODE";

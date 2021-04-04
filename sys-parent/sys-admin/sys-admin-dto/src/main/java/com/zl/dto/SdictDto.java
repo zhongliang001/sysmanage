@@ -5,7 +5,9 @@ import com.zl.domain.Sdict;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author zhongliang
+ */
 public class SdictDto implements Serializable {
 
     private Map<String,List<Sdict>> dictData;

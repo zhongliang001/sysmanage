@@ -1,4 +1,8 @@
-package com.zl.common.Exception;
+package com.zl.common.exception;
+
+/**
+ * @author zhongliang
+ */
 
 public class ZlException extends RuntimeException {
 

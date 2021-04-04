@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author zhongliang
+ */
 @Service
 public class SMenuServiceImpl implements SMenuService {
 
     @Autowired
     private SMenuMapper sMenuMapper;
 
+    @Override
     public List<SMenu> selectSMenu(String parentId){
         List<SMenu> sMenus = sMenuMapper.selectSMenu(parentId);
         sMenus.forEach(sMenu -> {

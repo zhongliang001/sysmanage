@@ -13,7 +13,7 @@ apollo:
 
 logging:
   level:
-    root: debug
+    root: info
 
 tokenStore:
-  jwt
+  mysql

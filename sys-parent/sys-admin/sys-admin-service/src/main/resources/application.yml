@@ -12,13 +12,11 @@ apollo:
   bootstrap:
     enabled: true #是否启用apollo, 不使用apollo 请剔除该包
     namespaces: application.yml
-    eagerLoad:
-      enabled: true #是apollo中配置的日志几级别生效
 
 
-swagger:
-  enable: true
-  oauth:
-    url: http://localhost:8083/oauth_token
-    clien_id: app
+#swagger:
+#  enable: true
+#  oauth:
+#    url: http://localhost:8083/oauth_token
+#    clien_id: app
 

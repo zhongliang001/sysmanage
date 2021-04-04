@@ -1,6 +1,6 @@
 package com.zl.sysadminservice.suser.service.imp;
 
-import com.zl.common.Exception.ZlException;
+import com.zl.common.exception.ZlException;
 import com.zl.common.error.ErrDict;
 import com.zl.common.util.MD5Util;
 import com.zl.domain.SUser;
@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+/**
+ * @author zhongliang
+ */
 
 @Service
 public class SUserServiceImpl implements SUserService {
@@ -40,13 +43,13 @@ public class SUserServiceImpl implements SUserService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = ZlException.class)
     @Override
     public int addSUSer(SUser sUser) {
         String id = UUID.randomUUID().toString().replaceAll("-","");
         sUser.setId(id);
         sUser.setPassword(MD5Util.encryption(sUser.getPassword()));
-        int i = 0;
+        int i;
         try{
             i =sUerMapper.addSUSer(sUser);
 

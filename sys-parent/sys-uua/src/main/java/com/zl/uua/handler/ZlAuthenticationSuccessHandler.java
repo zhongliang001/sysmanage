@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * @author zhongliang
+ */
+
 @Component("alAuthenticationSuccessHandler")
 public class ZlAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
