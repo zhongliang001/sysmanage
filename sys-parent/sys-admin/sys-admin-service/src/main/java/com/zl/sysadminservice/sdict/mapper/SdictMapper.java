@@ -10,6 +10,7 @@ import java.util.List;
 public interface SdictMapper {
     /**
      * 查询数据字典
+     *
      * @param sdict 数据字典
      * @return 数据字典集合
      */
@@ -17,6 +18,7 @@ public interface SdictMapper {
 
     /**
      * 根据字典类型查询数据字典
+     *
      * @param sdictType 数据字典类型
      * @return 数据字典集合
      */

@@ -2,7 +2,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-   <parent>
+    <parent>
         <artifactId>sys-parent</artifactId>
         <groupId>com.zl</groupId>
         <version>0.0.1-SNAPSHOT</version>
@@ -50,6 +50,10 @@
         <dependency>
             <groupId>com.zl</groupId>
             <artifactId>sys-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zl</groupId>
+            <artifactId>sys-admin-feign</artifactId>
         </dependency>
     </dependencies>
 

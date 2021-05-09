@@ -13,8 +13,8 @@ public class MD5Util {
     @Value("md5.key")
     private String key;
 
-    public String encryption(String password){
-        String base = password +"/"+password;
+    public String encryption(String password) {
+        String base = password + "/" + password;
         return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 }

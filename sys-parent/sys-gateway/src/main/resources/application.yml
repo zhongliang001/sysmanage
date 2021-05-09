@@ -22,3 +22,10 @@ logging:
 security:
   username: app
   password: 123456
+  whitelist:
+    - /sys-uua/oauth/token
+    - /sys-uua/oauth/authorize
+    - /sys-uua/login
+
+swagger:
+  enabled: false

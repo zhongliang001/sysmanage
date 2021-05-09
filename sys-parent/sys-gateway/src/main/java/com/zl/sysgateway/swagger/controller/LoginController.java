@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.session.CookieWebSessionIdResolver;
+import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * @author zhongliang
@@ -23,22 +23,24 @@ public class LoginController {
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private RestTemplate restTemplate;
+
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "redirect:index.html";
     }
+
+    @Autowired
+    private Docket docket;
 
     @GetMapping("/user/oauth/token")
     public String token(ServerWebExchange exchange) {
         MultiValueMap<String, String> queryParams = exchange.getRequest().getQueryParams();
-        String result = restTemplate.postForObject("http://localhost:8084/oauth/token",queryParams,String.class);
-        if(result == null){
+        String result = restTemplate.postForObject("http://localhost:8084/oauth/token", queryParams, String.class);
+        if (result == null) {
             return "redirect:index.html";
         }
         JsonObject asJsonObject = JsonParser.parseString(result).getAsJsonObject();
-        logger.info("授权结果：{}",result);
-        CookieWebSessionIdResolver cookieWebSessionIdResolver = new CookieWebSessionIdResolver();
-        cookieWebSessionIdResolver.setSessionId(exchange, asJsonObject.get("access_token").getAsString());
+        logger.info("授权结果：{}", result);
         return "redirect:/swagger-ui/index.html";
     }
 }

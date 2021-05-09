@@ -21,12 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ZlExceptionHandler extends ResponseEntityExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(ZlExceptionHandler.class);
+
     @ExceptionHandler(ZlException.class)
     @ResponseBody
     ResultDto<String> handleControllerException(HttpServletRequest request, Throwable
             ex) {
         ResultDto<String> resultDto = ResultUtil.genenrateByCode(ex.getMessage());
-        logger.error("错误码：{}， 错误信息：{}",ex.getMessage(),resultDto.getMsg());
+        logger.error("错误码：{}， 错误信息：{}", ex.getMessage(), resultDto.getMsg());
         ex.printStackTrace();
         return resultDto;
     }

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -17,6 +16,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
@@ -42,6 +43,11 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     private UserSecurityServiceImpl userDetailsServiceImpl;
 
     @Bean
+    public TokenEnhancer jwtTokenEnhancer(){
+        return new ZlJwtTokenEnhancer();
+    }
+
+    @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         //  Sets the JWT signing key
@@ -52,13 +58,24 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    @Autowired
+    private ZlJwtTokenEnhancer zlJwtTokenEnhancer;
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer security) {
-        security.accessTokenConverter(jwtAccessTokenConverter);
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> enhancerList = new ArrayList<>();
+        enhancerList.add(zlJwtTokenEnhancer);
+        enhancerList.add(jwtAccessTokenConverter);
+        enhancerChain.setTokenEnhancers(enhancerList);
+
+
+        security
+                .tokenEnhancer(enhancerChain)
+                .accessTokenConverter(jwtAccessTokenConverter);
         //使用oauth2的密码模式时需要配置
         security.authenticationManager(authorizationAuthenticationManager())
                 .userDetailsService(userDetailsServiceImpl);
-
     }
 
     @Override
@@ -74,10 +91,10 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
         clients.inMemory().withClient("app")
                 .secret(bCryptPasswordEncoder.encode("123456"))
-                .authorizedGrantTypes("password","refresh_token")
+                .authorizedGrantTypes("password", "refresh_token", "authorization_code").redirectUris("https://www.baidu.com/")
                 .scopes("all")
                 //Token有效时间
-                .accessTokenValiditySeconds(40000).refreshTokenValiditySeconds(720000)
+                .accessTokenValiditySeconds(3600).refreshTokenValiditySeconds(3600)
                 .and()
                 .withClient("web")
                 .secret(bCryptPasswordEncoder.encode("123456"))
@@ -102,9 +119,9 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     private AuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        ZlAuthenticationProvider daoAuthenticationProvider = new ZlAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
+        daoAuthenticationProvider.setUserSecurityServiceImpl(userDetailsServiceImpl);
         return daoAuthenticationProvider;
     }
 }

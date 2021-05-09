@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 /**
  * @author zhongliang
  */
@@ -33,11 +35,13 @@ public class ApplicationProperties {
 
     @Configuration
     @ConfigurationProperties(prefix = "security")
-    public static class Security{
+    public static class Security {
 
         private String username;
 
         private String password;
+
+        private List<String> whiteList;
 
         public String getUsername() {
             return username;
@@ -53,6 +57,14 @@ public class ApplicationProperties {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+
+        public List<String> getWhiteList() {
+            return whiteList;
+        }
+
+        public void setWhiteList(List<String> whiteList) {
+            this.whiteList = whiteList;
         }
     }
 

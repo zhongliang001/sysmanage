@@ -53,7 +53,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
                 resources.add(swaggerResource);
             }
         });
-            return resources;
+        return resources;
     }
 
     private SwaggerResource swaggerResource(String name, String location) {

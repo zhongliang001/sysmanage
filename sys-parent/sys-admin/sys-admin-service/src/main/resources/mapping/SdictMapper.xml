@@ -12,15 +12,15 @@
     </resultMap>
     <select id="selectSdict" resultMap="sdict" parameterType="com.zl.domain.Sdict">
         select
-            id,
-            dict_type,
-            cn_name,
-            en_name,
-            create_time,
-            update_time,
-            order_id
+        id,
+        dict_type,
+        cn_name,
+        en_name,
+        create_time,
+        update_time,
+        order_id
         from
-            s_dict
+        s_dict
         <where>
             <if test="id != null">
                 id = #{id}

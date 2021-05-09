@@ -28,6 +28,7 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 /**
  * @author zhongliang
  */
@@ -74,7 +75,7 @@ public class AuthorizationMysqlConfig extends AuthorizationServerConfigurerAdapt
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security){
+    public void configure(AuthorizationServerSecurityConfigurer security) {
         security.checkTokenAccess("permitAll()");
         security.allowFormAuthenticationForClients();
     }

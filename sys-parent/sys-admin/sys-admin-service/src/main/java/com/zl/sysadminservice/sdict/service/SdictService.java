@@ -13,6 +13,7 @@ public interface SdictService {
 
     /**
      * 查询数据字典
+     *
      * @param sdict 字典对象
      * @return 字典集合
      */
@@ -20,6 +21,7 @@ public interface SdictService {
 
     /**
      * 根据字典类型查询数据字典
+     *
      * @param sdictType 字典类型
      * @return 字典集合
      */

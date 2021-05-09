@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
 /**
  * @author zhongliang
  */
@@ -27,14 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       http.antMatcher("/user/**").formLogin().usernameParameter("username").passwordParameter("password").loginPage("/user/login").successHandler(zlAuthenticationSuccessHandler).failureHandler(zlAuthenticationFailureHandler).and().authorizeRequests().antMatchers("/user/login").permitAll().antMatchers("/user/register").permitAll();
-       http.logout().permitAll();
-       http.cors().and().csrf().ignoringAntMatchers("/user/**");
-       http.logout().logoutUrl("/user/logout").permitAll();
+        http.antMatcher("/user/**").formLogin().usernameParameter("username").passwordParameter("password").loginPage("/user/login").successHandler(zlAuthenticationSuccessHandler).failureHandler(zlAuthenticationFailureHandler).and().authorizeRequests().antMatchers("/user/login").permitAll().antMatchers("/user/register").permitAll();
+        http.logout().permitAll();
+        http.cors().and().csrf().ignoringAntMatchers("/user/**");
+        http.logout().logoutUrl("/user/logout").permitAll();
     }
 
     @Bean
-    UserDetailsService UserSecurityService(){
+    UserDetailsService UserSecurityService() {
         return new UserSecurityServiceImpl();
     }
 

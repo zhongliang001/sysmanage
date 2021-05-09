@@ -1,9 +1,10 @@
 <template>
-    <div>
-        <h1>登录</h1>
+    <div style="align-content: center; margin:0 auto;width:300px;height:200px;  ">
+        <h2>密码登录</h2>
         <zl-form ref="login" column="1" :method="method" :url="url">
             <zl-item type="text" field-name="用户名" name="username"/>
-            <zl-item type="password" field-name="密码" name="password"/>
+            <zl-item type="password" field-name="密　码" name="password"/>
+            <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" hidden="true"/>
         </zl-form>
         <zl-button type="submit"  name="登录" @click.native="onclick"></zl-button>
         <zl-button type="submit"  name="注册" @click.native="onRegister"></zl-button>
@@ -16,7 +17,7 @@
         name: 'Login',
         data: function () {
             return {
-                url: '/suser/login',
+                url: '/oauth/token',
                 method: 'post'
             }
         },
@@ -26,9 +27,15 @@
                 let form = _this.common.getForm(this,'login')
                 let reqData = form.reqData
                 this.zlaxios.request({
-                    url: this.zlService.baseUrl + _this.url,
-                    data: reqData,
+                    url: this.zlService.oauthUrl + _this.url,
                     method: _this.method,
+                    config:{
+                        auth:{
+                            username: 'app',
+                            password: '123456'
+                        },
+                        params:reqData
+                    },
                     success: function (response) {
                         _this.$router.push({name:"Welcome"})
                     },

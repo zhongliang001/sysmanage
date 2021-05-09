@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author zhongliang
@@ -14,8 +15,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 @MapperScan("com.zl.uua.mapper")
 @EnableApolloConfig
-public class UaaApplication
-{
+@EnableFeignClients
+public class UaaApplication {
     public static void main(String[] args) {
         SpringApplication.run(UaaApplication.class, args);
     }

@@ -13,7 +13,10 @@ apollo:
 
 logging:
   level:
-    root: info
-
+    org:
+      springframework:
+        debug
+    com:
+      zl: debug
 tokenStore:
-  mysql
+  jwt

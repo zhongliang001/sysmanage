@@ -21,10 +21,11 @@ import java.io.PrintWriter;
 public class ZlAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final Logger log = LoggerFactory.getLogger(ZlAuthenticationSuccessHandler.class);
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails){
+        if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             response.setContentType("application/json;charset=utf-8");
             PrintWriter out = response.getWriter();
