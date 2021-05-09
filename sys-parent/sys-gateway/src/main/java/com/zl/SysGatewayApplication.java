@@ -4,6 +4,7 @@ import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,10 @@ import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.result.view.freemarker.FreeMarkerConfigurer;
+
+/**
+ * @author zhongliang
+ */
 
 @EnableAutoConfiguration
 @EnableEurekaClient
@@ -22,7 +27,7 @@ import org.springframework.web.reactive.result.view.freemarker.FreeMarkerConfigu
 public class SysGatewayApplication implements WebFluxConfigurer {
 
     public static void main(String[] args) {
-        SpringApplication.run(SysGatewayApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(SysGatewayApplication.class, args);
     }
 
     @Bean
@@ -32,13 +37,10 @@ public class SysGatewayApplication implements WebFluxConfigurer {
         return configurer;
     }
 
-//    private FreeMarkerConfigurer freeMarkerConfigurer;
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
-
     }
 
     @Override

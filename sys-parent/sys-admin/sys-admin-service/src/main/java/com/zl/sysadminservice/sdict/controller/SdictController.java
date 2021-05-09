@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author zhongliang
+ */
+
 @RestController
 @RequestMapping("/sdict")
 public class SdictController {
@@ -28,10 +32,10 @@ public class SdictController {
     }
 
     @GetMapping("/sdictTree")
-    public ResultDto<Map<String, List<Sdict>>> selectSdictTree(String sdictType){
+    public ResultDto<Map<String, List<Sdict>>> selectSdictTree(String sdictType) {
         List<String> sdictTypes = sdictService.selctSdictByType(sdictType);
-        Map<String, List<Sdict>> dictData = new HashMap<String, List<Sdict>>();
-        for(String type : sdictTypes){
+        Map<String, List<Sdict>> dictData = new HashMap<>(16);
+        for (String type : sdictTypes) {
             Sdict sdict = new Sdict();
             sdict.setDictType(type);
             List<Sdict> sdicts = sdictService.selectSdict(sdict);

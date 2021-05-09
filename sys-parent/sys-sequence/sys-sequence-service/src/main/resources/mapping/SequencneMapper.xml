@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zl.syssequence.mapper.SequenceMapper">
+    <resultMap id="sequence" type="com.zl.sequence.Sequence">
+        <id column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="value" jdbcType="INTEGER" property="value"/>
+    </resultMap>
+    <select id="getSeq" parameterType="java.lang.String" resultType="java.lang.Long">
+        select value + 1 from sequnce where name = #{name}
+    </select>
+
+    <update id="updateSeq"  parameterType="java.lang.String">
+        update sequnce set value = value + 1 where name = #{name}
+    </update>
+
+    <update id="resetSeq" parameterType="java.lang.String">
+        update sequnce set value = 0 where name = #{name}
+    </update>
+</mapper>

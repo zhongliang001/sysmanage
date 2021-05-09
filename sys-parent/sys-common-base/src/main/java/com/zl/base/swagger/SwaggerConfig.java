@@ -9,16 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ParameterType;
-import springfox.documentation.service.RequestParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * @author zhongliang
+ */
 
 @Configuration
 @EnableSwagger2
@@ -32,20 +30,15 @@ public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
-        String name = applicationProperties.getName();
-        List<RequestParameter> pars = new ArrayList<RequestParameter>();
-        RequestParameterBuilder rb = new RequestParameterBuilder();
-        rb.name("real_source_ip").description("本机局域网IP").in(ParameterType.HEADER).name("Token").required(true);
-//                .modelRef(new ModelRef("string")).parameterType("header").required(false).build();
-        pars.add(rb.build());
         return new Docket(DocumentationType.SWAGGER_2).pathMapping("/")
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.zl"))
                 .paths(PathSelectors.any())
-                .build().globalRequestParameters(pars);
+                .build();
 
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title(title)

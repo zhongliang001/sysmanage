@@ -1,12 +1,14 @@
 package com.zl.uua.config;
 
-import com.zl.uua.UserSecurityService;
+
+import com.zl.uua.UserSecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -14,16 +16,19 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+/**
+ * @author zhongliang
+ */
+@ConditionalOnProperty(name = "tokenStore", havingValue = "jwt")
+@Configuration
 @EnableAuthorizationServer
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
@@ -35,28 +40,42 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private UserSecurityService userDetailsService;
+    private UserSecurityServiceImpl userDetailsServiceImpl;
 
-
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(new JwtAccessTokenConverter());
+    @Bean
+    public TokenEnhancer jwtTokenEnhancer(){
+        return new ZlJwtTokenEnhancer();
     }
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("cjs");   //  Sets the JWT signing key
+        //  Sets the JWT signing key
+        jwtAccessTokenConverter.setSigningKey("cjs");
         return jwtAccessTokenConverter;
     }
 
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    @Autowired
+    private ZlJwtTokenEnhancer zlJwtTokenEnhancer;
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer security) {
-        security.accessTokenConverter(jwtAccessTokenConverter);
-        security.authenticationManager(authorizationAuthenticationManager())//使用oauth2的密码模式时需要配置
-                .userDetailsService(userDetailsService);
+        TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> enhancerList = new ArrayList<>();
+        enhancerList.add(zlJwtTokenEnhancer);
+        enhancerList.add(jwtAccessTokenConverter);
+        enhancerChain.setTokenEnhancers(enhancerList);
+
+
+        security
+                .tokenEnhancer(enhancerChain)
+                .accessTokenConverter(jwtAccessTokenConverter);
+        //使用oauth2的密码模式时需要配置
+        security.authenticationManager(authorizationAuthenticationManager())
+                .userDetailsService(userDetailsServiceImpl);
     }
 
     @Override
@@ -71,13 +90,11 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         clients.inMemory().withClient("app")
-                //Spring Boot1.x版本中不需要加密的，但2.x版本需要加密
                 .secret(bCryptPasswordEncoder.encode("123456"))
-                //这样写的话，获取的token里不会有refresh_token
-                .authorizedGrantTypes("password")
+                .authorizedGrantTypes("password", "refresh_token", "authorization_code").redirectUris("https://www.baidu.com/")
                 .scopes("all")
                 //Token有效时间
-                .accessTokenValiditySeconds(36000)
+                .accessTokenValiditySeconds(3600).refreshTokenValiditySeconds(3600)
                 .and()
                 .withClient("web")
                 .secret(bCryptPasswordEncoder.encode("123456"))
@@ -90,7 +107,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
     private PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
         PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider = new PreAuthenticatedAuthenticationProvider();
-        preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper(userDetailsService));
+        preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsServiceImpl));
         return preAuthenticatedAuthenticationProvider;
     }
 
@@ -102,9 +119,9 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     private AuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        ZlAuthenticationProvider daoAuthenticationProvider = new ZlAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setUserSecurityServiceImpl(userDetailsServiceImpl);
         return daoAuthenticationProvider;
     }
 }

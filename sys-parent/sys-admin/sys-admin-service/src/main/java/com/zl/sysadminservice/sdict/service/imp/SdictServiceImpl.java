@@ -8,11 +8,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author zhongliang
+ */
 @Service
 public class SdictServiceImpl implements SdictService {
 
     @Autowired
     private SdictMapper sdictMapper;
+
     @Override
     public List<Sdict> selectSdict(Sdict sdict) {
         return sdictMapper.selectSdict(sdict);

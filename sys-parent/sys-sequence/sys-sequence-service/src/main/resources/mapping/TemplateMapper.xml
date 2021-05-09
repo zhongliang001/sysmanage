@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zl.syssequence.template.mapper.TemplateMapper">
+    <resultMap id="template" type="com.zl.sequence.Template">
+        <id property="id" jdbcType="VARCHAR" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="temp" jdbcType="VARCHAR" column="temp"/>
+        <result property="start" jdbcType="INTEGER" column="start"/>
+        <result property="end" jdbcType="INTEGER" column="end"/>
+        <result property="length" jdbcType="INTEGER" column="length"/>
+        <result property="createTime" jdbcType="VARCHAR" column="create_time"/>
+        <result property="createUser" jdbcType="VARCHAR" column="create_user"/>
+        <result property="updateTime" jdbcType="VARCHAR" column="update_time"/>
+        <result property="updateUser" jdbcType="VARCHAR" column="update_user"/>
+    </resultMap>
+
+    <select id="select" resultMap="template" parameterType="java.lang.String">
+        select * from template where name = #{name}
+    </select>
+
+    <insert id="add" parameterType="com.zl.sequence.Template">
+        insert into template (
+            id, name, temp, start, end, length, create_time, create_user, update_time, update_user
+        ) VALUES (
+            #{id}, #{name},#{temp},#{start},#{end},#{length},#{createTime},#{createUser},#{updateTime},#{updateUser}
+        )
+    </insert>
+</mapper>

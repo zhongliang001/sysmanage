@@ -1,11 +1,15 @@
 package com.zl.sysgateway.swagger;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
+
+/**
+ * @author zhongliang
+ */
 
 @Component
 public class SwaggerHeaderFilter<C> extends AbstractGatewayFilterFactory<C> {

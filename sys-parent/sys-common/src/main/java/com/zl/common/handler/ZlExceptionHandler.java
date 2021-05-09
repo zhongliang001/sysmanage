@@ -1,6 +1,6 @@
 package com.zl.common.handler;
 
-import com.zl.common.Exception.ZlException;
+import com.zl.common.exception.ZlException;
 import com.zl.common.dto.ResultDto;
 import com.zl.common.util.ResultUtil;
 import org.slf4j.Logger;
@@ -13,20 +13,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 
-//@ControllerAdvice(basePackageClasses = SUserController.class)
+/**
+ * @author zhongliang
+ */
+
 @ControllerAdvice(basePackages = "com.zl")
 public class ZlExceptionHandler extends ResponseEntityExceptionHandler {
 
     private Logger logger = LoggerFactory.getLogger(ZlExceptionHandler.class);
+
     @ExceptionHandler(ZlException.class)
     @ResponseBody
-    ResultDto handleControllerException(HttpServletRequest request, Throwable
+    ResultDto<String> handleControllerException(HttpServletRequest request, Throwable
             ex) {
-//        HttpStatus status = getStatus(request);
-//        return new ResponseEntity<>(new ResultDto(status.value(),
-//                ex.getMessage()), status);
-        ResultDto resultDto = ResultUtil.genenrateByCode(ex.getMessage());
-        logger.error("错误码：{}， 错误信息：{}",ex.getMessage(),resultDto.getMsg());
+        ResultDto<String> resultDto = ResultUtil.genenrateByCode(ex.getMessage());
+        logger.error("错误码：{}， 错误信息：{}", ex.getMessage(), resultDto.getMsg());
         ex.printStackTrace();
         return resultDto;
     }

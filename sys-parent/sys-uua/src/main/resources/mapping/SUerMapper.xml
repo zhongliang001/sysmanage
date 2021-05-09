@@ -1,63 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zl.uua.mapper.SUerMapper">
-    <resultMap id="suser" type="com.zl.uua.domain.SUser">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="realName" jdbcType="VARCHAR" property="real_name"/>
-        <result column="sex" jdbcType="CHAR" property="sex"/>
-        <result column="phoneNo" jdbcType="VARCHAR" property="phone_no"/>
-        <result column="certType" jdbcType="VARCHAR" property="cert_type"/>
-        <result column="certNo" jdbcType="VARCHAR" property="cert_no"/>
-        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
-        <result column="lastLoginTime" jdbcType="VARCHAR" property="last_login_time"/>
-        <result column="errLoginTimes" jdbcType="VARCHAR" property="err_login_times"/>
-        <result column="forbiddenLoginTime" jdbcType="VARCHAR" property="forbidden_login_time"/>
-        <result column="forbiddenLoginPeriod" jdbcType="VARCHAR" property="forbidden_login_period"/>
-        <result column="forbiddenReason" jdbcType="VARCHAR" property="forbidden_reason"/>
-        <result column="lastModifyPwd" jdbcType="VARCHAR" property="last_modify_pwd"/>
+<mapper namespace="com.zl.uua.mapper.SysUerMapper">
+    <resultMap id="user" type="com.zl.uua.domain.SysUser">
+        <id property="id" jdbcType="VARCHAR" column="id"/>
+        <result property="username" jdbcType="VARCHAR" column="username"/>
+        <result property="password" jdbcType="VARCHAR" column="password"/>
+        <result property="realName" jdbcType="VARCHAR" column="real_name"/>
+        <result property="sex" jdbcType="CHAR" column="sex"/>
+        <result property="phoneNo" jdbcType="VARCHAR" column="phone_no"/>
+        <result property="certType" jdbcType="VARCHAR" column="cert_type"/>
+        <result property="certNo" jdbcType="VARCHAR" column="cert_no"/>
+        <result property="birthday" jdbcType="VARCHAR" column="birthday"/>
+        <result property="lastLoginTime" jdbcType="VARCHAR" column="last_login_time"/>
+        <result property="errLoginTimes" jdbcType="INTEGER" column="err_login_times"/>
+        <result property="forbiddenLoginTime" jdbcType="VARCHAR" column="forbidden_login_time"/>
+        <result property="forbiddenLoginPeriod" jdbcType="INTEGER" column="forbidden_login_period"/>
+        <result property="forbiddenReason" jdbcType="VARCHAR" column="forbidden_reason"/>
+        <result property="lastModifyPwd" jdbcType="VARCHAR" column="last_modify_pwd"/>
     </resultMap>
 
-    <select id="selectForLogin" parameterType="java.lang.String" resultMap="suser">
-        select id, username, password, phone_no, real_name,sex, phone_no,cert_type,cert_no,birthday,last_login_time,err_login_times,
-               forbidden_login_period,forbidden_login_time,forbidden_reason,last_modify_pwd
-        from s_user
-        where username = #{username} limit 1
+    <select id="selectForLogin" parameterType="java.lang.String" resultMap="user">
+        select id,
+               username,
+               password,
+               phone_no,
+               real_name,
+               sex,
+               phone_no,
+               cert_type,
+               cert_no,
+               birthday,
+               last_login_time,
+               err_login_times,
+               forbidden_login_period,
+               forbidden_login_time,
+               forbidden_reason,
+               last_modify_pwd
+        from sys_user
+        where username = #{username}
+        limit 1
     </select>
 
-    <insert id="addSUSer" parameterType="com.zl.uua.domain.SUser">
-        insert into s_user (id,
-                            username,
-                            password,
-                            real_name,
-                            sex,
-                            phone_no,
-                            cert_type,
-                            cert_no,
-                            birthday,
-                            last_login_time,
-                            err_login_times,
-                            forbidden_login_time,
-                            forbidden_login_period,
-                            forbidden_reason,
-                            last_modify_pwd)
-        values (
-                   #{id},
-                   #{username},
-                   #{password},
-                   #{realName},
-                   #{sex},
-                   #{phoneNo},
-                   #{certType},
-                   #{certNo},
-                   #{birthday},
-                   #{lastLoginTime},
-                   #{errLoginTimes},
-                   #{forbiddenLoginTime},
-                   #{forbiddenLoginPeriod},
-                   #{forbiddenReason},
-                   #{lastModifyPwd}
-               )
+    <insert id="addSysUSer" parameterType="com.zl.uua.domain.SysUser">
+        insert into sys_user (id,
+                              username,
+                              password,
+                              real_name,
+                              sex,
+                              phone_no,
+                              cert_type,
+                              cert_no,
+                              birthday,
+                              last_login_time,
+                              err_login_times,
+                              forbidden_login_time,
+                              forbidden_login_period,
+                              forbidden_reason,
+                              last_modify_pwd)
+        values (#{id},
+                #{username},
+                #{password},
+                #{realName},
+                #{sex},
+                #{phoneNo},
+                #{certType},
+                #{certNo},
+                #{birthday},
+                #{lastLoginTime},
+                #{errLoginTimes},
+                #{forbiddenLoginTime},
+                #{forbiddenLoginPeriod},
+                #{forbiddenReason},
+                #{lastModifyPwd})
     </insert>
+
+    <update id="updateSysUSer" parameterType="com.zl.uua.domain.SysUser">
+        update sys_user set username= #{username},
+        password = #{password},
+        real_name = #{realName},
+        sex = #{sex},
+        phone_no = #{phoneNo},
+        cert_type = #{certType},
+        cert_no = #{certNo},
+        birthday = #{birthday},
+        last_login_time = #{lastLoginTime},
+        err_login_times = #{errLoginTimes},
+        forbidden_login_time = #{forbiddenLoginTime},
+        forbidden_login_period = #{forbiddenLoginPeriod},
+        forbidden_reason = #{forbiddenReason},
+        last_modify_pwd = #{lastModifyPwd}
+        <where>
+            username = #{username}
+        </where>
+    </update>
 </mapper>

@@ -14,6 +14,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author zhongliang
+ */
+
 @Component
 @Primary
 public class SwaggerProvider implements SwaggerResourcesProvider {
@@ -49,7 +53,7 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
                 resources.add(swaggerResource);
             }
         });
-            return resources;
+        return resources;
     }
 
     private SwaggerResource swaggerResource(String name, String location) {

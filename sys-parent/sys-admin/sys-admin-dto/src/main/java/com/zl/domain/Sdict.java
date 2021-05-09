@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 数据字典实体类
+ *
  * @author zhongliang
  * @version 1.0.1
  */

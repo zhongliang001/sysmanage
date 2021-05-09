@@ -11,9 +11,13 @@
     <modules>
         <module>sys-admin-service</module>
         <module>sys-admin-dto</module>
+        <module>sys-admin-feign</module>
     </modules>
+    <groupId>com.zl</groupId>
+    <name>sys-admin</name>
     <version>0.0.1-SNAPSHOT</version>
     <artifactId>sys-admin</artifactId>
+    <description>sys-admin</description>
     <packaging>pom</packaging>
 
 </project>
