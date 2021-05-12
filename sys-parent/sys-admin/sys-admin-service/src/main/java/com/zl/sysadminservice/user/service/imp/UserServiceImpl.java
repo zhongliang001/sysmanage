@@ -4,13 +4,15 @@ import com.zl.common.error.ErrDict;
 import com.zl.common.exception.ZlException;
 import com.zl.common.util.MD5Util;
 import com.zl.domain.User;
+import com.zl.sys.sequence.feign.client.SequenceFeign;
 import com.zl.sysadminservice.user.mapper.UerMapper;
 import com.zl.sysadminservice.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 /**
  * @author zhongliang
@@ -19,11 +21,19 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final Logger logger  = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UerMapper uerMapper;
 
     @Autowired
     private MD5Util MD5Util;
+
+    @Autowired
+    private SequenceFeign sequenceFeign;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User selectForLogin(User loginUser) {
@@ -46,14 +56,16 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = ZlException.class)
     @Override
     public int addUser(User user) {
-        String id = UUID.randomUUID().toString().replaceAll("-", "");
+        String id = sequenceFeign.getSequnces("USER_SEQ").getData();
         user.setId(id);
-        user.setPassword(MD5Util.encryption(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         int i;
         try {
             i = uerMapper.addUser(user);
 
         } catch (Exception e) {
+            logger.info("新增失败：{}", e.getMessage());
+            e.printStackTrace();
             throw new ZlException(ErrDict.FAILED_ADD_CODE);
         }
         return i;

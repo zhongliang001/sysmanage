@@ -42,6 +42,29 @@ new Vue({
 if (typeof (Vue) == "function") {
     Vue.prototype.zlService = zlService
 }
+
+Vue.prototype.zlaxios.request({
+    url: zlService.baseUrl + '/dict/dictTree',
+    success: function (response) {
+        let dictData = response.data
+        if (dictData) {
+            Vue.prototype.dictData = dictData
+        }
+        new Vue({
+            router,
+            render: h => h(App)
+        }).$mount('#app')
+    },
+    failed: function (error) {
+        new Vue({
+            router,
+            render: h => h(App)
+        }).$mount('#app')
+    }
+})
+
+
+
 // Vue.prototype.zlaxios.request({
 //         url: zlService.baseUrl + '/smenu/selectMenu',
 //         method: 'POST',

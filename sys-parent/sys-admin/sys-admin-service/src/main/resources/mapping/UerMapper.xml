@@ -41,7 +41,7 @@
         limit 1
     </select>
 
-    <insert id="addUSer" parameterType="com.zl.domain.User">
+    <insert id="addUser" parameterType="com.zl.domain.User" >
         insert into user (id,
                           username,
                           password,

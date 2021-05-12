@@ -12,6 +12,7 @@ import com.zl.syssequence.template.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class SequenceController {
     private TemplateService templateService;
 
     @PostMapping("/getsequnces")
-    public ResultDto<String> getSequnces(String name){
+    public ResultDto<String> getSequnces(@RequestBody String name){
         List<Template> templates = templateService.select(name);
         if (templates.isEmpty()) {
             throw new ZlException(ErrDict.NO_TEMPLATE_CODE);

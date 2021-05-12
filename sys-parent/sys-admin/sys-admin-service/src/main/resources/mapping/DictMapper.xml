@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zl.sysadminservice.sdict.mapper.SdictMapper">
-    <resultMap id="sdict" type="com.zl.domain.Sdict">
+<mapper namespace="com.zl.sysadminservice.dict.mapper.DictMapper">
+    <resultMap id="sdict" type="com.zl.domain.Dict">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="dict_type" jdbcType="VARCHAR" property="dictType"/>
         <result column="cn_name" jdbcType="VARCHAR" property="cnName"/>
@@ -10,7 +10,7 @@
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
         <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
     </resultMap>
-    <select id="selectSdict" resultMap="sdict" parameterType="com.zl.domain.Sdict">
+    <select id="selectSdict" resultMap="sdict" parameterType="com.zl.domain.Dict">
         select
         id,
         dict_type,
@@ -20,7 +20,7 @@
         update_time,
         order_id
         from
-        s_dict
+        dict
         <where>
             <if test="id != null">
                 id = #{id}
@@ -48,7 +48,7 @@
         select
         dict_type
         from
-        s_dict
+        dict
         <where>
             <if test="dictType != null">
                 dict_type = #{dictType},

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author zhongliang
  * @version 1.0.1
  */
-public class Sdict implements Serializable {
+public class Dict implements Serializable {
 
     private String id;
 
@@ -99,7 +99,7 @@ public class Sdict implements Serializable {
 
     @Override
     public String toString() {
-        return "Sdict{" +
+        return "Dict{" +
                 "id='" + id + '\'' +
                 ", dictType='" + dictType + '\'' +
                 ", cnName='" + cnName + '\'' +
