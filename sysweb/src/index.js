@@ -50,16 +50,9 @@ Vue.prototype.zlaxios.request({
         if (dictData) {
             Vue.prototype.dictData = dictData
         }
-        new Vue({
-            router,
-            render: h => h(App)
-        }).$mount('#app')
     },
     failed: function (error) {
-        new Vue({
-            router,
-            render: h => h(App)
-        }).$mount('#app')
+        console.log("查询数据字典失败")
     }
 })
 

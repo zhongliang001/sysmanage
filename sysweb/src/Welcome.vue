@@ -1,5 +1,5 @@
 <template>
-    <zl-menu></zl-menu>
+    <zl-menu :menu="menu"></zl-menu>
 </template>
 
 <script>
@@ -7,8 +7,9 @@
         name: "Welcome",
         data: function (){
             return {
-                url: '/sysmenu/selectSysMenu',
-                method: 'post'
+                url: '/menu/selectMenu',
+                method: 'post',
+                menu: []
             }
         },
         created: function () {
@@ -17,7 +18,7 @@
                 url: _this.zlService.baseUrl + _this.url,
                 method: _this.method,
                 success: function (response) {
-                    _this.$router.push({name:"Welcome"})
+                    _this.menu = response.data
                 },
                 error: function (error) {
                     console.log(error)
