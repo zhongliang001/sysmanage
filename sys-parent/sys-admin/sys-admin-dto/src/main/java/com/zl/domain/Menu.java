@@ -9,13 +9,13 @@ import java.util.List;
  * @author zhongliang
  * @since 1.0
  */
-public class SysMenu implements Serializable {
+public class Menu implements Serializable {
     private String id;
     private String name;
     private String path;
     private String filePath;
     private String parentId;
-    private List<SysMenu> children;
+    private List<Menu> children;
 
     public String getId() {
         return id;
@@ -57,17 +57,17 @@ public class SysMenu implements Serializable {
         this.parentId = parentId;
     }
 
-    public List<SysMenu> getChildren() {
+    public List<Menu> getChildren() {
         return children;
     }
 
-    public void setChildren(List<SysMenu> children) {
+    public void setChildren(List<Menu> children) {
         this.children = children;
     }
 
     @Override
     public String toString() {
-        return "SysMenu{" +
+        return "Menu{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", path='" + path + '\'' +

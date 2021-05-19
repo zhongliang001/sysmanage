@@ -42,6 +42,22 @@ new Vue({
 if (typeof (Vue) == "function") {
     Vue.prototype.zlService = zlService
 }
+
+Vue.prototype.zlaxios.request({
+    url: zlService.baseUrl + '/dict/dictTree',
+    success: function (response) {
+        let dictData = response.data
+        if (dictData) {
+            Vue.prototype.dictData = dictData
+        }
+    },
+    failed: function (error) {
+        console.log("查询数据字典失败")
+    }
+})
+
+
+
 // Vue.prototype.zlaxios.request({
 //         url: zlService.baseUrl + '/smenu/selectMenu',
 //         method: 'POST',

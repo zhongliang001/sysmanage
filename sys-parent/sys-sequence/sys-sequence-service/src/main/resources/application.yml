@@ -10,7 +10,7 @@ apollo:
     namespaces: application.yml
 
 sequenceService:
-  SequenceRedisServiceImpl
+  SequenceServiceImpl
 
 spring:
   application:
@@ -32,4 +32,9 @@ spring:
       min-idle: 0
 #连接超时时间（毫秒）
     timeout: 30000
+
+#logging:
+#  level:
+#    #    root: debug
+#    com.zl: debug
 

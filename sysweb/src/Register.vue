@@ -21,7 +21,7 @@
         name: "Register",
         data: function () {
             return {
-                url: '/suser/register',
+                url: '/user/register',
                 method: 'post'
             }
         },

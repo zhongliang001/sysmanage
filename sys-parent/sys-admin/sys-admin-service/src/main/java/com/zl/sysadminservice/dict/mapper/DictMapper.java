@@ -1,20 +1,20 @@
-package com.zl.sysadminservice.sdict.mapper;
+package com.zl.sysadminservice.dict.mapper;
 
-import com.zl.domain.Sdict;
+import com.zl.domain.Dict;
 
 import java.util.List;
 
 /**
  * @author zhongliang
  */
-public interface SdictMapper {
+public interface DictMapper {
     /**
      * 查询数据字典
      *
      * @param sdict 数据字典
      * @return 数据字典集合
      */
-    List<Sdict> selectSdict(Sdict sdict);
+    List<Dict> selectSdict(Dict sdict);
 
     /**
      * 根据字典类型查询数据字典

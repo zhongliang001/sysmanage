@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public interface AdminFeign {
 
+    /**
+     * 查询用户信息
+     * @param username
+     * @return
+     */
     @PostMapping("/query")
     ResultDto<User> query(@RequestBody String username);
 

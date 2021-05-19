@@ -1,6 +1,6 @@
-package com.zl.sysadminservice.sdict.service;
+package com.zl.sysadminservice.dict.service;
 
-import com.zl.domain.Sdict;
+import com.zl.domain.Dict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author zhongliang
  */
 @Service
-public interface SdictService {
+public interface DictService {
 
     /**
      * 查询数据字典
@@ -17,7 +17,7 @@ public interface SdictService {
      * @param sdict 字典对象
      * @return 字典集合
      */
-    List<Sdict> selectSdict(Sdict sdict);
+    List<Dict> selectSdict(Dict sdict);
 
     /**
      * 根据字典类型查询数据字典

@@ -5,10 +5,13 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author zhongliang
+ */
 public class ObjectUtil {
 
     public static Map<String, Object> ObjectToMap(Object obj){
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         if(obj==null){
             return null;
         }

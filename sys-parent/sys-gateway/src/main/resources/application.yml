@@ -26,6 +26,8 @@ security:
     - /sys-uua/oauth/token
     - /sys-uua/oauth/authorize
     - /sys-uua/login
+    - /sys-admin-service/dict/dictTree
+    - /sys-admin-service/user/register
 
 swagger:
   enabled: false

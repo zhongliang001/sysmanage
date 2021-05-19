@@ -1,10 +1,10 @@
-package com.zl.sysadminservice.sdict.controller;
+package com.zl.sysadminservice.dict.controller;
 
 import com.zl.common.dto.ResultDto;
 import com.zl.common.error.ErrDict;
 import com.zl.common.util.ResultUtil;
-import com.zl.domain.Sdict;
-import com.zl.sysadminservice.sdict.service.SdictService;
+import com.zl.domain.Dict;
+import com.zl.sysadminservice.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,26 +19,26 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/sdict")
-public class SdictController {
+@RequestMapping("/dict")
+public class DictController {
 
     @Autowired
-    private SdictService sdictService;
+    private DictService dictService;
 
     @GetMapping("/")
-    public ResultDto<List<Sdict>> selectSdict(Sdict sdict) {
-        List<Sdict> sdicts = sdictService.selectSdict(sdict);
+    public ResultDto<List<Dict>> selectSdict(Dict sdict) {
+        List<Dict> sdicts = dictService.selectSdict(sdict);
         return ResultUtil.genenrate(sdicts, ErrDict.SUCCESS_QUERRY_CODE);
     }
 
-    @GetMapping("/sdictTree")
-    public ResultDto<Map<String, List<Sdict>>> selectSdictTree(String sdictType) {
-        List<String> sdictTypes = sdictService.selctSdictByType(sdictType);
-        Map<String, List<Sdict>> dictData = new HashMap<>(16);
+    @GetMapping("/dictTree")
+    public ResultDto<Map<String, List<Dict>>> selectSdictTree(String sdictType) {
+        List<String> sdictTypes = dictService.selctSdictByType(sdictType);
+        Map<String, List<Dict>> dictData = new HashMap<>(16);
         for (String type : sdictTypes) {
-            Sdict sdict = new Sdict();
+            Dict sdict = new Dict();
             sdict.setDictType(type);
-            List<Sdict> sdicts = sdictService.selectSdict(sdict);
+            List<Dict> sdicts = dictService.selectSdict(sdict);
             dictData.put(type, sdicts);
         }
         return ResultUtil.genenrate(dictData, ErrDict.SUCCESS_QUERRY_CODE);

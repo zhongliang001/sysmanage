@@ -1,5 +1,8 @@
 package com.zl.common.dto;
 
+/**
+ * @author zhongliang
+ */
 public class SysUserDto {
 
     /**
