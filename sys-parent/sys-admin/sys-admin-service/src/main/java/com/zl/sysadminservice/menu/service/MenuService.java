@@ -1,5 +1,6 @@
 package com.zl.sysadminservice.menu.service;
 
+import com.zl.common.domain.QueryCondition;
 import com.zl.domain.Menu;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,11 @@ public interface MenuService {
      * @return 菜单集合
      */
     List<Menu> selectMenu(String parentId);
+
+    /**
+     * 菜单查查询
+     * @param queryCondition 查询条件
+     * @return 菜单集合
+     */
+    List<Menu> select(QueryCondition queryCondition);
 }

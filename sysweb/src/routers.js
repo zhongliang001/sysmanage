@@ -3,6 +3,7 @@ import Register from './Register'
 import Welcome from "./Welcome";
 import Hi from "./pages/Hi";
 import Hi2 from "./pages/Hi2";
+import Menu from "./pages/Menu"
 
 let routes = [
     {
@@ -29,6 +30,10 @@ let routes = [
                 name: 'Hi2',
                 path: '/hi2',
                 component: Hi2
+            },{
+                name: '菜单配置',
+                path: '/menu',
+                component: Menu
             }
         ]
     }

@@ -1,5 +1,7 @@
 package com.zl.sysadminservice.menu.service.imp;
 
+import com.github.pagehelper.PageHelper;
+import com.zl.common.domain.QueryCondition;
 import com.zl.domain.Menu;
 import com.zl.sysadminservice.menu.mapper.MenuMapper;
 import com.zl.sysadminservice.menu.service.MenuService;
@@ -27,4 +29,12 @@ public class MenuServiceImpl implements MenuService {
         });
         return menus;
     }
+
+    @Override
+    public List<Menu> select(QueryCondition queryCondition) {
+        PageHelper.startPage(queryCondition.getPageNum(), queryCondition.getPageSize());
+        return menuMapper.select(queryCondition.getCondition());
+    }
+
+
 }
