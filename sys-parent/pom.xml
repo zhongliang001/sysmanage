@@ -38,6 +38,7 @@
         <sys-sequence-dto.version>0.0.1-SNAPSHOT</sys-sequence-dto.version>
         <java-jwt.version>3.10.0</java-jwt.version>
         <spring-security.version>5.3.3.RELEASE</spring-security.version>
+        <pagehelper.starter.version>1.2.5</pagehelper.starter.version>
     </properties>
 
     <dependencyManagement>
@@ -108,6 +109,17 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-core</artifactId>
                 <version>${spring-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.starter.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis.spring.boot</groupId>
+                        <artifactId>mybatis-spring-boot-starter</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
