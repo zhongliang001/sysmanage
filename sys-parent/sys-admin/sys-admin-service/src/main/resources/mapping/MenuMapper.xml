@@ -21,7 +21,34 @@
                 parent_id is null
             </if>
         </where>
-
-
     </select>
+
+    <select id="select" resultMap="sysMenu" parameterType="java.util.Map">
+        select
+        id, name, path, file_path, parent_id
+        from
+        menu
+        <where>
+            <if test="parentId != null">
+                parent_id = #{parentId}
+            </if>
+            <if test="name != null">
+               and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.zl.domain.Menu">
+        insert into menu ( id, name, path, file_path, parent_id)
+        values ( #{id}, #{name}, #{path}, #{filePath}, #{parentId})
+    </insert>
+
+    <update id="update" parameterType="com.zl.domain.Menu">
+        update menu set
+            name =  #{name}, path = #{path},file_path = #{filePath}, parent_id = #{parentId} where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from menu where id = #{id}
+    </delete>
 </mapper>
