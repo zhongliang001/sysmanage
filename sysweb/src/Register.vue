@@ -28,7 +28,7 @@
         methods:{
             onclick: function () {
                 let _this = this
-                let form = _this.common.getForm(this,'register')
+                let form = _this.common.getComponent(this,'register')
                 if(form.checkAll()){
                     let reqData = form.reqData
                     this.zlaxios.request({
@@ -45,7 +45,7 @@
                 }
             },
             validate: function () {
-                let form = this.common.getForm(this,'register')
+                let form = this.common.getComponent(this,'register')
                 let reqData = form.reqData
                 let password = reqData.password
                 let repassword = reqData.repassword

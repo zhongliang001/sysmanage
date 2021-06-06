@@ -26,4 +26,26 @@ public interface MenuService {
      * @return 菜单集合
      */
     List<Menu> select(QueryCondition queryCondition);
+
+    /**
+     * 菜单新增
+     * @param menu 新增的菜单
+     * @return 新增的条数
+     */
+    int save(Menu menu);
+
+    /**
+     * 修改菜单
+     * @param menu 修改的菜单
+     * @return 修改的条数
+     */
+    int update(Menu menu);
+
+    /**
+     * 删除菜单
+     * @param id 菜单编号
+     * @return 返回删除菜单条数
+     */
+    int delete (String id);
+
 }

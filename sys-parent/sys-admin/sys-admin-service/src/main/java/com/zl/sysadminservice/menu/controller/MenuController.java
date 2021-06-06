@@ -7,10 +7,7 @@ import com.zl.common.util.ResultUtil;
 import com.zl.domain.Menu;
 import com.zl.sysadminservice.menu.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,23 @@ public class MenuController {
     public ResultDto<List<Menu>> select(@RequestBody QueryCondition queryCondition) {
         List<Menu> menus = menuService.select(queryCondition);
         return ResultUtil.genenrate(menus, ErrDict.SUCCESS_QUERRY_CODE);
+    }
+
+    @PostMapping("/save")
+    public ResultDto<Integer> save(@RequestBody Menu menu){
+        int num = menuService.save(menu);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/update")
+    public ResultDto<Integer> update(@RequestBody Menu menu){
+        int num = menuService.update(menu);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/delete")
+    public ResultDto<Integer> delete(@RequestParam(value="id") String id){
+        int num = menuService.delete(id);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
     }
 }
