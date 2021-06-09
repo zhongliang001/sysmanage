@@ -41,6 +41,11 @@ public class Dict implements Serializable {
      */
     private String orderId;
 
+    /**
+     * 字典描述
+     */
+    private String dictDesc;
+
     public String getId() {
         return id;
     }
@@ -97,6 +102,15 @@ public class Dict implements Serializable {
         this.orderId = orderId;
     }
 
+
+    public String getDictDesc() {
+        return dictDesc;
+    }
+
+    public void setDictDesc(String dictDesc) {
+        this.dictDesc = dictDesc;
+    }
+
     @Override
     public String toString() {
         return "Dict{" +
@@ -107,6 +121,7 @@ public class Dict implements Serializable {
                 ", createTime='" + createTime + '\'' +
                 ", updateTime='" + updateTime + '\'' +
                 ", orderId='" + orderId + '\'' +
+                ", dictDesc='" + dictDesc + '\'' +
                 '}';
     }
 }

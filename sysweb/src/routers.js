@@ -3,7 +3,8 @@ import Register from './Register'
 import Welcome from "./Welcome";
 import Hi from "./pages/Hi";
 import Hi2 from "./pages/Hi2";
-import Menu from "./pages/Menu"
+import Menu from "./pages/Menu";
+import Dict from "./pages/Dict";
 
 let routes = [
     {
@@ -34,6 +35,10 @@ let routes = [
                 name: '菜单配置',
                 path: '/menu',
                 component: Menu
+            },{
+                name: '数据字典配置',
+                path: '/dict',
+                component: Dict
             }
         ]
     }

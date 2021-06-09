@@ -3,6 +3,7 @@ package com.zl.sysadminservice.dict.mapper;
 import com.zl.domain.Dict;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhongliang
@@ -23,4 +24,11 @@ public interface DictMapper {
      * @return 数据字典集合
      */
     List<String> selctSdictByType(String sdictType);
+
+    /**
+     * 查询数据字典分组列表
+     * @param condition 查询条件
+     * @return 数据字典集合
+     */
+    List<Dict> selectGroup(Map<String, Object> condition);
 }

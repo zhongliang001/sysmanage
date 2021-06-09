@@ -9,6 +9,7 @@
         <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
         <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="dict_desc" jdbcType="VARCHAR" property="dictDesc"/>
     </resultMap>
     <select id="selectSdict" resultMap="sdict" parameterType="com.zl.domain.Dict">
         select
@@ -18,7 +19,8 @@
         en_name,
         create_time,
         update_time,
-        order_id
+        order_id,
+        dict_desc
         from
         dict
         <where>
@@ -55,5 +57,16 @@
             </if>
         </where>
         group by dict_type
+    </select>
+
+    <select id="selectGroup" parameterType="java.util.Map" resultMap="sdict">
+        select dict_type, dict_desc from dict
+        <where>
+            <if test="dictType != null">
+                dict_type = #{dictType}
+            </if>
+        </where>
+        group by dict_type
+
     </select>
 </mapper>
