@@ -1,14 +1,13 @@
 package com.zl.sysadminservice.dict.controller;
 
+import com.zl.common.domain.QueryCondition;
 import com.zl.common.dto.ResultDto;
 import com.zl.common.error.ErrDict;
 import com.zl.common.util.ResultUtil;
 import com.zl.domain.Dict;
 import com.zl.sysadminservice.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,5 +41,11 @@ public class DictController {
             dictData.put(type, sdicts);
         }
         return ResultUtil.genenrate(dictData, ErrDict.SUCCESS_QUERRY_CODE);
+    }
+
+    @PostMapping("/selectGroup")
+    public ResultDto<List<Dict>> selectGroup(@RequestBody QueryCondition queryCondition){
+        List<Dict> dicts = dictService.selectGroup(queryCondition);
+        return ResultUtil.genenrate(dicts, ErrDict.SUCCESS_QUERRY_CODE);
     }
 }

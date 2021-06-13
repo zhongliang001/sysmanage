@@ -1,5 +1,6 @@
 package com.zl.sysadminservice.dict.service;
 
+import com.zl.common.domain.QueryCondition;
 import com.zl.domain.Dict;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +27,11 @@ public interface DictService {
      * @return 字典集合
      */
     List<String> selctSdictByType(String sdictType);
+
+    /**
+     * 查询数据字典分组列表
+     * @param queryCondition 查询条件
+     * @return 数据字典集合
+     */
+    List<Dict> selectGroup(QueryCondition queryCondition);
 }

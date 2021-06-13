@@ -9,6 +9,7 @@ create table dict
     en_name     varchar(64) comment '英文名',
     create_time varchar(20) comment '创建时间',
     update_time varchar(20) comment '修改时间',
+    dict_desc        varchar(60) comment '字典描述',
     order_id    char(2) comment '排序编号'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment '数据字典表';
