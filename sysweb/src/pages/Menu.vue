@@ -1,7 +1,7 @@
 <template>
     <div>
         <zl-page :viewPage="viewPage" page="query">
-            <zl-query-table column="2" re="menu" method="post" :url="url" :fileds="fileds" :titles="titles">
+            <zl-query-table ref="table" column="2" re="menu" method="post" :url="url" :fileds="fileds" :titles="titles">
                 <zl-button type="button" name="新增"  @click.native="add"></zl-button>
                 <zl-button type="button" name="修改"  @click.native="update"></zl-button>
                 <zl-button type="button" name="查看"  @click.native="view"></zl-button>
