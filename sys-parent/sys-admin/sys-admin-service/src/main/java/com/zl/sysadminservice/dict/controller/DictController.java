@@ -48,4 +48,10 @@ public class DictController {
         List<Dict> dicts = dictService.selectGroup(queryCondition);
         return ResultUtil.genenrate(dicts, ErrDict.SUCCESS_QUERRY_CODE);
     }
+
+    @PostMapping("/select")
+    public ResultDto<List<Dict>> select(@RequestBody QueryCondition queryCondition){
+        List<Dict> dicts = dictService.select(queryCondition);
+        return ResultUtil.genenrate(dicts, ErrDict.SUCCESS_QUERRY_CODE);
+    }
 }

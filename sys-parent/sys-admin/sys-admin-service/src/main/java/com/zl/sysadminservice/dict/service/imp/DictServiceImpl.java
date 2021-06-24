@@ -35,5 +35,12 @@ public class DictServiceImpl implements DictService {
         return dictMapper.selectGroup(queryCondition.getCondition());
     }
 
+    @Override
+    public List<Dict> select(QueryCondition queryCondition) {
+        PageHelper.startPage(queryCondition.getPageNum(), queryCondition.getPageSize());
+        return dictMapper.select(queryCondition.getCondition());
+    }
+
+
 
 }

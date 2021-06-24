@@ -34,4 +34,11 @@ public interface DictService {
      * @return 数据字典集合
      */
     List<Dict> selectGroup(QueryCondition queryCondition);
+
+    /**
+     * 查询数据字典
+     * @param queryCondition 查询条件
+     * @return 数据字典集合
+     */
+    List<Dict> select(QueryCondition queryCondition);
 }
