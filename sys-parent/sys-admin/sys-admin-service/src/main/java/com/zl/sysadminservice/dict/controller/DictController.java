@@ -43,9 +43,33 @@ public class DictController {
         return ResultUtil.genenrate(dictData, ErrDict.SUCCESS_QUERRY_CODE);
     }
 
-    @PostMapping("/selectGroup")
-    public ResultDto<List<Dict>> selectGroup(@RequestBody QueryCondition queryCondition){
-        List<Dict> dicts = dictService.selectGroup(queryCondition);
+    @PostMapping("/selectGroups")
+    public ResultDto<List<Dict>> selectGroups(@RequestBody QueryCondition queryCondition){
+        List<Dict> dicts = dictService.selectGroups(queryCondition);
         return ResultUtil.genenrate(dicts, ErrDict.SUCCESS_QUERRY_CODE);
+    }
+
+    @PostMapping("/selectGroup")
+    public ResultDto<List<Dict>> selectGroup(@RequestBody Map<String, Object> condition){
+        List<Dict> dicts = dictService.selectGroup(condition);
+        return ResultUtil.genenrate(dicts, ErrDict.SUCCESS_QUERRY_CODE);
+    }
+
+    @PostMapping("/select")
+    public ResultDto<List<Dict>> select(@RequestBody QueryCondition queryCondition){
+        List<Dict> dicts = dictService.select(queryCondition);
+        return ResultUtil.genenrate(dicts, ErrDict.SUCCESS_QUERRY_CODE);
+    }
+
+    @PostMapping("/save")
+    public ResultDto<Integer> save(@RequestBody Dict dict){
+        int num = dictService.save(dict);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/delDict")
+    public ResultDto<Integer> delDict(@RequestBody String id){
+        int num = dictService.delDict(id);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
     }
 }

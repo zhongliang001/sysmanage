@@ -1,7 +1,7 @@
 <template>
     <div style="height: 50%; width: 50%; margin:0 auto; top:20%; left: 20%; position: absolute; ">
         <h2>密码登录</h2>
-        <zl-form ref="login" column="1" :method="method" :url="url">
+        <zl-form ref="login" :column="1" :method="method" :url="url">
             <zl-item cstclass="user" type="text" field-name="用户名" name="username" required="true"/>
             <zl-item cstclass="password" type="password" field-name="密　码" name="password" required="true"/>
             <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" hidden="true"/>

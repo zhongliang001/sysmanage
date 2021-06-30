@@ -31,4 +31,25 @@ public interface DictMapper {
      * @return 数据字典集合
      */
     List<Dict> selectGroup(Map<String, Object> condition);
+
+    /**
+     * 查询数据字典
+     * @param condition 查询条件
+     * @return 数据字典集合
+     */
+    List<Dict> select(Map<String, Object> condition);
+
+    /**
+     * 新增数据字典
+     * @param dict 数据字典
+     * @return 新增数量
+     */
+    int save(Dict dict);
+
+    /**
+     * 删除数据字典
+     * @param id 数据字典id
+     * @return 删除数量
+     */
+    int delDict(String id);
 }
