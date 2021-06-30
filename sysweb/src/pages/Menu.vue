@@ -1,7 +1,7 @@
 <template>
     <div>
         <zl-page :viewPage="viewPage" page="query">
-            <zl-query-table ref="table" column="2" re="menu" method="post" :url="url" :fileds="fileds" :titles="titles">
+            <zl-query-table ref="table" :column="2" re="menu" method="post" :url="url" :fileds="fileds" :titles="titles">
                 <zl-button type="button" name="新增"  @click.native="add"></zl-button>
                 <zl-button type="button" name="修改"  @click.native="update"></zl-button>
                 <zl-button type="button" name="查看"  @click.native="view"></zl-button>
@@ -23,7 +23,7 @@
                 <zl-tree :tree="tree" :sel="sel"/>
             </span>
             <span style="width:80%;" >
-                <zl-form ref="addMenu" column="2" method="post" url="/menu/save">
+                <zl-form ref="addMenu" :column="2" method="post" url="/menu/save">
                     <zl-item type="text" field-name="父菜单编号" name="parentId"/>
                     <zl-item type="text" field-name="菜单名"  name="name"/>
                     <zl-item type="text" field-name="菜单路径" name="path"/>
@@ -36,7 +36,7 @@
             </span>
         </zl-page>
         <zl-page :viewPage="viewPage" page="update">
-            <zl-form ref="updateMenu" column="2" method="post" url="/menu/update">
+            <zl-form ref="updateMenu" :column="2" method="post" url="/menu/update">
                 <zl-item type="text" field-name="菜单编号" name="id"/>
                 <zl-item type="text" field-name="父菜单编号" name="parentId"/>
                 <zl-item type="text" field-name="菜单名"  name="name"/>
@@ -86,8 +86,10 @@
                 url : this.zlService.baseUrl +'/menu/select',
                 reqData:{},
                 viewPage: 'query',
-                tree: {},
-
+                sel: {
+                  data: {}
+                },
+                tree: {}
             }
         },
         watch: {

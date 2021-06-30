@@ -78,4 +78,13 @@
         </where>
         order by id desc
     </select>
+
+    <insert id="save" parameterType="com.zl.domain.Dict">
+        insert into dict (id,dict_type,cn_name,en_name,create_time,update_time,order_id,dict_desc )
+        values (#{id},#{dictType},#{cnName},#{enName},#{createTime},#{updateTime},#{orderId},#{dictDesc})
+    </insert>
+
+    <delete id="delDict" parameterType="java.lang.String">
+        delete from dict where id = #{id}
+    </delete>
 </mapper>
