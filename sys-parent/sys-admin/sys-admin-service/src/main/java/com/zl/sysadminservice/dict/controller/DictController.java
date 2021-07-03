@@ -68,8 +68,26 @@ public class DictController {
     }
 
     @PostMapping("/delDict")
-    public ResultDto<Integer> delDict(@RequestBody String id){
+    public ResultDto<Integer> delDict(@RequestParam(value="id")  String id){
         int num = dictService.delDict(id);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/delete")
+    public ResultDto<Integer> delete(@RequestParam(value="dictType") String dictType){
+        int num = dictService.delete(dictType);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/update")
+    public ResultDto<Integer> update(@RequestBody Dict dict){
+        int num = dictService.update(dict);
+        return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/updateDict")
+    public ResultDto<Integer> updateDict(@RequestBody Dict dict){
+        int num = dictService.updateDict(dict);
         return  ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
     }
 }

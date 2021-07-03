@@ -35,7 +35,7 @@ public class LoginController {
     @GetMapping("/user/oauth/token")
     public String token(ServerWebExchange exchange) {
         MultiValueMap<String, String> queryParams = exchange.getRequest().getQueryParams();
-        String result = restTemplate.postForObject("http://localhost:8084/oauth/token", queryParams, String.class);
+        String result = restTemplate.postForObject("http://localhost:8093/oauth/token", queryParams, String.class);
         if (result == null) {
             return "redirect:index.html";
         }
