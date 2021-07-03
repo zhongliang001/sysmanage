@@ -65,7 +65,7 @@ public class Oauth2Filter implements GlobalFilter, Ordered {
             MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
             queryParams.add("token", value);
             try {
-                String result = restTemplate.postForObject("http://localhost:8084/oauth/check_token", queryParams, String.class);
+                String result = restTemplate.postForObject("http://localhost:8093/oauth/check_token", queryParams, String.class);
                 logger.debug("检验的token 的结果：{}", result);
             } catch (HttpClientErrorException e) {
                 return Mono.defer(() -> {

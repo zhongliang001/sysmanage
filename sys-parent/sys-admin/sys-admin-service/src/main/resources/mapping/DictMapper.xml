@@ -80,11 +80,37 @@
     </select>
 
     <insert id="save" parameterType="com.zl.domain.Dict">
-        insert into dict (id,dict_type,cn_name,en_name,create_time,update_time,order_id,dict_desc )
-        values (#{id},#{dictType},#{cnName},#{enName},#{createTime},#{updateTime},#{orderId},#{dictDesc})
+        insert into dict (id, dict_type, cn_name, en_name, create_time, update_time, order_id, dict_desc)
+        values (#{id}, #{dictType}, #{cnName}, #{enName}, #{createTime}, #{updateTime}, #{orderId}, #{dictDesc})
     </insert>
 
     <delete id="delDict" parameterType="java.lang.String">
-        delete from dict where id = #{id}
+        delete
+        from dict
+        where id = #{id}
     </delete>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete
+        from dict
+        where dict_type = #{dictType}
+    </delete>
+
+    <update id="update" parameterType="com.zl.domain.Dict">
+        update dict
+        set dict_desc = #{dictDesc}
+        where dict_type = #{dictType}
+    </update>
+
+    <update id="updateDict" parameterType="com.zl.domain.Dict">
+        update dict
+        set dict_type=#{dictType},
+            cn_name=#{cnName},
+            en_name=#{enName},
+            create_time=#{createTime},
+            update_time=#{updateTime},
+            order_id=#{orderId},
+            dict_desc=#{dictDesc}
+        where id = #{id}
+    </update>
 </mapper>

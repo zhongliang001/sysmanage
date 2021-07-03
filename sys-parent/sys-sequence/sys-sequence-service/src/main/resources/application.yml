@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8095
 
 app:
   id: sys-sequence #apollo配置中心应用名

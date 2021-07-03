@@ -68,5 +68,18 @@ public class DictServiceImpl implements DictService {
         return dictMapper.delDict(id);
     }
 
+    @Override
+    public int delete(String dictType) {
+        return dictMapper.delete(dictType);
+    }
 
+    @Override
+    public int update(Dict dict) {
+        return dictMapper.update(dict);
+    }
+
+    @Override
+    public int updateDict(Dict dict) {
+        return dictMapper.updateDict(dict);
+    }
 }

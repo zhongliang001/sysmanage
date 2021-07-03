@@ -52,4 +52,25 @@ public interface DictMapper {
      * @return 删除数量
      */
     int delDict(String id);
+
+    /**
+     * 根据数据字典类型删除是数据字典
+     * @param dictType 数据字典类型
+     * @return 删除数量
+     */
+    int delete(String dictType);
+
+    /**
+     * 修改字典描述
+     * @param dict 字典
+     * @return 修改数量
+     */
+    int update(Dict dict);
+
+    /**
+     * 修改字典描述
+     * @param dict 字典
+     * @return 修改数量
+     */
+    int updateDict(Dict dict);
 }
