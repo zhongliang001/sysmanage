@@ -57,6 +57,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>sys-admin-service</finalName>
         <plugins>
             <!-- 这是spring boot devtool plugin -->
             <plugin>
@@ -67,6 +68,12 @@
                     <fork>true</fork>
                     <addResources>true</addResources>
                 </configuration>
+            </plugin>
+            <!--使用docker-maven-plugin插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
             </plugin>
         </plugins>
     </build>
