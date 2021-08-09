@@ -34,8 +34,8 @@ Docker: 打包镜像测试,一键运行
 在容器之后,我们的开发,测试环境都是高度一阵子  
 更高效的计算资源利用  
 Docker是内核级别的虚拟化,可以在一个物理机上可以运行很多的容器  
-####Docker 安装  
-#####基本组成  
+#### Docker 安装  
+##### 基本组成  
 镜像(Image)：  
 docker镜像就好比一个模板,可以通过这个模板来创建容器服务, tomcat镜像===>run==>tomcat容器  
 容器(container):  
@@ -46,7 +46,7 @@ Docker利用容器技术,独立运行一个或者多个应用,用过镜像来创
 仓库分为共有仓库和私有仓库  
 DockerHub (国外镜像)  
 
-#####Ubuntu安装步骤：		
+##### Ubuntu安装步骤：		
 1.卸载旧的Docker：   
 ```shell
 sudo apt-get remove docker docker-engine docker.io containerd runc
@@ -88,7 +88,7 @@ docker version
 service docker start
 ```
 9.测试安装是否成功：
-#####CentOs：
+##### CentOs：
 1.卸载旧的Docker：
 ```shell
 yum remove docker \
@@ -130,21 +130,21 @@ systemctl start docker
 docker run hello-world
 ```
 
-####Docker 命令
-#####帮助命令：
+#### Docker 命令
+##### 帮助命令：
 ```shell
 docker version	#显示docker版本信息
 docker info 	#显示docker的系统信息
 docker help 	#docker帮助
 ```
-#####镜像命令
+##### 镜像命令
 ```shell
 docker images 	#查看本地docker镜像
 docker search	#搜索
 docker pull		#下载 镜像名：tag
 docker rmi		#删除镜像  docker rmi -f ${docker image aq} 删除所有偶的
 ```
-#####容器命令
+##### 容器命令
 说明：我们有了镜像才能创建容器, linux, 下载一个centOS	
 ```shell
 docker run [可选参数] image 启动
@@ -166,7 +166,7 @@ docker start 		启动容器
 docker stop			停止容器
 docker restart 		重启容器
 ```
-#####常用命令
+##### 常用命令
 ```shell
 docker logs 		#查看日志命令
 docker top 			#查看进程
@@ -185,12 +185,12 @@ full-id
 docker rm $(docker ps -aqf ancestor=dfd0427ba95f) #删除指定镜像的容器
 docker rm $(docker ps -aqf ancestor=7b19f37e42a0)
 ```
-#####操作命令  
+##### 操作命令  
 Docker 镜像  
 ```shell
 docker commit
 ```
-####容器数据卷  
+#### 容器数据卷  
 容器数据共享技术,将容器数据挂载再linux,实现容器的持久化和同步操作  
 使用方法 -v 主机路径:容器目录：权限(ro:只读, rw：可读可写)  
 具名挂载和匿名挂载  
@@ -206,7 +206,7 @@ DockerFile
 docker build -f dockerfile[文件名] -t centos01 .
 docker build -f dockerfile -t centos01 .
 ```
-####DockerFile基础：  
+#### DockerFile基础：  
 1.每个关键字都必须是大写  
 2.执行顺序从上到下  
 3.#表示注释  
@@ -214,7 +214,7 @@ docker build -f dockerfile -t centos01 .
 dockerfile:构建文件,定义了一切步骤,源代码  
 dockerimages:通过Dockerfile构建生成镜像最终发布运行的产品。  
 dockercontainer:镜像运行起来的服务  
-#####指令：  
+##### 指令：  
 ```text
 FROM：指定基础镜像
 MAINTAINER:镜像作者 姓名+邮箱
@@ -229,13 +229,13 @@ ONBUILD:当构建一个被继承DockerFile这个时候回运行ONBUILD指令
 COPY:类似ADD,将我们的文件拷贝到镜像中
 ENV:构建是设置的环境变量
 ```
-#####提交阿里云
+##### 提交阿里云
 ```shell
 docker login --username=coolzhongliang@126.com registry.cn-hangzhou.aliyuncs.com
 docker tag 18e039ec614e registry.cn-hangzhou.aliyuncs.com/zldoc/zhongliang:1.0.0
 docker push registry.cn-hangzhou.aliyuncs.com/zldoc/zhongliang:1.0.0
 ```
-####Docker 网络资源
+#### Docker 网络资源
 ```shell
 docker network ls
 docker network create --driver bridge --subnet 192.168.0.0/16 --gateway 192.168.0.1 mynet
