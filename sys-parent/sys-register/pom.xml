@@ -30,10 +30,17 @@
     </dependencies>
 
     <build>
+        <finalName>sys-register</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--使用docker-maven-plugin插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
             </plugin>
         </plugins>
     </build>

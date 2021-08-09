@@ -8,7 +8,7 @@ spring:
 app:
   id: sys-admin #apollo配置中心应用名
 apollo:
-  meta: http://localhost:8080 #apollo地址
+  meta: http://192.168.59.1:8080 #apollo地址
   bootstrap:
     enabled: true #是否启用apollo, 不使用apollo 请剔除该包
     namespaces: application.yml
