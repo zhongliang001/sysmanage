@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <zl-page :viewPage="viewPage" page="query">
       <zl-query-table ref="dict" method="post" :fileds="fileds" :url="url" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add"></zl-button>
@@ -91,8 +91,8 @@ export default {
       fileds: [
         {
           type: 'text',
-          cnName: "数据字典描述",
-          name: "dictDesc"
+          cnName: "数据字典类型",
+          name:"dictType"
         }
       ],
       titles: [
@@ -164,7 +164,7 @@ export default {
               dictType: sel.dictType
             }
           },
-          success: function (response) {
+          success: function () {
             alert("删除成功")
             table.query()
             table.selNum = -1
@@ -178,6 +178,11 @@ export default {
     update: function () {
       let _this = this
       let table = _this.common.getComponent(this, 'dict')
+      if(JSON.stringify(table.selData)==='{}'){
+        alert("请选择一条记录");
+        debugger
+        return
+      }
       this.viewPage = 'update'
       let updateTable = _this.common.getComponent(this, 'updateTable')
       updateTable.setReqData( table.selData)
@@ -269,7 +274,7 @@ export default {
         url: this.addUrl,
         method: form.method,
         data: reqData,
-        success: function (response) {
+        success: function () {
           _this.toNextPage()
         },
         error: function (error) {
@@ -312,7 +317,7 @@ export default {
               id: sel.id
             }
           },
-          success: function (response) {
+          success: function () {
             alert("删除成功")
             nextPageTable.query()
             nextPageTable.selNum = -1

@@ -62,7 +62,7 @@
     <select id="selectGroup" parameterType="java.util.Map" resultMap="sdict">
         select dict_type, dict_desc from dict
         <where>
-            <if test="dictType != null">
+            <if test="dictType != null and dictType != ''">
                 dict_type = #{dictType}
             </if>
         </where>

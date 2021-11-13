@@ -5,6 +5,7 @@ import zolui from 'zolui'
 import VueRouter from "vue-router";
 import zlService from "./lib/zlservice";
 import routes from "./routers";
+import './scss/custom.scss'
 
 Vue.use(VueRouter);
 const originalPush = VueRouter.prototype.push
@@ -13,18 +14,18 @@ VueRouter.prototype.push = function push(location) {
 }
 
 // 根据list 生成 router
-function createRouter(r){
-    r.forEach(t =>{
-        if(t.filePath){
-            let component = () => import(`@/${t.filePath}`)
-            t.component = component
-            if(t.children && t.children.length > 0){
-                createRouter(t.children)
-            }
-        }
-    })
-    return r
-}
+// function createRouter(r){
+//     r.forEach(t =>{
+//         if(t.filePath){
+//             let component = () => import(`@/${t.filePath}`)
+//             t.component = component
+//             if(t.children && t.children.length > 0){
+//                 createRouter(t.children)
+//             }
+//         }
+//     })
+//     return r
+// }
 
 Vue.config.devtools = true
 Vue.use(zolui)
@@ -34,14 +35,7 @@ const router = new VueRouter({
     routes  // routes: routes 的简写
 })
 
-new Vue({
-    router,
-    render: h => h(App)
-}).$mount('#app')
-
-if (typeof (Vue) == "function") {
-    Vue.prototype.zlService = zlService
-}
+let ok = false;
 
 Vue.prototype.zlaxios.request({
     url: zlService.baseUrl + '/dict/dictTree',
@@ -50,11 +44,29 @@ Vue.prototype.zlaxios.request({
         if (dictData) {
             Vue.prototype.dictData = dictData
         }
+        ok = true
     },
-    failed: function (error) {
+    failed: function () {
         console.log("查询数据字典失败")
     }
 })
+
+let st = setInterval(inintData,500)
+
+function inintData (){
+    if(ok){
+        new Vue({
+            router,
+            render: h => h(App)
+        }).$mount('#app')
+
+        if (typeof (Vue) == "function") {
+            Vue.prototype.zlService = zlService
+        }
+        clearInterval(st)
+    }
+}
+
 
 
 
