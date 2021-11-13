@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.common.exceptions.UnauthorizedUserException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +25,9 @@ public class UserSecurityServiceImpl implements UserDetailsService {
         ResultDto<User> query = AdminFeign.query(username);
         User data = query.getData();
         UserDomain sd = new UserDomain();
+        if(data == null){
+            throw new UnauthorizedUserException("用户名或密码错误");
+        }
         sd.setUser(data);
         return sd;
     }
