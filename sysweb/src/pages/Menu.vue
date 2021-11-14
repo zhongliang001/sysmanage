@@ -16,34 +16,36 @@
                 <zl-item type="text" field-name="菜单路径" name="path"/>
                 <zl-item type="text" field-name="菜单文件" name="filePath"/>
             </zl-f-table>
-            <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
+            <div  class="d-grid gap-2 d-md-flex justify-content-md-center">
+              <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
+            </div>
         </zl-page>
         <zl-page :viewPage="viewPage" page="add">
-            <span style="display:block; float:left; width:150px;">
+            <div style="display:block; float:left; width:200px; height: 100%">
                 <zl-tree :tree="tree" :sel="sel"/>
-            </span>
-            <span style="width:80%;" >
+            </div>
+            <div style="width:80%;  float:left;" >
                 <zl-form ref="addMenu" :column="2" method="post" url="/menu/save">
                     <zl-item type="text" field-name="父菜单编号" name="parentId"/>
                     <zl-item type="text" field-name="菜单名"  name="name"/>
                     <zl-item type="text" field-name="菜单路径" name="path"/>
                     <zl-item type="text" field-name="菜单文件" name="filePath"/>
                 </zl-form>
-                 <div style="align-content: center; margin:0 auto;width:300px; ">
+                 <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                     <zl-button type="button" name="保存"  @click.native="save"></zl-button>
                     <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
                  </div>
-            </span>
+            </div>
         </zl-page>
         <zl-page :viewPage="viewPage" page="update">
             <zl-form ref="updateMenu" :column="2" method="post" url="/menu/update">
-                <zl-item type="text" field-name="菜单编号" name="id"/>
+                <zl-item type="text" field-name="菜单编号" name="id" readOnly="true" />
                 <zl-item type="text" field-name="父菜单编号" name="parentId"/>
                 <zl-item type="text" field-name="菜单名"  name="name"/>
                 <zl-item type="text" field-name="菜单路径" name="path"/>
                 <zl-item type="text" field-name="菜单文件" name="filePath"/>
             </zl-form>
-            <div style="align-content: center; margin:0 auto;width:300px; ">
+            <div  class="d-grid gap-2 d-md-flex justify-content-md-center">
                 <zl-button type="button" name="保存"  @click.native="updateData"></zl-button>
                 <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
             </div>
@@ -141,7 +143,7 @@
                     url: this.zlService.baseUrl + form.url,
                     method: form.method,
                     data: reqData,
-                    success: function (response) {
+                    success: function () {
                         _this.toBack()
                     },
                     error: function (error) {
@@ -157,7 +159,7 @@
                     url: this.zlService.baseUrl + form.url,
                     method: form.method,
                     data: reqData,
-                    success: function (response) {
+                    success: function () {
                         _this.toBack()
                     },
                     error: function (error) {
@@ -175,7 +177,7 @@
                             id:table.selData.id
                         }
                     },
-                    success: function (response) {
+                    success: function () {
                         alert("删除成功")
                         table.query()
                         table.selNum = -1

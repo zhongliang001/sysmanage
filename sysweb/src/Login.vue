@@ -39,7 +39,6 @@ export default {
   methods: {
     onclick: function () {
       let _this = this
-      debugger
       let form = _this.common.getComponent(this, 'login')
       if(form.checkAll()) {
         let reqData = form.reqData
@@ -81,5 +80,8 @@ export default {
   min-height: 300px;
   height: auto;
   left: 33%;
+}
+h4 {
+  color: #FFFFFF;
 }
 </style>

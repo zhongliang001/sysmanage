@@ -13,20 +13,6 @@ VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 }
 
-// 根据list 生成 router
-// function createRouter(r){
-//     r.forEach(t =>{
-//         if(t.filePath){
-//             let component = () => import(`@/${t.filePath}`)
-//             t.component = component
-//             if(t.children && t.children.length > 0){
-//                 createRouter(t.children)
-//             }
-//         }
-//     })
-//     return r
-// }
-
 Vue.config.devtools = true
 Vue.use(zolui)
 
