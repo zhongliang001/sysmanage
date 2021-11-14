@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/user/**").formLogin().usernameParameter("username").passwordParameter("password").loginPage("/user/login").successHandler(zlAuthenticationSuccessHandler).failureHandler(zlAuthenticationFailureHandler).and().authorizeRequests().antMatchers("/user/login").permitAll().antMatchers("/user/register").permitAll();
+        http.antMatcher("/oauth/**").formLogin().usernameParameter("username").passwordParameter("password").loginPage("/user/login").successHandler(zlAuthenticationSuccessHandler).failureHandler(zlAuthenticationFailureHandler).and().authorizeRequests().antMatchers("/user/login").permitAll().antMatchers("/user/register").permitAll();
         http.logout().permitAll();
         http.cors().and().csrf().ignoringAntMatchers("/user/**");
         http.logout().logoutUrl("/user/logout").permitAll();
