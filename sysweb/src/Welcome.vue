@@ -24,7 +24,7 @@
               url: _this.zlService.baseUrl + _this.url,
               method: _this.method,
               success: function (response) {
-                _this.menu = response.data[0].children
+                _this.menu = response.data
               },
               error: function (error) {
                 console.log(error)
