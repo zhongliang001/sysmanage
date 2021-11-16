@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zl.sysadminservice.role.mapper.RoleMapper">
+    <resultMap id="role" type="com.zl.domain.Role">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+    </resultMap>
+    
+    <select id="select" parameterType="java.util.Map" resultMap="role">
+        select id, name, remark from role
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" parameterType="com.zl.domain.Role">
+        insert into role (id, name,remark) values (#{id}, #{name},#{remark})
+    </insert>
+
+    <update id="update" parameterType="com.zl.domain.Role">
+        update role set name=#{name}, remark=#{remark} where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from role where id=#{id}
+    </delete>
+</mapper>

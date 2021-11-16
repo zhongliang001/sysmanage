@@ -3,7 +3,7 @@ package com.zl.syssequence.format;
 import com.zl.common.util.DateUtil;
 import com.zl.syssequence.service.SequenceService;
 
-import java.util.Date;
+import java.time.LocalDate;
 /**
  * @author zhongliang
  */
@@ -15,6 +15,6 @@ public class DateFormat implements FormatInterface {
      */
     @Override
     public String format(String format, SequenceService sequenceService) {
-        return DateUtil.format(new Date(), format);
+        return DateUtil.format(LocalDate.now(), format);
     }
 }

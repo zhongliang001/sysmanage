@@ -1,6 +1,6 @@
 package com.zl.syssequence.format;
 
-import com.zl.common.error.ErrDict;
+import com.zl.common.error.TradeCodeDict;
 import com.zl.common.exception.ZlException;
 import com.zl.syssequence.service.SequenceService;
 import org.springframework.util.StringUtils;
@@ -24,9 +24,9 @@ public class SequceFormat implements FormatInterface {
      */
     @Override
     public String format(String format,SequenceService sequenceService) {
-        String seq = "";
+        String seq;
         if(format == null){
-            throw new ZlException(ErrDict.SEQUENCE_NAME_NULL_CODE);
+            throw new ZlException(TradeCodeDict.SEQUENCE_NAME_NULL_CODE);
         }
         int i = format.indexOf("[");
         if (i == -1) {

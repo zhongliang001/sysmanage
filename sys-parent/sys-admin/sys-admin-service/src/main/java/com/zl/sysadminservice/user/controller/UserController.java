@@ -1,7 +1,7 @@
 package com.zl.sysadminservice.user.controller;
 
 import com.zl.common.dto.ResultDto;
-import com.zl.common.error.ErrDict;
+import com.zl.common.error.TradeCodeDict;
 import com.zl.common.util.MD5Util;
 import com.zl.common.util.ResultUtil;
 import com.zl.domain.User;
@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/login")
     public ResultDto<User> login(@RequestBody User user) {
         user = userService.selectForLogin(user);
-        return ResultUtil.genenrate(user, ErrDict.SUCCESS_QUERRY_CODE);
+        return ResultUtil.genenrate(user, TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 
     @PostMapping("/query")
@@ -36,13 +36,13 @@ public class UserController {
         User user = new User();
         user.setUsername(username);
         user = userService.selectForLogin(user);
-        return ResultUtil.genenrate(user, ErrDict.SUCCESS_QUERRY_CODE);
+        return ResultUtil.genenrate(user, TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 
     @PostMapping("/register")
     public ResultDto<Integer> register(@RequestBody User user) {
         int i = userService.addUser(user);
-        return ResultUtil.genenrate(i, ErrDict.SUCCESS_ADD_CODE);
+        return ResultUtil.genenrate(i, TradeCodeDict.SUCCESS_ADD_CODE);
     }
 
 }

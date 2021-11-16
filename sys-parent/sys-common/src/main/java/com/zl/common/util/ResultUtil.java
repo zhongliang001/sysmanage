@@ -2,7 +2,7 @@ package com.zl.common.util;
 
 import com.github.pagehelper.PageInfo;
 import com.zl.common.dto.ResultDto;
-import com.zl.common.error.ErrEnum;
+import com.zl.common.error.TradeCodeEnum;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class ResultUtil {
     }
 
     private static <T> void formatResponseInfo(ResultDto<T> resultDto, String errDict) {
-        for (ErrEnum s : ErrEnum.values()) {
+        for (TradeCodeEnum s : TradeCodeEnum.values()) {
             if (s.name().equals(errDict)) {
                 resultDto.setCode(s.getCode());
                 resultDto.setMsg(s.getMessage());

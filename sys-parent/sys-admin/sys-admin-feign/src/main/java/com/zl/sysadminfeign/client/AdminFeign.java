@@ -16,8 +16,8 @@ public interface AdminFeign {
 
     /**
      * 查询用户信息
-     * @param username
-     * @return
+     * @param username 用户名
+     * @return 返回用户
      */
     @PostMapping("/query")
     ResultDto<User> query(@RequestBody String username);

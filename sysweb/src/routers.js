@@ -5,6 +5,7 @@ import Hi from "./pages/Hi";
 import Hi2 from "./pages/Hi2";
 import Menu from "./pages/Menu";
 import Dict from "./pages/Dict";
+import Role from "./pages/Role";
 
 let routes = [
     {
@@ -39,6 +40,10 @@ let routes = [
                 name: '数据字典配置',
                 path: '/dict',
                 component: Dict
+            },{
+                name: '角色配置',
+                path: '/role',
+                component: Role
             }
         ]
     }

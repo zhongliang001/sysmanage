@@ -1,6 +1,6 @@
 package com.zl.sysadminservice.user.service.imp;
 
-import com.zl.common.error.ErrDict;
+import com.zl.common.error.TradeCodeDict;
 import com.zl.common.exception.ZlException;
 import com.zl.common.util.MD5Util;
 import com.zl.domain.User;
@@ -39,18 +39,7 @@ public class UserServiceImpl implements UserService {
     public User selectForLogin(User loginUser) {
         String username = loginUser.getUsername();
         String password = loginUser.getPassword();
-        User user = uerMapper.selectForLogin(username);
-//        if (user == null) {
-//            throw new ZlException(ErrDict.FAILED_LOGIN_FAILED);
-//        }
-//        String password1 = user.getPassword();
-//        String enPassword = MD5Util.encryption(password);
-//        if (enPassword.equals(password1)) {
-//            user.setPassword("");
-        return user;
-//        } else {
-//            throw new ZlException(ErrDict.FAILED_LOGIN_FAILED);
-//        }
+        return uerMapper.selectForLogin(username);
     }
 
     @Transactional(rollbackFor = ZlException.class)
@@ -66,7 +55,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             logger.info("新增失败：{}", e.getMessage());
             e.printStackTrace();
-            throw new ZlException(ErrDict.FAILED_ADD_CODE);
+            throw new ZlException(TradeCodeDict.FAILED_ADD_CODE);
         }
         return i;
     }

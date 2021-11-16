@@ -43,8 +43,16 @@ create table menu
     id        varchar(32) not null primary key comment '菜单id',
     name      varchar(64) comment '菜单名',
     path      varchar(256) comment '菜单路由',
-    component varchar(32) comment '菜单组件',
     parent_id varchar(32) comment '父菜单id',
     file_path varchar(32) comment '组件文件'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment '菜单表';
+
+create table role
+(
+    id varchar(10) not null primary key comment '角色id',
+    name varchar(20) comment '角色名',
+    remark varchar(100) comment '角色描述'
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8 comment '角色表';
+
