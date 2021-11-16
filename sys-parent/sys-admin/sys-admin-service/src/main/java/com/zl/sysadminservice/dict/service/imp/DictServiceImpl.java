@@ -11,7 +11,7 @@ import com.zl.sysadminservice.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -58,8 +58,8 @@ public class DictServiceImpl implements DictService {
     public int save(Dict dict) {
         ResultDto<String> ditId = sequenceFeign.getSequnces("DICT_TMP");
         dict.setId(ditId.getData());
-        dict.setCreateTime(DateUtil.format(new Date()));
-        dict.setUpdateTime(DateUtil.format(new Date()));
+        dict.setCreateTime(DateUtil.format(LocalDate.now()));
+        dict.setUpdateTime(DateUtil.format(LocalDate.now()));
         return dictMapper.save(dict);
     }
 

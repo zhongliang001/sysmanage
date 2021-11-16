@@ -3,7 +3,6 @@ package com.zl.common.dto;
 import java.io.Serializable;
 
 /**
- * @param <Data>
  * @author zhongliang
  * @version 1.0.1
  */

@@ -16,7 +16,9 @@ import java.util.UUID;
 @Component
 public class LogInterceptor implements HandlerInterceptor {
 
-    // 会话ID
+    /**
+     * 会话ID
+      */
     private final static String SESSION_ID = "sessionId";
 
     @Override
