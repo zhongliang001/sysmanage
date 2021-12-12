@@ -9,11 +9,14 @@ import com.zl.sys.sequence.feign.client.SequenceFeign;
 import com.zl.sysadminservice.dict.mapper.DictMapper;
 import com.zl.sysadminservice.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhongliang
@@ -27,9 +30,33 @@ public class DictServiceImpl implements DictService {
     @Autowired
     private SequenceFeign sequenceFeign;
 
+    @Autowired
+    public RedisTemplate<String, Object> redisTemplate;
+
     @Override
     public List<Dict> selectSdict(Dict sdict) {
         return dictMapper.selectSdict(sdict);
+    }
+
+    @Override
+    public Map<String, Map<String, String>> selectSdictTree(String sdictType) {
+        Map map = redisTemplate.boundHashOps("dictMap").entries();
+        if(map == null || map.isEmpty()){
+            List<String> sdictTypes = dictMapper.selctSdictByType(sdictType);
+            Map<String, Map<String, String>> dictData = new HashMap<>(16);
+            for (String type : sdictTypes) {
+                Dict sdict = new Dict();
+                sdict.setDictType(type);
+                List<Dict> sdicts = dictMapper.selectSdict(sdict);
+                Map<String, String> dictMap = sdicts.stream().collect(Collectors.toMap(Dict::getCnName, Dict::getEnName));
+                dictData.put(type, dictMap);
+            }
+            redisTemplate.boundHashOps("dictMap").putAll(dictData);
+            return dictData;
+        }else {
+            return map;
+        }
+
     }
 
     @Override
@@ -58,8 +85,8 @@ public class DictServiceImpl implements DictService {
     public int save(Dict dict) {
         ResultDto<String> ditId = sequenceFeign.getSequnces("DICT_TMP");
         dict.setId(ditId.getData());
-        dict.setCreateTime(DateUtil.format(LocalDate.now()));
-        dict.setUpdateTime(DateUtil.format(LocalDate.now()));
+        dict.setCreateTime(DateUtil.format(LocalDateTime.now()));
+        dict.setUpdateTime(DateUtil.format(LocalDateTime.now()));
         return dictMapper.save(dict);
     }
 
@@ -81,5 +108,10 @@ public class DictServiceImpl implements DictService {
     @Override
     public int updateDict(Dict dict) {
         return dictMapper.updateDict(dict);
+    }
+
+    @Override
+    public void clearRedisDict() {
+        redisTemplate.delete("dictMap");
     }
 }

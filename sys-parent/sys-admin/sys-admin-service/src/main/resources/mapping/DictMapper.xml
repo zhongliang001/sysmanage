@@ -52,7 +52,7 @@
         from
         dict
         <where>
-            <if test="dictType != null">
+            <if test="dictType != null and dictType != ''">
                 dict_type = #{dictType},
             </if>
         </where>

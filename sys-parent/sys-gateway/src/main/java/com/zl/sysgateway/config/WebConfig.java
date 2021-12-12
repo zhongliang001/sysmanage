@@ -35,7 +35,7 @@ public class WebConfig implements WebFluxConfigurer {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //1,允许任何来源
-        corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
+        corsConfiguration.setAllowedOrigins(Collections.singletonList("http://127.0.0.1"));
         //2,允许任何请求头
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
         //3,允许任何方法

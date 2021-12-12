@@ -6,6 +6,7 @@
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="删除" @click.native="del"></zl-button>
         <zl-button type="button" name="查看" @click.native="view"></zl-button>
+        <zl-button type="button" name="重载缓存" @click.native="reload"></zl-button>
       </zl-query-table>
     </zl-page>
     <zl-page :viewPage="viewPage" page="detail">
@@ -83,6 +84,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 export default {
   name: 'Dict',
   data: function () {
@@ -133,6 +135,7 @@ export default {
       delUrl: this.zlService.baseUrl + '/dict/delete',
       updateUrl: this.zlService.baseUrl + '/dict/update',
       updateDictUrl: this.zlService.baseUrl + '/dict/updateDict',
+      reloadUrl: this.zlService.baseUrl + '/dict/reloadRedisDict',
       reqData: {},
       reqData2: {},
       isShow: false
@@ -174,6 +177,20 @@ export default {
           }
         })
       }
+    },
+    reload:function (){
+      let _this = this
+      this.zlaxios.request({
+        url:_this.reloadUrl,
+        method: 'POST',
+        success: function (response) {
+          alert("重载数据字典缓存成功")
+          Vue.prototype.dictData = response.data
+        },
+        error: function (error) {
+          console.log(error)
+        }
+      })
     },
     update: function () {
       let _this = this
