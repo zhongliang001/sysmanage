@@ -9,7 +9,6 @@ import com.zl.sysadminservice.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,15 +30,8 @@ public class DictController {
     }
 
     @GetMapping("/dictTree")
-    public ResultDto<Map<String, List<Dict>>> selectSdictTree(String sdictType) {
-        List<String> sdictTypes = dictService.selctSdictByType(sdictType);
-        Map<String, List<Dict>> dictData = new HashMap<>(16);
-        for (String type : sdictTypes) {
-            Dict sdict = new Dict();
-            sdict.setDictType(type);
-            List<Dict> sdicts = dictService.selectSdict(sdict);
-            dictData.put(type, sdicts);
-        }
+    public ResultDto<Map<String, Map<String, String>>> selectSdictTree(String sdictType) {
+        Map<String, Map<String, String>> dictData = dictService.selectSdictTree(sdictType);
         return ResultUtil.genenrate(dictData, TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 
@@ -89,5 +81,12 @@ public class DictController {
     public ResultDto<Integer> updateDict(@RequestBody Dict dict){
         int num = dictService.updateDict(dict);
         return  ResultUtil.genenrate(num, TradeCodeDict.SUCCESS_ADD_CODE);
+    }
+
+    @PostMapping("/reloadRedisDict")
+    public ResultDto<Map<String, Map<String, String>>>  reloadRedisDict(){
+        dictService.clearRedisDict();
+        Map<String, Map<String, String>> dictData = dictService.selectSdictTree(null);
+        return  ResultUtil.genenrate(dictData,TradeCodeDict.SUCCESS_UPDATE_CODE);
     }
 }

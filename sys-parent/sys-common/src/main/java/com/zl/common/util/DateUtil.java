@@ -2,7 +2,7 @@ package com.zl.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -307,12 +307,12 @@ public class DateUtil {
         return sdf.parse(dateString);
     }
 
-    public static String format(LocalDate date){
+    public static String format(LocalDateTime time){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DEFALT_FORMAT);
-        return dtf.format(date);
+        return dtf.format(time);
     }
 
-    public static String format(LocalDate date, String format){
+    public static String format(LocalDateTime date, String format){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
         return dtf.format(date);
     }

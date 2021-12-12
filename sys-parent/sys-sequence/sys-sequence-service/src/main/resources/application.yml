@@ -35,6 +35,6 @@ spring:
 
 #logging:
 #  level:
-#    #    root: debug
+#    root: debug
 #    com.zl: debug
 

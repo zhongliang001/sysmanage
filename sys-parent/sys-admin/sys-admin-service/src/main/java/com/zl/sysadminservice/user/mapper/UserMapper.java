@@ -1,38 +1,22 @@
-package com.zl.sysadminservice.user.service;
+package com.zl.sysadminservice.user.mapper;
 
-import com.zl.common.domain.QueryCondition;
 import com.zl.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhongliang
  */
-
-public interface UserService {
+public interface UserMapper {
 
     /**
      * 根据用户名查询用户
      *
-     * @param user 用户
+     * @param username 用户名
      * @return 用户
      */
-    User selectForLogin(User user);
-
-    /**
-     * 注册用户
-     *
-     * @param user 用户
-     * @return 插入数据量
-     */
-    int register(User user);
-
-    /**
-     * 查询用户列表
-     * @param queryCondition 查询条件
-     * @return 查询用户列表
-     */
-    List<User> select(QueryCondition queryCondition);
+    User selectByUsername(String username);
 
     /**
      * 新增用户
@@ -41,6 +25,13 @@ public interface UserService {
      * @return 插入数据量
      */
     int add(User user);
+
+    /**
+     * 查询用户列表
+     * @param condtion 查询条件
+     * @return 查询用户列表
+     */
+    List<User> select(Map<String, Object> condtion);
 
     /**
      * 修改用户

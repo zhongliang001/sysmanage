@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zl.sysadminservice.user.mapper.UserMapper">
+    <resultMap id="user" type="com.zl.domain.User">
+        <id property="id" jdbcType="VARCHAR" column="id"/>
+        <result property="username" jdbcType="VARCHAR" column="username"/>
+        <result property="password" jdbcType="VARCHAR" column="password"/>
+        <result property="realName" jdbcType="VARCHAR" column="real_name"/>
+        <result property="sex" jdbcType="CHAR" column="sex"/>
+        <result property="phoneNo" jdbcType="VARCHAR" column="phone_no"/>
+        <result property="certType" jdbcType="VARCHAR" column="cert_type"/>
+        <result property="certNo" jdbcType="VARCHAR" column="cert_no"/>
+        <result property="birthday" jdbcType="VARCHAR" column="birthday"/>
+        <result property="lastLoginTime" jdbcType="VARCHAR" column="last_login_time"/>
+        <result property="errLoginTimes" jdbcType="INTEGER" column="err_login_times"/>
+        <result property="forbiddenLoginTime" jdbcType="VARCHAR" column="forbidden_login_time"/>
+        <result property="forbiddenLoginPeriod" jdbcType="INTEGER" column="forbidden_login_period"/>
+        <result property="forbiddenReason" jdbcType="VARCHAR" column="forbidden_reason"/>
+        <result property="lastModifyPwd" jdbcType="VARCHAR" column="last_modify_pwd"/>
+    </resultMap>
+
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="user">
+        select id,
+               username,
+               password,
+               phone_no,
+               real_name,
+               sex,
+               phone_no,
+               cert_type,
+               cert_no,
+               birthday,
+               last_login_time,
+               err_login_times,
+               forbidden_login_period,
+               forbidden_login_time,
+               forbidden_reason,
+               last_modify_pwd
+        from user
+        where username = #{username}
+        limit 1
+    </select>
+
+    <insert id="add" parameterType="com.zl.domain.User" >
+        insert into user (id,
+                          username,
+                          password,
+                          real_name,
+                          sex,
+                          phone_no,
+                          cert_type,
+                          cert_no,
+                          birthday,
+                          last_login_time,
+                          err_login_times,
+                          forbidden_login_time,
+                          forbidden_login_period,
+                          forbidden_reason,
+                          last_modify_pwd)
+        values (#{id},
+                #{username},
+                #{password},
+                #{realName},
+                #{sex},
+                #{phoneNo},
+                #{certType},
+                #{certNo},
+                #{birthday},
+                #{lastLoginTime},
+                #{errLoginTimes},
+                #{forbiddenLoginTime},
+                #{forbiddenLoginPeriod},
+                #{forbiddenReason},
+                #{lastModifyPwd})
+    </insert>
+
+    <select id="select" parameterType="java.util.Map" resultMap="user">
+        select id,
+               username,
+               phone_no,
+               real_name,
+               sex,
+               phone_no,
+               cert_type,
+               cert_no,
+               birthday,
+               last_login_time,
+               err_login_times,
+               forbidden_login_period,
+               forbidden_login_time,
+               forbidden_reason,
+               last_modify_pwd
+        from
+             user
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+               and username = #{username}
+            </if>
+            <if test="certType != null and certType != ''">
+                and cert_type = #{certType}
+            </if>
+            <if test="certNo != null and certNo != ''">
+                and cert_no = #{certNo}
+            </if>
+        </where>
+    </select>
+    <update id="update" parameterType="com.zl.domain.User" >
+        update user set
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="realName != null and realName != ''">
+            real_name = #{realName},
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex},
+        </if>
+        <if test="phoneNo != null and phoneNo != ''">
+            phone_no = #{phoneNo},
+        </if>
+        <if test="certType != null and certType != ''">
+            cert_type = #{certType},
+        </if>
+        <if test="certNo != null and certNo != ''">
+            cert_no = #{certNo},
+        </if>
+        <if test="birthday != null and birthday != ''">
+            birthday = #{birthday},
+        </if>
+        <if test="lastLoginTime != null and lastLoginTime != ''">
+            last_login_time = #{lastLoginTime},
+        </if>
+        <if test="errLoginTimes != null and errLoginTimes != ''">
+            err_login_times = #{errLoginTimes},
+        </if>
+        <if test="forbiddenLoginTime != null and forbiddenLoginTime != ''">
+            forbidden_login_time = #{forbiddenLoginTime},
+        </if>
+        <if test="forbiddenLoginPeriod != null and forbiddenLoginPeriod != ''">
+            forbidden_login_period = #{forbiddenLoginPeriod},
+        </if>
+        <if test="forbiddenReason != null and forbiddenReason != ''">
+            forbidden_reason = #{forbiddenReason},
+        </if>
+        <if test="lastModifyPwd != null and lastModifyPwd != ''">
+            last_modify_pwd = #{lastModifyPwd}
+        </if>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from user
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+</mapper>
