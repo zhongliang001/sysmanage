@@ -3,13 +3,13 @@ package com.zl.sysadminservice.dict.service.imp;
 import com.github.pagehelper.PageHelper;
 import com.zl.common.domain.QueryCondition;
 import com.zl.common.dto.ResultDto;
+import com.zl.common.service.RedisService;
 import com.zl.common.util.DateUtil;
 import com.zl.domain.Dict;
 import com.zl.sys.sequence.feign.client.SequenceFeign;
 import com.zl.sysadminservice.dict.mapper.DictMapper;
 import com.zl.sysadminservice.dict.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ public class DictServiceImpl implements DictService {
     private SequenceFeign sequenceFeign;
 
     @Autowired
-    public RedisTemplate<String, Object> redisTemplate;
+    public RedisService redisService;
 
     @Override
     public List<Dict> selectSdict(Dict sdict) {
@@ -39,8 +39,9 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
+    @SuppressWarnings(value={"unchecked", "rawtypes"})
     public Map<String, Map<String, String>> selectSdictTree(String sdictType) {
-        Map map = redisTemplate.boundHashOps("dictMap").entries();
+        Map map = redisService.getEntries("dictMap");
         if(map == null || map.isEmpty()){
             List<String> sdictTypes = dictMapper.selctSdictByType(sdictType);
             Map<String, Map<String, String>> dictData = new HashMap<>(16);
@@ -51,7 +52,7 @@ public class DictServiceImpl implements DictService {
                 Map<String, String> dictMap = sdicts.stream().collect(Collectors.toMap(Dict::getCnName, Dict::getEnName));
                 dictData.put(type, dictMap);
             }
-            redisTemplate.boundHashOps("dictMap").putAll(dictData);
+            redisService.putAll("dictMap",dictData);
             return dictData;
         }else {
             return map;
@@ -112,6 +113,6 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public void clearRedisDict() {
-        redisTemplate.delete("dictMap");
+        redisService.delete("dictMap");
     }
 }
