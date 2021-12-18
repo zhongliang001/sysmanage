@@ -9,7 +9,7 @@ import com.zl.syssequence.template.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class TemplateServiceImpl implements TemplateService {
     public int add(Template template) {
         User user = HttpRequestUtil.getRequestUser();
         template.setCreateUser(user.getUsername());
-        template.setCreateTime(DateUtil.format(new Date()));
+        template.setCreateTime(DateUtil.format(LocalDateTime.now()));
         return templateMapper.add(template);
     }
 }

@@ -51,7 +51,7 @@ public class Dict implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getDictType() {
@@ -59,7 +59,7 @@ public class Dict implements Serializable {
     }
 
     public void setDictType(String dictType) {
-        this.dictType = dictType;
+        this.dictType = dictType == null ? null : dictType.trim();
     }
 
     public String getCnName() {
@@ -67,7 +67,7 @@ public class Dict implements Serializable {
     }
 
     public void setCnName(String cnName) {
-        this.cnName = cnName;
+        this.cnName = cnName == null ? null : cnName.trim();
     }
 
     public String getEnName() {
@@ -75,7 +75,7 @@ public class Dict implements Serializable {
     }
 
     public void setEnName(String enName) {
-        this.enName = enName;
+        this.enName = enName == null ? null : enName.trim();
     }
 
     public String getCreateTime() {
@@ -83,7 +83,7 @@ public class Dict implements Serializable {
     }
 
     public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+        this.createTime = createTime == null ? null : createTime.trim();
     }
 
     public String getUpdateTime() {
@@ -91,7 +91,7 @@ public class Dict implements Serializable {
     }
 
     public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+        this.updateTime = updateTime == null ? null : updateTime.trim();
     }
 
     public String getOrderId() {
@@ -99,16 +99,15 @@ public class Dict implements Serializable {
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId;
+        this.orderId = orderId == null ? null : orderId.trim();
     }
-
 
     public String getDictDesc() {
         return dictDesc;
     }
 
     public void setDictDesc(String dictDesc) {
-        this.dictDesc = dictDesc;
+        this.dictDesc = dictDesc == null ? null : dictDesc.trim();
     }
 
     @Override

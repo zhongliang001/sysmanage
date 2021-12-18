@@ -18,11 +18,11 @@ import org.springframework.stereotype.Component;
 public class UserSecurityServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AdminFeign AdminFeign;
+    private AdminFeign adminFeign;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ResultDto<User> query = AdminFeign.query(username);
+        ResultDto<User> query = adminFeign.query(username);
         User data = query.getData();
         UserDomain sd = new UserDomain();
         if(data == null){
