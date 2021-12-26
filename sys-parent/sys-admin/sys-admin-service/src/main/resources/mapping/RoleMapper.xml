@@ -30,4 +30,11 @@
     <delete id="delete" parameterType="java.lang.String">
         delete from role where id=#{id}
     </delete>
+
+    <select id="selectUnchoose" parameterType="java.lang.String" resultMap="role">
+        select * from role where id not in (select role_id from user_role where user_id = #{userId} )
+    </select>
+    <select id="selectChoose" parameterType="java.lang.String" resultMap="role">
+        select * from role where id in (select role_id from user_role where user_id = #{userId} )
+    </select>
 </mapper>

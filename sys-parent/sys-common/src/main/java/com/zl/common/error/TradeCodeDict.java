@@ -30,4 +30,6 @@ public class TradeCodeDict {
     public static final String NO_TEMPLATE_CODE = "NO_TEMPLATE_CODE";
 
     public static final String SEQUENCE_NAME_NULL_CODE = "SEQUENCE_NAME_NULL_CODE";
+
+    public static final String ERROR_DATA = "SEQUENCE_NAME_NULL_CODE";
 }
