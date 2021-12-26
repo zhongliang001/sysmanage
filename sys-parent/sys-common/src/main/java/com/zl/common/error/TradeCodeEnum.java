@@ -21,6 +21,8 @@ public enum TradeCodeEnum {
     FAILED_DELTE_CODE("900003", "删除失败"),
     // 重复新增
     FAILED_ADD_DUP_CODE("900004", "新增数据已经存在"),
+    //传递参数有误
+    ERROR_DATA("900000", "传递参数有误"),
     // 查询失败
     FAILED_QUERRY_CODE("999999", "查询失败"),
     // 登录失败

@@ -7,10 +7,12 @@ import com.zl.common.util.ResultUtil;
 import com.zl.domain.Role;
 import com.zl.sysadminservice.role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *  角色控制类
@@ -65,5 +67,18 @@ public class RoleController {
     @PostMapping("/delete")
     public ResultDto<Integer> delete(@RequestParam(value="id") String id){
         return ResultUtil.genenrate(roleService.delete(id),  TradeCodeDict.SUCCESS_DELETE_CODE);
+    }
+
+    /**
+     *  查询用户已有的角色，以及未拥有的角色
+     * @param userId 用户id
+     * @return {
+     *     chooesedData:[{name:'',value:''}],
+     *     unchooesedData:[{name:'',value:''}]
+     * }
+     */
+    @PostMapping("/queryRoleForChoose")
+    public ResultDto<Map<String, List<Map<String,String>>>> queryRoleForChoose(@Param("userId") String userId) {
+        return ResultUtil.genenrate(roleService.queryRoleForChoose(userId),  TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 }

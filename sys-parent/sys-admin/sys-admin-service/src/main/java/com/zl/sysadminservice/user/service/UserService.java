@@ -2,6 +2,7 @@ package com.zl.sysadminservice.user.service;
 
 import com.zl.common.domain.QueryCondition;
 import com.zl.domain.User;
+import com.zl.dto.UserRoleDto;
 
 import java.util.List;
 
@@ -55,4 +56,5 @@ public interface UserService {
      * @return 返回删除条数
      */
     int delete(String id);
+
 }

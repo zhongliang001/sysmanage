@@ -6,6 +6,7 @@
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="删除" @click.native="del"></zl-button>
         <zl-button type="button" name="查看" @click.native="view"></zl-button>
+        <zl-button type="button" name="配置角色" @click.native="toConfig"></zl-button>
       </zl-query-table>
     </zl-page>
     <zl-page :viewPage="viewPage" page="add">
@@ -46,6 +47,16 @@
         <zl-item type="text" name="phoneNo" field-name="手机号码"/>
       </zl-f-table>
       <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
+      </div>
+    </zl-page>
+    <zl-page :viewPage="viewPage" page="config">
+      <zl-form  ref="configTable"  :url="updateUrl" method="post">
+        <zl-item type="text" name="id" field-name="用户id" hidden="true"></zl-item>
+        <zl-choose slot="choose" :chooesedData="chooesedData" :unchooesedData="unchooesedData"></zl-choose>
+      </zl-form>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <zl-button type="button" name="保存" @click.native="configRole"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
@@ -107,7 +118,11 @@ export default {
       addUrl: this.zlService.baseUrl + '/user/add',
       updateUrl: this.zlService.baseUrl + '/user/update',
       deleteUrl: this.zlService.baseUrl + '/user/delete',
-      reqData: {}
+      chooseUrl: this.zlService.baseUrl+'/role/queryRoleForChoose',
+      configUrl: this.zlService.baseUrl+'/userrole/config',
+      reqData: {},
+      unchooesedData:[],
+      chooesedData:[]
     }
   },
   methods:{
@@ -167,7 +182,6 @@ export default {
       let table = _this.common.getComponent(this, 'table')
       if(JSON.stringify(table.selData)==='{}'){
         alert("请选择一条记录");
-        debugger
         return
       }
       let sel = table.selData
@@ -201,6 +215,54 @@ export default {
       let table = _this.common.getComponent(this, 'table')
       table.query()
       table.selNum = -1
+    },
+    toConfig: function (){
+      debugger
+      let _this = this
+      let table = _this.common.getComponent(this, 'table')
+      this.reqData  = table.selData
+      if(JSON.stringify(table.selData)==='{}'){
+        alert("请选择一条记录");
+        return
+      }
+      let configTable = _this.common.getComponent(this, 'configTable')
+      configTable.setReqData( table.selData)
+      let sel = table.selData
+      this.viewPage = 'config'
+      this.zlaxios.request({
+        url:_this.chooseUrl,
+        method: 'POST',
+        config:{
+          params:{
+            userId: sel.id
+          }
+        },
+        success: function (response) {
+          debugger
+          _this.chooesedData = response.data.chooesedData
+          _this.unchooesedData = response.data.unchooesedData
+        },
+        error: function (error) {
+          console.log(error)
+        }
+      })
+    },
+    configRole: function (){
+      let _this = this
+      let form = _this.common.getComponent(this,'configTable')
+      let reqData = form.reqData
+      reqData.list = this.chooesedData
+      this.zlaxios.request({
+        url:_this.configUrl,
+        method: 'POST',
+        data: reqData,
+        success: function () {
+          alert("新增成功")
+        },
+        error: function (error) {
+          console.log(error)
+        }
+      })
     }
 
   }
