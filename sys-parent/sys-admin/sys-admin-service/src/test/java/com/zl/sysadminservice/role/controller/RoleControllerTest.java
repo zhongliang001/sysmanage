@@ -176,4 +176,19 @@ public class RoleControllerTest {
         String body = result.getResponse().getContentAsString();
         logger.info("获取到返回数据：{}",body);
     }
+
+    @Test
+    @Rollback(false)
+    public void queryRoleForChoose()  throws Exception{
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                .post("/role/queryRoleForChoose").contentType(MediaType.APPLICATION_JSON_VALUE).param("userId","zhong")
+                // 设置返回值类型为utf-8，否则默认为ISO-8859-1
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").exists())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+        String body = result.getResponse().getContentAsString();
+        logger.info("获取到返回数据：{}",body);
+    }
 }

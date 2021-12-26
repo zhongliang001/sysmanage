@@ -56,7 +56,7 @@ create table role
 )ENGINE = InnoDB
  DEFAULT CHARSET = utf8 comment '角色表';
 
-create table uer_role(
+create table user_role(
     id varchar(10) not null primary key comment 'id',
     role_id varchar(10) comment '角色id',
     user_id varchar(10) comment '用户id'

@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * RoleService的实现类
@@ -114,5 +115,27 @@ public class RoleServiceImpl implements RoleService {
             throw new ZlException(TradeCodeDict.FAILED_DELETE_CODE);
         }
 
+    }
+
+    @Override
+    public Map<String, List<Map<String,String>>> queryRoleForChoose(String userId){
+        Map<String, List<Map<String,String>>> map = new HashMap<>();
+        List<Role> choosedRoles = roleMapper.selectChoose(userId);
+        List<Map<String,String>> choosedList =   choosedRoles.stream().map(t->{
+            Map<String,String> m = new HashMap<>();
+            m.put("name", t.getName());
+            m.put("value", t.getId());
+            return m;
+        }).collect(Collectors.toList());
+        List<Role> unChoosedRoles = roleMapper.selectUnchoose(userId);
+        List<Map<String,String>> unChoosedList =  unChoosedRoles.stream().map(t->{
+            Map<String,String> m = new HashMap<>();
+            m.put("name", t.getName());
+            m.put("value", t.getId());
+            return m;
+        }).collect(Collectors.toList());
+        map.put("chooesedData", choosedList);
+        map.put("unchooesedData", unChoosedList);
+        return map;
     }
 }

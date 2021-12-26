@@ -1,6 +1,7 @@
 package com.zl.sysadminservice.role.mapper;
 
 import com.zl.domain.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +39,18 @@ public interface RoleMapper {
      * @return 删除条数
      */
     int delete(String id);
+
+    /**
+     * 根据用户id查询用户未选择的角色
+     * @param userId 用户id
+     * @return 角色集合
+     */
+    List<Role>selectUnchoose(@Param("userId") String userId);
+
+    /**
+     * 根据用户id查询用户已经选择的角色
+     * @param userId 用户id
+     * @return 角色集合
+     */
+    List<Role>selectChoose(@Param("userId") String userId);
 }
