@@ -63,3 +63,10 @@ create table user_role(
 )ENGINE = InnoDB
  DEFAULT CHARSET = utf8 comment '用户角色表';
 
+create table action (
+                        id varchar(10) not null primary key comment '操作id',
+                        name varchar(20) comment '操作名称',
+                        oper varchar(20) comment '操作',
+                        menu_id varchar(32) comment '菜单id'
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8 comment '操作表'
