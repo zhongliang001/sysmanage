@@ -35,6 +35,7 @@
                     <zl-button type="button" name="保存"  @click.native="save"></zl-button>
                     <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
                  </div>
+                 <Action></Action>
             </div>
         </zl-page>
         <zl-page :viewPage="viewPage" page="update">
@@ -54,8 +55,11 @@
 </template>
 
 <script>
+  import Action from "./Action";
     export default {
         name: "Menu",
+      components: {Action},
+      comments:{Action},
         data:function () {
             return {
                 fileds:[{
