@@ -16,7 +16,7 @@
                 <zl-item type="text" field-name="菜单路径" name="path"/>
                 <zl-item type="text" field-name="菜单文件" name="filePath"/>
             </zl-f-table>
-            <div  class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <div  class="form-buttons">
               <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
             </div>
         </zl-page>
@@ -31,7 +31,7 @@
                     <zl-item type="text" field-name="菜单路径" name="path"/>
                     <zl-item type="text" field-name="菜单文件" name="filePath"/>
                 </zl-form>
-                 <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                 <div class="form-buttons">
                     <zl-button type="button" name="保存"  @click.native="save"></zl-button>
                     <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
                  </div>
@@ -46,7 +46,7 @@
                 <zl-item type="text" field-name="菜单路径" name="path"/>
                 <zl-item type="text" field-name="菜单文件" name="filePath"/>
             </zl-form>
-            <div  class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <div  class="form-buttons">
                 <zl-button type="button" name="保存"  @click.native="updateData"></zl-button>
                 <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
             </div>
@@ -66,6 +66,14 @@
                     type: "text",
                     cnName: "菜单名",
                     name: "name"
+                },{
+                  type: "text",
+                  cnName: "菜单编号",
+                  name: "id"
+                },{
+                  type: "text",
+                  cnName: "菜单路径",
+                  name: "path"
                 }],
                 titles:[
                     {
