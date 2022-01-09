@@ -1,7 +1,9 @@
 <template>
     <main style="height:1024px">
       <zl-menu :menu="menu"></zl-menu>
+      <div class="main">
         <router-view></router-view>
+      </div>
     </main>
 
 
