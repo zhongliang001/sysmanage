@@ -18,7 +18,7 @@
         <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" required="true"/>
         <zl-item type="text" name="phoneNo" field-name="手机号码" required="true"/>
       </zl-form>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <div  class="form-buttons">
         <zl-button  type="submit" @click.native="save" name="保存"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
@@ -32,7 +32,7 @@
         <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" required="true"/>
         <zl-item type="text" name="phoneNo" field-name="手机号码" required="true"/>
       </zl-form>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <div  class="form-buttons">
         <zl-button  type="submit" @click.native="saveUpdate" name="保存"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
@@ -46,7 +46,7 @@
         <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" />
         <zl-item type="text" name="phoneNo" field-name="手机号码"/>
       </zl-f-table>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <div  class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
@@ -55,7 +55,7 @@
         <zl-item type="text" name="id" field-name="用户id" hidden="true"></zl-item>
         <zl-choose slot="choose" :chooesedData="chooesedData" :unchooesedData="unchooesedData"></zl-choose>
       </zl-form>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <div  class="clear form-buttons">
         <zl-button type="button" name="保存" @click.native="configRole"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
@@ -152,7 +152,6 @@ export default {
       let table = _this.common.getComponent(this, 'table')
       if(JSON.stringify(table.selData)==='{}'){
         alert("请选择一条记录");
-        debugger
         return
       }
       this.viewPage = 'update'
@@ -217,7 +216,6 @@ export default {
       table.selNum = -1
     },
     toConfig: function (){
-      debugger
       let _this = this
       let table = _this.common.getComponent(this, 'table')
       this.reqData  = table.selData
@@ -238,7 +236,6 @@ export default {
           }
         },
         success: function (response) {
-          debugger
           _this.chooesedData = response.data.chooesedData
           _this.unchooesedData = response.data.unchooesedData
         },

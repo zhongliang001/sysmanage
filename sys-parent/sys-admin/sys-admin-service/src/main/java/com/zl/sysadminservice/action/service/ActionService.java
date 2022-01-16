@@ -1,13 +1,16 @@
-package com.zl.sysadminservice.action.mapper;
+package com.zl.sysadminservice.action.service;
 
+import com.zl.common.domain.QueryCondition;
 import com.zl.domain.Action;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author zhongliang
  */
-public interface ActionMapper {
+@Service
+public interface ActionService {
 
     /**
      * 根据主键删除
@@ -45,8 +48,8 @@ public interface ActionMapper {
 
     /**
      * 根据查询条件查询操作
-     * @param map 查询条件
+     * @param queryCondition 查询条件
      * @return 查询记录
      */
-    List<Action> select(Map<String, Object> map);
+    List<Action> select(QueryCondition queryCondition);
 }
