@@ -35,6 +35,13 @@ public class Action implements Serializable {
      */
     private String menuId;
 
+    /**
+     * Column: menu_name
+     * Type: VARCHAR(64)
+     * Remark: 菜单name
+     */
+    private String menuName;
+
     public String getId() {
         return id;
     }
@@ -65,5 +72,13 @@ public class Action implements Serializable {
 
     public void setMenuId(String menuId) {
         this.menuId = menuId == null ? null : menuId.trim();
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 }

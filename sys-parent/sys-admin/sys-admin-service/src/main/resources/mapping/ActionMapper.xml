@@ -1,40 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.sysadminservice.action.mapper.ActionMapper">
-  <resultMap id="BaseResultMap" type="com.zl.domain.Action">
+  <resultMap id="action" type="com.zl.domain.Action">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
     <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
   </resultMap>
+
+  <select id="select" parameterType="java.util.Map" resultMap="action">
+    select id, name, oper, menu_id, menu_name from action
+    <where>
+      <if test="id != null and id !=''">
+        id= #{id}
+      </if>
+      <if test="name != null and name !=''">
+        and name= #{name}
+      </if>
+      <if test="oper != null and oper !=''">
+        and oper= #{oper}
+      </if>
+      <if test="menuId != null and menuId !=''">
+        and menu_id= #{menuId}
+      </if>
+      <if test="menuName != null and menuName !=''">
+        and menu_name= #{menuName}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from action
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zl.domain.Action">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into action (`name`, oper, menu_id
+    insert into action (`id`,`name`, oper, menu_id, menu_name
       )
-    values (#{name,jdbcType=VARCHAR}, #{oper,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}
+    values (#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR}, #{oper,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zl.domain.Action">
     update action
     set `name` = #{name,jdbcType=VARCHAR},
       oper = #{oper,jdbcType=VARCHAR},
-      menu_id = #{menuId,jdbcType=VARCHAR}
+      menu_id = #{menuId,jdbcType=VARCHAR},
+      menu_name= #{menuName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, `name`, oper, menu_id
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="action">
+    select id, `name`, oper, menu_id, menu_name
     from action
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, `name`, oper, menu_id
+  <select id="selectAll" resultMap="action">
+    select id, `name`, oper, menu_id, menu_name
     from action
   </select>
 </mapper>
