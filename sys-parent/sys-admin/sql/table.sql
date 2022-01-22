@@ -73,4 +73,12 @@ create table action
     menu_name varchar(64) comment '菜单名'
 
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 comment '操作表'
+  DEFAULT CHARSET = utf8 comment '操作表';
+
+create table role_right
+(
+    id      varchar(10) not null primary key comment '角色权限id',
+    role_id varchar(10) comment '角色id',
+    action_id   varchar(10) comment '操作id'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 comment '角色权限表';

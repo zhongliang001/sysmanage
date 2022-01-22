@@ -2,6 +2,7 @@ package com.zl.sysadminservice.menu.service;
 
 import com.zl.common.domain.QueryCondition;
 import com.zl.domain.Menu;
+import com.zl.dto.MenuRightDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,5 +48,12 @@ public interface MenuService {
      * @return 返回删除菜单条数
      */
     int delete (String id);
+
+    /**
+     * 根据角色查询角色的菜单权限
+     * @param queryCondition 查询条件呢
+     * @return 菜单权限
+     */
+    List<MenuRightDto> selectByRole(QueryCondition queryCondition);
 
 }

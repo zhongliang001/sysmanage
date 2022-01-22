@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.sysadminservice.action.mapper.ActionMapper">
   <resultMap id="action" type="com.zl.domain.Action">
-    <!-- @mbg.generated: generated automatically, do not modify! -->
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="oper" jdbcType="VARCHAR" property="oper" />
@@ -58,4 +57,21 @@
     select id, `name`, oper, menu_id, menu_name
     from action
   </select>
+
+  <select id="selectByMenuId" resultMap="action">
+    select id, `name`, oper, menu_id, menu_name
+    from action
+    where menu_id = #{menuId}
+  </select>
+
+  <resultMap id="actionDto" type="com.zl.dto.ActionDto" extends="action">
+    <result column="is_has_right" jdbcType="BOOLEAN" property="isHasRight" />
+  </resultMap>
+  <!-- 根据用户角色查询用户权限 -->
+  <select id="selectByRole" resultMap="actionDto" parameterType="java.util.Map">
+    select a.id, a.`name`, a.oper, a.menu_id, a.menu_name, if((select 1 from role_right r where r.action_id = a.id and r.role_id = #{roleId}) is null, 0, 1) is_has_right
+    from action a
+    where a.menu_id = #{menuId}
+  </select>
+
 </mapper>

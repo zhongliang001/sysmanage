@@ -52,4 +52,5 @@ public interface ActionService {
      * @return 查询记录
      */
     List<Action> select(QueryCondition queryCondition);
+
 }

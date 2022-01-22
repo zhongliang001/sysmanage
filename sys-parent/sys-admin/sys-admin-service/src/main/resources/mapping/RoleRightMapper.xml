@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zl.sysadminservice.roleright.mapper.RoleRightMapper">
+  <resultMap id="roleRight" type="com.zl.domain.RoleRight">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="action_id" jdbcType="VARCHAR" property="actionId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from role_right
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zl.domain.RoleRight">
+    insert into role_right (id,role_id, action_id)
+    values (#{id,jdbcType=VARCHAR},#{roleId,jdbcType=VARCHAR}, #{actionId,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zl.domain.RoleRight">
+    update role_right
+    set role_id = #{roleId,jdbcType=VARCHAR},
+      action_id = #{actionId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="roleRight">
+    select id, role_id, action_id
+    from role_right
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="roleRight">
+    select id, role_id, action_id
+    from role_right
+  </select>
+
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+    delete from role_right where role_id = #{roleId}
+  </delete>
+  
+  <insert id="inserBatch" parameterType="java.util.List">
+    insert into role_right (id, role_id, action_id)
+    values
+    <foreach item="item" index="index" collection="list"  separator=",">
+      (#{item.id},#{item.roleId,jdbcType=VARCHAR}, #{item.actionId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

@@ -5,6 +5,7 @@ import com.zl.common.dto.ResultDto;
 import com.zl.common.error.TradeCodeDict;
 import com.zl.common.util.ResultUtil;
 import com.zl.domain.Menu;
+import com.zl.dto.MenuRightDto;
 import com.zl.sysadminservice.menu.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,4 +51,12 @@ public class MenuController {
         int num = menuService.delete(id);
         return  ResultUtil.genenrate(num, TradeCodeDict.SUCCESS_ADD_CODE);
     }
+
+    @PostMapping("/selectByRole")
+    public ResultDto<List<MenuRightDto>> selectByRole(@RequestBody QueryCondition queryCondition) {
+        List<MenuRightDto> menus = menuService.selectByRole(queryCondition);
+        return ResultUtil.genenrate(menus, TradeCodeDict.SUCCESS_QUERRY_CODE);
+    }
+
+
 }
