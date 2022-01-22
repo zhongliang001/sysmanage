@@ -16,6 +16,7 @@ public class Menu implements Serializable {
     private String filePath;
     private String parentId;
     private List<Menu> children;
+    private List<Action> actions;
 
     public String getId() {
         return id;
@@ -65,6 +66,14 @@ public class Menu implements Serializable {
         this.children = children;
     }
 
+    public List<Action> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<Action> actions) {
+        this.actions = actions;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
@@ -74,6 +83,7 @@ public class Menu implements Serializable {
                 ", filePath='" + filePath + '\'' +
                 ", parentId='" + parentId + '\'' +
                 ", children=" + children +
+                ", actions=" + actions +
                 '}';
     }
 }

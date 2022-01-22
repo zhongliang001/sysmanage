@@ -25,7 +25,7 @@
     </zl-page>
     <zl-page :viewPage="viewPage" page="update">
       <zl-form  ref="updateTable" :column="2" :url="updateUrl" method="post">
-        <zl-item type="text" name="username" field-name="用户名" required="true" :rules="rules.username" readOnly="true"/>
+        <zl-item type="text" name="username" field-name="用户名" required="true" :rules="rules.username" :readOnly="true"/>
         <zl-item type="text" name="realName" field-name="真实姓名" required="true" :rules="rules.realName"/>
         <zl-item type="select" name="certType" field-name="证件类型" dict-name="CERT_TYPE" required="true"/>
         <zl-item type="text" name="certNo" field-name="证件号码" required="true"/>

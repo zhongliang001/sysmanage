@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.sysadminservice.menu.mapper.MenuMapper">
-    <resultMap id="sysMenu" type="com.zl.domain.Menu">
+    <resultMap id="menu" type="com.zl.domain.Menu">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <collection column="{menuId=id}" property="actions" javaType="java.util.List" ofType="com.zl.domain.Action" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByMenuId" />
+        <collection column="{parentId=id}" property="children" javaType="java.util.List" ofType="com.zl.domain.Menu" select="selectMenu" />
     </resultMap>
-    <select id="selectMenu" resultMap="sysMenu" parameterType="java.lang.String">
+    <select id="selectMenu" resultMap="menu" >
         select
         id, name, path, file_path, parent_id
         from
@@ -23,7 +25,7 @@
         </where>
     </select>
 
-    <select id="select" resultMap="sysMenu" parameterType="java.util.Map">
+    <select id="select" resultMap="menu" parameterType="java.util.Map">
         select
         id, name, path, file_path, parent_id
         from
@@ -51,4 +53,22 @@
     <delete id="delete" parameterType="java.lang.String">
         delete from menu where id = #{id}
     </delete>
+
+    <resultMap id="menuRight" type="com.zl.dto.MenuRightDto">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <collection column="{menuId=id,roleId=roleId}" property="actionDtos" javaType="java.util.List" ofType="com.zl.dto.ActionDto" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByRole" />
+    </resultMap>
+
+    <select id="selectByRole"  resultMap="menuRight" parameterType="java.util.Map">
+        select
+            id, name, path, file_path, parent_id, #{id} as roleId
+        from
+            menu
+    </select>
+
+
 </mapper>
