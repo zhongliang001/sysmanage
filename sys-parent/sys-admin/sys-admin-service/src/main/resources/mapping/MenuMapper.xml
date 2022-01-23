@@ -7,21 +7,33 @@
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
-        <collection column="{menuId=id}" property="actions" javaType="java.util.List" ofType="com.zl.domain.Action" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByMenuId" />
-        <collection column="{parentId=id}" property="children" javaType="java.util.List" ofType="com.zl.domain.Menu" select="selectMenu" />
     </resultMap>
-    <select id="selectMenu" resultMap="menu" >
+
+    <resultMap id="menuDto" type="com.zl.dto.MenuDto" extends="menu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <collection column="{menuId=id, actions=actions}" property="actionDtos" javaType="java.util.List" ofType="com.zl.domain.ActionDto" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByMenuIdWithRole" />
+        <collection column="{parentId=id, actions=actions}" property="children" javaType="java.util.List" ofType="com.zl.domain.Menu" select="selectMenu" />
+    </resultMap>
+    <select id="selectMenu" resultMap="menuDto" >
         select
-        id, name, path, file_path, parent_id
+        m.id, m.name, m.path, m.file_path, m.parent_id, #{list} list
         from
-        menu
+        menu m
         <where>
             <if test="parentId != null">
-                parent_id = #{parentId}
+                m.parent_id = #{parentId}
             </if>
             <if test="parentId == null">
-                parent_id is null
+                m.parent_id is null
             </if>
+            and exists (
+            select 1 from role_right r left join action a on r.action_id = a.id where r.role_id in
+            (#{actions}) and a.menu_id = m.id and a.oper ='visit'
+                    )
         </where>
     </select>
 

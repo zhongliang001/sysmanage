@@ -74,4 +74,14 @@
     where a.menu_id = #{menuId}
   </select>
 
+  <select id="selectByMenuIdWithRole" resultMap="actionDto" parameterType="java.util.Map">
+    select a.id, a.`name`, a.oper, a.menu_id, a.menu_name, if((select 1 from role_right r where r.action_id = a.id and r.role_id in (
+        #{actions}
+
+    ) ) is null, 0, 1) is_has_right
+    from action a
+    where a.menu_id = #{menuId}
+  </select>
+
+
 </mapper>

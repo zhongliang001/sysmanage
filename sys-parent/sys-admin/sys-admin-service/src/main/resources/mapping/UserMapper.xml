@@ -19,7 +19,12 @@
         <result property="lastModifyPwd" jdbcType="VARCHAR" column="last_modify_pwd"/>
     </resultMap>
 
-    <select id="selectByUsername" parameterType="java.lang.String" resultMap="user">
+    <resultMap id="userDto" type="com.zl.dto.UserDto" extends="user">
+        <collection property="roles" column="{userId=id}" select="com.zl.sysadminservice.role.mapper.RoleMapper.selectByUserId" javaType="java.util.List" ofType="com.zl.domain.Role"/>
+
+    </resultMap>
+
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="userDto">
         select id,
                username,
                password,
@@ -38,7 +43,6 @@
                last_modify_pwd
         from user
         where username = #{username}
-        limit 1
     </select>
 
     <insert id="add" parameterType="com.zl.domain.User" >
@@ -148,9 +152,8 @@
         <if test="lastModifyPwd != null and lastModifyPwd != ''">
             last_modify_pwd = #{lastModifyPwd}
         </if>
-        <where>
+        where
             id = #{id}
-        </where>
     </update>
 
     <delete id="delete" parameterType="java.lang.String">

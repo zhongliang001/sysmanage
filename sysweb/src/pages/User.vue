@@ -51,7 +51,7 @@
       </div>
     </zl-page>
     <zl-page :viewPage="viewPage" page="config">
-      <zl-form  ref="configTable"  :url="updateUrl" method="post">
+      <zl-form  ref="configTable"  :column="2"  :url="updateUrl" method="post">
         <zl-item type="text" name="id" field-name="用户id" hidden="true"></zl-item>
         <zl-choose slot="choose" :chooesedData="chooesedData" :unchooesedData="unchooesedData"></zl-choose>
       </zl-form>

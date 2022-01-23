@@ -1,7 +1,6 @@
 package com.zl.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 菜单实体类
@@ -15,8 +14,6 @@ public class Menu implements Serializable {
     private String path;
     private String filePath;
     private String parentId;
-    private List<Menu> children;
-    private List<Action> actions;
 
     public String getId() {
         return id;
@@ -58,22 +55,6 @@ public class Menu implements Serializable {
         this.parentId = parentId;
     }
 
-    public List<Menu> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Menu> children) {
-        this.children = children;
-    }
-
-    public List<Action> getActions() {
-        return actions;
-    }
-
-    public void setActions(List<Action> actions) {
-        this.actions = actions;
-    }
-
     @Override
     public String toString() {
         return "Menu{" +
@@ -82,8 +63,6 @@ public class Menu implements Serializable {
                 ", path='" + path + '\'' +
                 ", filePath='" + filePath + '\'' +
                 ", parentId='" + parentId + '\'' +
-                ", children=" + children +
-                ", actions=" + actions +
                 '}';
     }
 }

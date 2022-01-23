@@ -1,6 +1,7 @@
 package com.zl.sysadminservice.menu.mapper;
 
 import com.zl.domain.Menu;
+import com.zl.dto.MenuDto;
 import com.zl.dto.MenuRightDto;
 
 import java.util.List;
@@ -14,10 +15,10 @@ public interface MenuMapper {
     /**
      * 根据父节点查询菜单
      *
-     * @param parentId 父节点id
+     * @param map 查詢條件
      * @return 菜单集合
      */
-    List<Menu> selectMenu(String parentId);
+    List<MenuDto> selectMenu(Map<String, Object> map);
 
     /**
      * 菜单查查询

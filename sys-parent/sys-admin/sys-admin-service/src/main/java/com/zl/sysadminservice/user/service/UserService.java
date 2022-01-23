@@ -2,7 +2,7 @@ package com.zl.sysadminservice.user.service;
 
 import com.zl.common.domain.QueryCondition;
 import com.zl.domain.User;
-import com.zl.dto.UserRoleDto;
+import com.zl.dto.UserDto;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface UserService {
      * @param user 用户
      * @return 用户
      */
-    User selectForLogin(User user);
+    UserDto selectForLogin(User user);
 
     /**
      * 注册用户

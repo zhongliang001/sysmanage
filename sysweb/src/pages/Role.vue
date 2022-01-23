@@ -175,10 +175,11 @@ export default {
       if(form.checkAll()) {
         let reqData = form.reqData
         this.zlaxios.request({
-          url: _this.url,
+          url: _this.addUrl,
           method: form.method,
           data: reqData,
           success: function () {
+            form.reset()
             _this.toBack()
           },
           error: function (error) {

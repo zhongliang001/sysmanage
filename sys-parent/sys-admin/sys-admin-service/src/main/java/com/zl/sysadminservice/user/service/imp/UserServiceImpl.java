@@ -6,6 +6,7 @@ import com.zl.common.error.TradeCodeDict;
 import com.zl.common.exception.ZlException;
 import com.zl.common.util.MD5Util;
 import com.zl.domain.User;
+import com.zl.dto.UserDto;
 import com.zl.sys.sequence.feign.client.SequenceFeign;
 import com.zl.sysadminservice.user.mapper.UserMapper;
 import com.zl.sysadminservice.user.service.UserService;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
      * @return 返回用户信息
      */
     @Override
-    public User selectForLogin(User loginUser) {
+    public UserDto selectForLogin(User loginUser) {
         String username = loginUser.getUsername();
         return userMapper.selectByUsername(username);
     }
