@@ -5,6 +5,7 @@ import com.zl.common.dto.ResultDto;
 import com.zl.common.error.TradeCodeDict;
 import com.zl.common.util.ResultUtil;
 import com.zl.domain.Menu;
+import com.zl.dto.MenuDto;
 import com.zl.dto.MenuRightDto;
 import com.zl.sysadminservice.menu.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class MenuController {
     private MenuService menuService;
 
     @PostMapping("/selectMenu")
-    public ResultDto<List<Menu>> selectMenu() {
-        List<Menu> menus = menuService.selectMenu(null);
+    public ResultDto<List<MenuDto>> selectMenu() {
+        List<MenuDto> menus = menuService.selectMenu(null);
         return ResultUtil.genenrate(menus, TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 

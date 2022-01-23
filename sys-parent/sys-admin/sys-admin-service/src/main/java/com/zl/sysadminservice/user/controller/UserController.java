@@ -6,6 +6,7 @@ import com.zl.common.error.TradeCodeDict;
 import com.zl.common.util.MD5Util;
 import com.zl.common.util.ResultUtil;
 import com.zl.domain.User;
+import com.zl.dto.UserDto;
 import com.zl.sysadminservice.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -37,11 +38,10 @@ public class UserController {
     }
 
     @PostMapping("/query")
-    public ResultDto<User> query(@RequestBody String username) {
+    public ResultDto<UserDto> query(@RequestBody String username) {
         User user = new User();
         user.setUsername(username);
-        user = userService.selectForLogin(user);
-        return ResultUtil.genenrate(user, TradeCodeDict.SUCCESS_QUERRY_CODE);
+        return ResultUtil.genenrate(userService.selectForLogin(user), TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 
     @PostMapping("/register")

@@ -2,6 +2,7 @@ package com.zl.sysadminservice.menu.service;
 
 import com.zl.common.domain.QueryCondition;
 import com.zl.domain.Menu;
+import com.zl.dto.MenuDto;
 import com.zl.dto.MenuRightDto;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public interface MenuService {
      * @param parentId 父节点id
      * @return 菜单集合
      */
-    List<Menu> selectMenu(String parentId);
+    List<MenuDto> selectMenu(String parentId);
 
     /**
      * 菜单查查询

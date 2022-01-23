@@ -3,8 +3,13 @@ package com.zl.sysadminservice.menu.service.imp;
 import com.github.pagehelper.PageHelper;
 import com.zl.common.domain.QueryCondition;
 import com.zl.common.dto.ResultDto;
+import com.zl.common.exception.ZlException;
+import com.zl.common.util.HttpRequestUtil;
 import com.zl.domain.Menu;
+import com.zl.domain.Role;
+import com.zl.dto.MenuDto;
 import com.zl.dto.MenuRightDto;
+import com.zl.dto.UserDto;
 import com.zl.sys.sequence.feign.client.SequenceFeign;
 import com.zl.sysadminservice.menu.mapper.MenuMapper;
 import com.zl.sysadminservice.menu.service.MenuService;
@@ -13,7 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhongliang
@@ -30,8 +38,18 @@ public class MenuServiceImpl implements MenuService {
     private SequenceFeign sequenceFeign;
 
     @Override
-    public List<Menu> selectMenu(String parentId) {
-        return menuMapper.selectMenu(parentId);
+    public List<MenuDto> selectMenu(String parentId) {
+        UserDto userDto = HttpRequestUtil.getRequestUser();
+        if (userDto == null) {
+            throw new ZlException("你暂时无法访问，请重新登录！");
+        }
+        logger.debug("token 中的用户信息为:{}", userDto);
+        // 获取用户角色，根据用户角色查询用户的菜单及权限
+        List<Role> roles = userDto.getRoles();
+        String actions = roles.stream().map(Role::getId).collect(Collectors.joining(","));
+        Map<String, Object> map = new HashMap<>(16);
+        map.put("actions", actions);
+        return menuMapper.selectMenu(map);
     }
 
     @Override

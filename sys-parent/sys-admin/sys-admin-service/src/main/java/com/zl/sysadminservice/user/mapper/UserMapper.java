@@ -1,6 +1,7 @@
 package com.zl.sysadminservice.user.mapper;
 
 import com.zl.domain.User;
+import com.zl.dto.UserDto;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface UserMapper {
      * @param username 用户名
      * @return 用户
      */
-    User selectByUsername(String username);
+    UserDto selectByUsername(String username);
 
     /**
      * 新增用户
