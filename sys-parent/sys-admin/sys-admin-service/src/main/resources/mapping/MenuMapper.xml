@@ -20,7 +20,7 @@
     </resultMap>
     <select id="selectMenu" resultMap="menuDto" >
         select
-        m.id, m.name, m.path, m.file_path, m.parent_id, #{list} list
+        m.id, m.name, m.path, m.file_path, m.parent_id, #{actions} actions
         from
         menu m
         <where>
