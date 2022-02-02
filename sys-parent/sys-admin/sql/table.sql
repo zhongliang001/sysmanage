@@ -70,11 +70,11 @@ create table action
     name    varchar(20) comment '操作名称',
     oper    varchar(20) comment '操作',
     menu_id varchar(32) comment '菜单id',
-    menu_name varchar(64) comment '菜单名'
+    menu_name varchar(64) comment '菜单名',
+    path    varchar(30) comment '操作路径'
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment '操作表';
-
 create table role_right
 (
     id      varchar(10) not null primary key comment '角色权限id',

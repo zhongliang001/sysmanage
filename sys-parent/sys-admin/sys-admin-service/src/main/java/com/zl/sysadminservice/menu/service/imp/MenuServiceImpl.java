@@ -1,6 +1,7 @@
 package com.zl.sysadminservice.menu.service.imp;
 
 import com.github.pagehelper.PageHelper;
+import com.zl.base.service.RedisService;
 import com.zl.common.domain.QueryCondition;
 import com.zl.common.dto.ResultDto;
 import com.zl.common.exception.ZlException;
@@ -37,8 +38,12 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private SequenceFeign sequenceFeign;
 
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public List<MenuDto> selectMenu(String parentId) {
+        logger.info("开始请求查询菜单列表...");
         UserDto userDto = HttpRequestUtil.getRequestUser();
         if (userDto == null) {
             throw new ZlException("你暂时无法访问，请重新登录！");
@@ -49,7 +54,14 @@ public class MenuServiceImpl implements MenuService {
         String actions = roles.stream().map(Role::getId).collect(Collectors.joining(","));
         Map<String, Object> map = new HashMap<>(16);
         map.put("actions", actions);
-        return menuMapper.selectMenu(map);
+
+        List<MenuDto> menuDtos = menuMapper.selectMenu(map);
+        // 将查询回来的菜单权限保存至redis中用来后面做操作权限校验
+        Map<String, List<MenuDto>> rightMap = new HashMap<>(16);
+        rightMap.put(userDto.getId(), menuDtos);
+        redisService.putAll("right", rightMap);
+        logger.info("请求查询菜单列表结束...");
+        return menuDtos;
     }
 
     @Override

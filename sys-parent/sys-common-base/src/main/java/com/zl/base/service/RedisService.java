@@ -1,4 +1,4 @@
-package com.zl.common.service;
+package com.zl.base.service;
 
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.Map;
 
 /**
- * redis 连接服务
+ * redis 连接工具
  * @author zhongliang
  */
 public class RedisService {

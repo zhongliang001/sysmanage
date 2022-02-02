@@ -6,6 +6,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.Map;
 
 /**
@@ -22,10 +23,13 @@ public class HttpRequestUtil {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes !=null) {
             HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            String token = request.getHeaders("token").nextElement();
-            Map<String, Claim> parse = JwtUtil.parse(token);
-            Claim userClaim = parse.get("userDto");
-            return userClaim.as(UserDto.class);
+            Enumeration<String> headers = request.getHeaders("token");
+            if(request.getHeaders("token").hasMoreElements()){
+                String token = request.getHeaders("token").nextElement();
+                Map<String, Claim> parse = JwtUtil.parse(token);
+                Claim userClaim = parse.get("userDto");
+                return userClaim.as(UserDto.class);
+            }
         }
        return null;
     }

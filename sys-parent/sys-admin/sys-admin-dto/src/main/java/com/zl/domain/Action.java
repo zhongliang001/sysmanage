@@ -42,6 +42,13 @@ public class Action implements Serializable {
      */
     private String menuName;
 
+    /**
+     * Column: path
+     * Type: VARCHAR(30)
+     * Remark: 请求路径
+     */
+    private String path;
+
     public String getId() {
         return id;
     }
@@ -80,5 +87,13 @@ public class Action implements Serializable {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

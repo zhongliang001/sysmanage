@@ -1,5 +1,7 @@
 package com.zl.common.interceptor;
 
+import com.zl.common.util.HttpRequestUtil;
+import com.zl.dto.UserDto;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,11 @@ public class LogInterceptor implements HandlerInterceptor {
       */
     private final static String SESSION_ID = "sessionId";
 
+    /**
+     * 用户id
+     */
+    private final static String USER_ID = "userId";
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
         String logid = httpServletRequest.getHeader("logid");
@@ -29,6 +36,10 @@ public class LogInterceptor implements HandlerInterceptor {
             httpServletRequest.setAttribute("logid", logid);
         }
         MDC.put(SESSION_ID, logid);
+        UserDto userDto = HttpRequestUtil.getRequestUser();
+        if (userDto != null) {
+            MDC.put(USER_ID, userDto.getId());
+        }
         return true;
     }
 
