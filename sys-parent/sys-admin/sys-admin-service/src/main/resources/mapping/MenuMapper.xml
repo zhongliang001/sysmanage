@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.sysadminservice.menu.mapper.MenuMapper">
-    <resultMap id="sysMenu" type="com.zl.domain.Menu">
+    <resultMap id="menu" type="com.zl.domain.Menu">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
     </resultMap>
-    <select id="selectMenu" resultMap="sysMenu" parameterType="java.lang.String">
+
+    <resultMap id="menuDto" type="com.zl.dto.MenuDto" extends="menu">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <collection column="{menuId=id, actions=actions}" property="actionDtos" javaType="java.util.List" ofType="com.zl.domain.ActionDto" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByMenuIdWithRole" />
+        <collection column="{parentId=id, actions=actions}" property="children" javaType="java.util.List" ofType="com.zl.domain.Menu" select="selectMenu" />
+    </resultMap>
+    <select id="selectMenu" resultMap="menuDto" >
         select
-        id, name, path, file_path, parent_id
+        m.id, m.name, m.path, m.file_path, m.parent_id, #{actions} actions
         from
-        menu
+        menu m
         <where>
             <if test="parentId != null">
-                parent_id = #{parentId}
+                m.parent_id = #{parentId}
             </if>
             <if test="parentId == null">
-                parent_id is null
+                m.parent_id is null
             </if>
+            and exists (
+            select 1 from role_right r left join action a on r.action_id = a.id where r.role_id in
+            (#{actions}) and a.menu_id = m.id and a.oper ='visit'
+                    )
         </where>
     </select>
 
-    <select id="select" resultMap="sysMenu" parameterType="java.util.Map">
+    <select id="select" resultMap="menu" parameterType="java.util.Map">
         select
         id, name, path, file_path, parent_id
         from
@@ -51,4 +65,22 @@
     <delete id="delete" parameterType="java.lang.String">
         delete from menu where id = #{id}
     </delete>
+
+    <resultMap id="menuRight" type="com.zl.dto.MenuRightDto">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+        <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
+        <collection column="{menuId=id,roleId=roleId}" property="actionDtos" javaType="java.util.List" ofType="com.zl.dto.ActionDto" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByRole" />
+    </resultMap>
+
+    <select id="selectByRole"  resultMap="menuRight" parameterType="java.util.Map">
+        select
+            id, name, path, file_path, parent_id, #{id} as roleId
+        from
+            menu
+    </select>
+
+
 </mapper>

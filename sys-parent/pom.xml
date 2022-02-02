@@ -15,11 +15,11 @@
     <name>sys-parent</name>
     <description>sys-parent</description>
     <modules>
-        <module>sys-admin</module>
         <module>sys-common</module>
+        <module>sys-admin</module>
+        <module>sys-common-base</module>
         <module>sys-register</module>
         <module>sys-uua</module>
-        <module>sys-common-base</module>
         <module>sys-sequence</module>
         <module>sys-gateway</module>
     </modules>
@@ -40,6 +40,8 @@
         <spring-security.version>5.3.3.RELEASE</spring-security.version>
         <pagehelper.starter.version>1.2.5</pagehelper.starter.version>
         <skipTests>true</skipTests>
+        <spring-boot-maven-plugin.version>2.0.1.RELEASE</spring-boot-maven-plugin.version>
+        <docker.version>1.0.0</docker.version>
     </properties>
 
     <dependencyManagement>
@@ -90,6 +92,16 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-spring-boot-starter.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>log4j-api</artifactId>
+                        <groupId>org.apache.logging.log4j</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>log4j-to-slf4j</artifactId>
+                        <groupId>org.apache.logging.log4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.ctrip.framework.apollo</groupId>
@@ -132,7 +144,7 @@
                 <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>1.0.0</version>
+                    <version>${docker.version}</version>
                     <!--将插件绑定在某个phase执行-->
                     <executions>
                         <execution>
@@ -189,17 +201,12 @@
 
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
-
-        
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.0.1.RELEASE</version>
-            </plugin>
-        </plugins>
     </build>
-
 </project>

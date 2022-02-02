@@ -1,15 +1,16 @@
 package com.zl.syssequence.template.service.impl;
 
+import com.zl.common.exception.ZlException;
 import com.zl.common.util.DateUtil;
 import com.zl.common.util.HttpRequestUtil;
-import com.zl.domain.User;
+import com.zl.dto.UserDto;
 import com.zl.sequence.Template;
 import com.zl.syssequence.template.mapper.TemplateMapper;
 import com.zl.syssequence.template.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -38,9 +39,12 @@ public class TemplateServiceImpl implements TemplateService {
      */
     @Override
     public int add(Template template) {
-        User user = HttpRequestUtil.getRequestUser();
-        template.setCreateUser(user.getUsername());
-        template.setCreateTime(DateUtil.format(new Date()));
+        UserDto userDto = HttpRequestUtil.getRequestUser();
+        if (userDto == null) {
+           throw new ZlException("你暂时无法进行当前操作，请重新登录后再尝试！");
+        }
+        template.setCreateUser(userDto.getUsername());
+        template.setCreateTime(DateUtil.format(LocalDateTime.now()));
         return templateMapper.add(template);
     }
 }

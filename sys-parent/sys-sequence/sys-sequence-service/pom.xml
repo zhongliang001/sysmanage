@@ -7,7 +7,6 @@
         <groupId>com.zl</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.zl</groupId>
     <artifactId>sys-sequence-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sys-sequence-service</name>
@@ -19,10 +18,6 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -49,6 +44,10 @@
         <dependency>
             <groupId>com.zl</groupId>
             <artifactId>sys-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zl</groupId>
+            <artifactId>sys-common-base</artifactId>
         </dependency>
     </dependencies>
 

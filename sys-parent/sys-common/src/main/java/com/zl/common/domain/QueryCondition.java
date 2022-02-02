@@ -38,4 +38,13 @@ public class QueryCondition implements Serializable {
     public void setCondtion(Map<String, Object> condition) {
         this.condition = condition;
     }
+
+    @Override
+    public String toString() {
+        return "QueryCondition{" +
+                "pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
+                ", condition=" + condition +
+                '}';
+    }
 }

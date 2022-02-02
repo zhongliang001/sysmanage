@@ -31,7 +31,7 @@ public class User implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getUsername() {
@@ -39,7 +39,7 @@ public class User implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {
@@ -47,7 +47,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public String getRealName() {
@@ -55,7 +55,7 @@ public class User implements Serializable {
     }
 
     public void setRealName(String realName) {
-        this.realName = realName;
+        this.realName = realName == null ? null : realName.trim();
     }
 
     public String getSex() {
@@ -63,7 +63,7 @@ public class User implements Serializable {
     }
 
     public void setSex(String sex) {
-        this.sex = sex;
+        this.sex = sex == null ? null : sex.trim();
     }
 
     public String getPhoneNo() {
@@ -71,7 +71,7 @@ public class User implements Serializable {
     }
 
     public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+        this.phoneNo = phoneNo == null ? null : phoneNo.trim();
     }
 
     public String getCertType() {
@@ -79,7 +79,7 @@ public class User implements Serializable {
     }
 
     public void setCertType(String certType) {
-        this.certType = certType;
+        this.certType = certType == null ? null : certType.trim();
     }
 
     public String getCertNo() {
@@ -87,7 +87,7 @@ public class User implements Serializable {
     }
 
     public void setCertNo(String certNo) {
-        this.certNo = certNo;
+        this.certNo = certNo == null ? null : certNo.trim();
     }
 
     public String getBirthday() {
@@ -95,7 +95,7 @@ public class User implements Serializable {
     }
 
     public void setBirthday(String birthday) {
-        this.birthday = birthday;
+        this.birthday = birthday == null ? null : birthday.trim();
     }
 
     public String getLastLoginTime() {
@@ -103,7 +103,7 @@ public class User implements Serializable {
     }
 
     public void setLastLoginTime(String lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+        this.lastLoginTime = lastLoginTime == null ? null : lastLoginTime.trim();
     }
 
     public Integer getErrLoginTimes() {
@@ -119,7 +119,7 @@ public class User implements Serializable {
     }
 
     public void setForbiddenLoginTime(String forbiddenLoginTime) {
-        this.forbiddenLoginTime = forbiddenLoginTime;
+        this.forbiddenLoginTime = forbiddenLoginTime == null ? null : forbiddenLoginTime.trim();
     }
 
     public Integer getForbiddenLoginPeriod() {
@@ -135,7 +135,7 @@ public class User implements Serializable {
     }
 
     public void setForbiddenReason(String forbiddenReason) {
-        this.forbiddenReason = forbiddenReason;
+        this.forbiddenReason = forbiddenReason == null ? null : forbiddenReason.trim();
     }
 
     public String getLastModifyPwd() {
@@ -143,12 +143,12 @@ public class User implements Serializable {
     }
 
     public void setLastModifyPwd(String lastModifyPwd) {
-        this.lastModifyPwd = lastModifyPwd;
+        this.lastModifyPwd = lastModifyPwd == null ? null : lastModifyPwd.trim();
     }
 
     @Override
     public String toString() {
-        return "SUser{" +
+        return "User{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

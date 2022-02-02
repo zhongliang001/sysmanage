@@ -1,6 +1,8 @@
 package com.zl.sysadminservice.menu.mapper;
 
 import com.zl.domain.Menu;
+import com.zl.dto.MenuDto;
+import com.zl.dto.MenuRightDto;
 
 import java.util.List;
 import java.util.Map;
@@ -13,10 +15,10 @@ public interface MenuMapper {
     /**
      * 根据父节点查询菜单
      *
-     * @param parentId 父节点id
+     * @param map 查詢條件
      * @return 菜单集合
      */
-    List<Menu> selectMenu(String parentId);
+    List<MenuDto> selectMenu(Map<String, Object> map);
 
     /**
      * 菜单查查询
@@ -45,5 +47,12 @@ public interface MenuMapper {
      * @return 返回删除菜单条数
      */
     int delete (String id);
+
+    /**
+     * 根据角色查询角色的菜单权限
+     * @param condition 查询条件呢
+     * @return 菜单权限
+     */
+    List<MenuRightDto> selectByRole(Map<String, Object> condition);
 
 }

@@ -22,6 +22,13 @@ public interface DictService {
     List<Dict> selectSdict(Dict sdict);
 
     /**
+     * 查询数据字典
+     * @param sdictType 字典类型
+     * @return 返回map格式的数据字典
+     */
+    Map<String, Map<String, String>> selectSdictTree(String sdictType);
+
+    /**
      * 根据字典类型查询数据字典
      *
      * @param sdictType 字典类型
@@ -83,4 +90,9 @@ public interface DictService {
      * @return 修改数量
      */
     int updateDict(Dict dict);
+
+    /**
+     * 清除redis中数据字典缓存
+     */
+    void clearRedisDict();
 }

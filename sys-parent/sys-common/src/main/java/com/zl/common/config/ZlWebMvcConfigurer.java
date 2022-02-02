@@ -14,12 +14,8 @@ public class ZlWebMvcConfigurer implements WebMvcConfigurer {
     @Autowired
     private LogInterceptor logInterceptor;
 
-//    @Autowired
-//    private FeignConfiguration feignConfiguration;
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(logInterceptor);
-//        registry.addInterceptor(feignConfiguration);
     }
 }

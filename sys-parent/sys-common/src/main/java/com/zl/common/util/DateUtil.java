@@ -2,6 +2,8 @@ package com.zl.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -44,6 +46,7 @@ public class DateUtil {
      *
      * @param dateString 时间字符串
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDifToNow(String dateString) throws ParseException {
         return getTimeDifToNow(dateString, DEFALT_FORMAT);
@@ -53,7 +56,9 @@ public class DateUtil {
      * 从date 到当前时间的时间差
      *
      * @param dateString 时间字符串
+     * @param format 时间格式
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDifToNow(String dateString, String format) throws ParseException {
         return getTimeDifToNow(parse(dateString, format));
@@ -74,6 +79,7 @@ public class DateUtil {
      *
      * @param dateString 时间字符串
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDifFromNow(String dateString) throws ParseException {
         return getTimeDifFromNow(dateString, DEFALT_FORMAT);
@@ -84,6 +90,8 @@ public class DateUtil {
      *
      * @param dateString 时间字符串
      * @return 时间相差毫秒数
+     * @param format 时间格式
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDifFromNow(String dateString, String format) throws ParseException {
         return getTimeDifFromNow(parse(dateString, format));
@@ -95,6 +103,7 @@ public class DateUtil {
      * @param start 起始时间字符串
      * @param end   结束时间字符串
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(String start, String end) throws ParseException {
         return getTimeDif(start, end, DEFALT_FORMAT);
@@ -108,6 +117,7 @@ public class DateUtil {
      * @param end     结束时间字符串
      * @param format2 时间格式
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(String start, String format1, String end, String format2) throws ParseException {
         return getTimeDif(parse(start, format1), parse(end, format2));
@@ -120,6 +130,7 @@ public class DateUtil {
      * @param end    结束时间字符串
      * @param format 时间格式
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(String start, String end, String format) throws ParseException {
         return getTimeDif(start, format, end, format);
@@ -132,6 +143,7 @@ public class DateUtil {
      * @param end    结束时间字符串
      * @param format 时间格式
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(Date start, String end, String format) throws ParseException {
         return getTimeDif(start, parse(end, format));
@@ -143,6 +155,7 @@ public class DateUtil {
      * @param start 起始时间字符串
      * @param end   结束时间字符串
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(Date start, String end) throws ParseException {
         return getTimeDif(start, end, DEFALT_FORMAT);
@@ -155,6 +168,7 @@ public class DateUtil {
      * @param end    结束时间字符串
      * @param format 时间格式
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(String start, String format, Date end) throws ParseException {
         return getTimeDif(parse(start, format), end);
@@ -166,6 +180,7 @@ public class DateUtil {
      * @param start 起始时间字符串
      * @param end   结束时间字符串
      * @return 时间相差毫秒数
+     * @throws ParseException 格式化异常
      */
     public static long getTimeDif(String start, Date end) throws ParseException {
         return getTimeDif(start, DEFALT_FORMAT, end);
@@ -176,7 +191,7 @@ public class DateUtil {
      *
      * @param date1 起始时间
      * @param date2 结束时间
-     * @return -1: date1 < date2 0: date1=date2 1: date1 > date2
+     * @return -1: date1 &lt; date2 0: date1=date2 1: date1 &gt; date2
      */
     public static int compareDate(Date date1, Date date2) {
         return date1.compareTo(date2);
@@ -189,7 +204,8 @@ public class DateUtil {
      * @param format1  时间格式
      * @param dateStr2 结束时间
      * @param format2  时间格式
-     * @return -1: date1 < date2 0: date1=date2 1: date1 > date2
+     * @return -1: date1 &lt; date2 0: date1=date2 1: date1 &gt; date2
+     * @throws ParseException 格式化异常
      */
     public static int comparerDate(String dateStr1, String format1, String dateStr2, String format2) throws ParseException {
         Date date1 = parse(dateStr1, format1);
@@ -203,7 +219,8 @@ public class DateUtil {
      * @param dateStr1 起始时间
      * @param dateStr2 结束时间
      * @param format   时间格式
-     * @return -1: date1 < date2 0: date1=date2 1: date1 > date2
+     * @return -1: date1 &lt; date2 0: date1=date2 1: date1 &gt; date2
+     * @throws ParseException 格式化异常
      */
     public static int comparerDate(String dateStr1, String dateStr2, String format) throws ParseException {
         Date date1 = parse(dateStr1, format);
@@ -216,7 +233,8 @@ public class DateUtil {
      *
      * @param dateStr1 起始时间
      * @param dateStr2 结束时间
-     * @return -1: date1 < date2 0: date1=date2 1: date1 > date2
+     * @return -1: date1 &lt; date2 0: date1=date2 1: date1 &gt; date2
+     * @throws ParseException 格式化异常
      */
     public static int comparerDate(String dateStr1, String dateStr2) throws ParseException {
         return comparerDate(dateStr1, DEFALT_FORMAT, dateStr2, DEFALT_FORMAT);
@@ -256,6 +274,7 @@ public class DateUtil {
      * @param format 日期格式
      * @param num    指定天数
      * @return 加上num天后的日期
+     * @throws ParseException 格式化异常
      */
     public static Date addDay(String date, String format, int num) throws ParseException {
         Calendar calendar = new GregorianCalendar();
@@ -270,6 +289,7 @@ public class DateUtil {
      * @param date 指定日期
      * @param num  指定天数
      * @return 加上num天后的日期
+     * @throws ParseException 格式化异常
      */
     public static Date addDay(String date, int num) throws ParseException {
         return addDay(date, DEFALT_FORMAT, num);
@@ -287,13 +307,13 @@ public class DateUtil {
         return sdf.parse(dateString);
     }
 
-    public static String format(Date date){
-        SimpleDateFormat sdf = new SimpleDateFormat(DEFALT_FORMAT);
-        return sdf.format(date);
+    public static String format(LocalDateTime time){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DEFALT_FORMAT);
+        return dtf.format(time);
     }
 
-    public static String format(Date date, String format){
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
+    public static String format(LocalDateTime date, String format){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
+        return dtf.format(date);
     }
 }

@@ -1,10 +1,11 @@
 import Login from "./Login";
 import Register from './Register'
 import Welcome from "./Welcome";
-import Hi from "./pages/Hi";
-import Hi2 from "./pages/Hi2";
 import Menu from "./pages/Menu";
 import Dict from "./pages/Dict";
+import Role from "./pages/Role";
+import User from "./pages/User"
+import Action from "./pages/Action";
 
 let routes = [
     {
@@ -23,15 +24,6 @@ let routes = [
         component:  Welcome,
         children: [
             {
-                name: 'Hi',
-                path: '/hi',
-                component: Hi
-            },
-            {
-                name: 'Hi2',
-                path: '/hi2',
-                component: Hi2
-            },{
                 name: '菜单配置',
                 path: '/menu',
                 component: Menu
@@ -39,6 +31,18 @@ let routes = [
                 name: '数据字典配置',
                 path: '/dict',
                 component: Dict
+            },{
+                name: '角色配置',
+                path: '/role',
+                component: Role
+            },{
+                name: '用户管理',
+                path: '/user',
+                component: User
+            },{
+                name: '菜单操作管理',
+                path: '/action',
+                component: Action
             }
         ]
     }

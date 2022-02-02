@@ -1,7 +1,7 @@
 package com.zl.syssequence.template.controller;
 
 import com.zl.common.dto.ResultDto;
-import com.zl.common.error.ErrDict;
+import com.zl.common.error.TradeCodeDict;
 import com.zl.common.util.ResultUtil;
 import com.zl.sequence.Template;
 import com.zl.syssequence.template.service.TemplateService;
@@ -26,12 +26,12 @@ public class TemplateController {
     @PostMapping("/select")
     public ResultDto<List<Template>> select(String name) {
         List<Template> list = templateService.select(name);
-        return ResultUtil.genenrate(list, ErrDict.SUCCESS_QUERRY_CODE);
+        return ResultUtil.genenrate(list, TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 
     @PostMapping("/add")
     public ResultDto<Integer> add(@RequestBody Template template) {
         int num = templateService.add(template);
-        return ResultUtil.genenrate(num, ErrDict.SUCCESS_ADD_CODE);
+        return ResultUtil.genenrate(num, TradeCodeDict.SUCCESS_ADD_CODE);
     }
 }

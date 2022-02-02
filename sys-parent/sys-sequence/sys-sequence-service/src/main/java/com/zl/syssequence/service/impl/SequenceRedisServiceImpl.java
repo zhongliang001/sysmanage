@@ -1,6 +1,6 @@
 package com.zl.syssequence.service.impl;
 
-import com.zl.common.error.ErrDict;
+import com.zl.common.error.TradeCodeDict;
 import com.zl.common.exception.ZlException;
 import com.zl.syssequence.service.SequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,10 @@ import java.io.Serializable;
 public class SequenceRedisServiceImpl implements SequenceService {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    public RedisTemplate redisTemplate;
 
     @Override
+    @SuppressWarnings("unchecked")
     public Long getSeqence(String name) {
         Object o = redisTemplate.boundValueOps(name).get();
         if(o == null){
@@ -33,7 +34,7 @@ public class SequenceRedisServiceImpl implements SequenceService {
             try {
                 l = Long.parseLong(o.toString());
             } catch (NumberFormatException e) {
-                throw new ZlException(ErrDict.FAILED_FORMAT_CODE);
+                throw new ZlException(TradeCodeDict.FAILED_FORMAT_CODE);
             }
             return l;
         }

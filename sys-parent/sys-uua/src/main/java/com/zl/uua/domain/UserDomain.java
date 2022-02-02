@@ -1,7 +1,7 @@
 package com.zl.uua.domain;
 
 import com.zl.common.util.DateUtil;
-import com.zl.domain.User;
+import com.zl.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
@@ -18,24 +18,24 @@ import java.util.Date;
  */
 public class UserDomain implements UserDetails {
 
-    private User user;
+    private UserDto userDto;
 
-    public User getUser() {
-        return user;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userDto.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getPassword();
+        return userDto.getPassword();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserDomain implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        Integer errLoginTimes = user.getErrLoginTimes();
+        Integer errLoginTimes = userDto.getErrLoginTimes();
         if (errLoginTimes == null) {
             return true;
         }
@@ -54,9 +54,9 @@ public class UserDomain implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        if (!StringUtils.isEmpty(user.getForbiddenLoginTime()) && !StringUtils.isEmpty(user.getForbiddenLoginPeriod())) {
+        if (!StringUtils.isEmpty(userDto.getForbiddenLoginTime()) && !StringUtils.isEmpty(userDto.getForbiddenLoginPeriod())) {
             try {
-                Date date = DateUtil.addDay(user.getForbiddenLoginTime(), user.getForbiddenLoginPeriod());
+                Date date = DateUtil.addDay(userDto.getForbiddenLoginTime(), userDto.getForbiddenLoginPeriod());
                 int i = DateUtil.compareDate(new Date(), date);
                 return false;
             } catch (ParseException e) {
