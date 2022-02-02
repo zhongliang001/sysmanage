@@ -24,7 +24,7 @@ public class UserDto extends User {
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "UserDto{" + super.toString()+
                 "roles=" + roles +
                 '}';
     }

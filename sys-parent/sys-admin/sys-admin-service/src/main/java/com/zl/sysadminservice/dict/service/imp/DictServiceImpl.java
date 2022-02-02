@@ -1,9 +1,9 @@
 package com.zl.sysadminservice.dict.service.imp;
 
 import com.github.pagehelper.PageHelper;
+import com.zl.base.service.RedisService;
 import com.zl.common.domain.QueryCondition;
 import com.zl.common.dto.ResultDto;
-import com.zl.common.service.RedisService;
 import com.zl.common.util.DateUtil;
 import com.zl.domain.Dict;
 import com.zl.sys.sequence.feign.client.SequenceFeign;
