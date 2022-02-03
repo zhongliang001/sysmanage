@@ -58,46 +58,50 @@
 
 export default {
   name: "Menu",
-  data: function () {
+  data () {
     return {
-      fileds: [{
-        type: "text",
-        cnName: "菜单名",
-        name: "name"
-      }, {
-        type: "text",
-        cnName: "菜单编号",
-        name: "id"
-      }, {
-        type: "text",
-        cnName: "菜单路径",
-        name: "path"
-      }],
-      titles: [
+      fileds: [
         {
-          cnName: '菜单编号',
-          name: 'id'
+          type: "text",
+          cnName: "菜单名",
+          name: "name"
         },
         {
-          cnName: '菜单名',
-          name: 'name'
+          type: "text",
+          cnName: "菜单编号",
+          name: "id"
         },
         {
-          cnName: '菜单路径',
-          name: 'path'
-        },
-        {
-          cnName: '菜单文件',
-          name: 'filePath'
-        },
-        {
-          cnName: '父菜单编号',
-          name: 'parentId'
+          type: "text",
+          cnName: "菜单路径",
+          name: "path"
         }
       ],
-      url: this.zlService.baseUrl + '/menu/select',
+      titles: [
+        {
+          cnName: "菜单编号",
+          name: "id"
+        },
+        {
+          cnName: "菜单名",
+          name: "name"
+        },
+        {
+          cnName: "菜单路径",
+          name: "path"
+        },
+        {
+          cnName: "菜单文件",
+          name: "filePath"
+        },
+        {
+          cnName: "父菜单编号",
+          name: "parentId"
+        }
+      ],
+      url: `${this.zlService.baseUrl}/menu/select`,
       reqData: {},
-      viewPage: 'query',
+      viewPage: "query",
       sel: {
         data: {}
       },
@@ -106,106 +110,136 @@ export default {
   },
   watch: {
     sel: {
-      handler: function (newVal) {
-        let _this = this
-        let addMenu = _this.common.getComponent(this, 'addMenu')
-        addMenu.setData('parentId', newVal.data.id)
+      handler (newVal) {
+        const _this = this
+        const addMenu = _this.common.getComponent(
+          this,
+          "addMenu"
+        )
+        addMenu.setData(
+          "parentId",
+          newVal.data.id
+        )
       },
       deep: true
     }
   },
   methods: {
-    add: function () {
-      this.viewPage = 'add'
-      let _this = this
+    add () {
+      this.viewPage = "add"
+      const _this = this
       this.zlaxios.request({
-        url: _this.zlService.baseUrl + '/menu/selectMenu',
-        method: 'POST',
-        success: function (response) {
-          _this.tree = response.data[0]
+        url: `${_this.zlService.baseUrl}/menu/selectMenu`,
+        method: "POST",
+        success (response) {
+          const zero = 0
+          _this.tree = response.data[zero]
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    view: function () {
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
+    view () {
+      const _this = this
+      const table = _this.common.getComponent(
+        this,
+        "table"
+      )
       this.reqData = table.selData
-      this.viewPage = 'detail'
-      // fTable.resetData(form.selData)
+      this.viewPage = "detail"
+      // FTable.resetData(form.selData)
     },
-    update: function () {
-      let table = this.common.getComponent(this, 'table')
-      let updateMenu = this.common.getComponent(this, 'updateMenu')
+    update () {
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
+      const updateMenu = this.common.getComponent(
+        this,
+        "updateMenu"
+      )
       updateMenu.setReqData(table.selData)
-      this.viewPage = 'update'
+      this.viewPage = "update"
     },
-    toBack: function () {
-      this.viewPage = 'query'
+    toBack () {
+      this.viewPage = "query"
     },
-    save: function () {
-      let _this = this
-      let form = _this.common.getComponent(this, 'addMenu')
-      let reqData = form.reqData
+    save () {
+      const _this = this
+      const form = _this.common.getComponent(
+        this,
+        "addMenu"
+      )
+      const { reqData } = form
       this.zlaxios.request({
         url: this.zlService.baseUrl + form.url,
         method: form.method,
         data: reqData,
-        success: function () {
+        success () {
           _this.toBack()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    updateData: function () {
-      let _this = this
-      let form = _this.common.getComponent(this, 'updateMenu')
-      let reqData = form.reqData
+    updateData () {
+      const _this = this
+      const form = _this.common.getComponent(
+        this,
+        "updateMenu"
+      )
+      const { reqData } = form
       this.zlaxios.request({
         url: this.zlService.baseUrl + form.url,
         method: form.method,
         data: reqData,
-        success: function () {
+        success () {
           _this.toBack()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    delData: function () {
-      let table = this.common.getComponent(this, 'table')
+    delData () {
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
       this.zlaxios.request({
-        url: this.zlService.baseUrl + "/menu/delete",
-        method: 'POST',
+        url: `${this.zlService.baseUrl}/menu/delete`,
+        method: "POST",
         config: {
           params: {
             id: table.selData.id
           }
         },
-        success: function () {
+        success () {
           alert("删除成功")
           table.query()
           table.selNum = -1
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    actionConfig: function () {
-      let table = this.common.getComponent(this, 'table')
-      let selData = table.selData
+    actionConfig () {
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
+      const { selData } = table
       if (selData) {
-        this.$router.push({path: 'Action', query: table.selData})
-      }else{
+        this.$router.push({
+          path: "Action",
+          query: table.selData
+        })
+      } else {
         alert("请选择一条记录")
       }
-
     }
   }
 }
