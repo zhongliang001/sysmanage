@@ -1,7 +1,7 @@
 <template>
   <div>
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="table" :column="2" method="post" init="true" :req-data="reqData" :fileds="fileds" :init="true" :url="url"
+      <zl-query-table ref="table" :column="2" method="post" :init="true" :req-data="reqData" :fileds="fileds" :url="url"
                       :titles="titles">
         <zl-button type="button" name="新增" @click.native="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
@@ -14,7 +14,7 @@
         <zl-item type="text" field-name="菜单id" name="menuId" :default-value="menuId"
                  :read-only="menuId !== undefined&& menuId !== null && menuId !==''"/>
         <zl-item type="text" field-name="菜单名" name="menuName" :default-value="menuName"
-                 :read-only="menuName !== undefined&& menuName !== null && menuName !==''"/>
+                 :read-only="menuName !== undefined && menuName !== null && menuName !==''"/>
         <zl-item type="text" field-name="操作名" name="name"/>
         <zl-item type="text" field-name="操作" name="oper"/>
       </zl-form>
@@ -41,7 +41,7 @@
     <zl-page :view-page="viewPage" page="detail">
       <zl-f-table ref="fTable" :column="2" :view="true" :req-data="detail">
         <zl-item type="text" field-name="操作id" name="id"/>
-        <zl-item type="text" field-name="菜单id" name="menuId" />
+        <zl-item type="text" field-name="菜单id" name="menuId"/>
         <zl-item type="text" field-name="操作名" name="name"/>
         <zl-item type="text" field-name="操作" name="oper"/>
       </zl-f-table>
@@ -53,85 +53,104 @@
 </template>
 
 <script>
-import Dict from "./Dict";
 
 export default {
   name: "Action",
-  components: {Dict},
-  data: function () {
+  data () {
     return {
       fileds: [
         {
           type: "text",
-          cnName: '菜单id',
-          name: 'menuId'
+          cnName: "菜单id",
+          name: "menuId"
         },
         {
           type: "text",
-          cnName: '菜单名',
-          name: 'menuName'
+          cnName: "菜单名",
+          name: "menuName"
         },
         {
           type: "text",
-          cnName: '操作名',
-          name: 'name'
+          cnName: "操作名",
+          name: "name"
         },
         {
           type: "text",
-          cnName: '操作',
-          name: 'oper'
+          cnName: "操作",
+          name: "oper"
         }
       ],
       titles: [
         {
-          cnName: '菜单id',
-          name: 'menuId'
+          cnName: "菜单id",
+          name: "menuId"
         },
         {
-          cnName: '操作名',
-          name: 'name'
+          cnName: "操作名",
+          name: "name"
         },
         {
-          cnName: '操作',
-          name: 'oper'
+          cnName: "操作",
+          name: "oper"
         }
       ],
-      menuId: '',
-      menuName: '',
+      menuId: "",
+      menuName: "",
       reqData: {},
-      viewPage: 'query',
-      url: this.zlService.baseUrl + '/action/select',
-      addUrl: this.zlService.baseUrl + '/action/add',
-      updateUrl: this.zlService.baseUrl + '/action/update',
-      delUrl: this.zlService.baseUrl + '/action/delete',
+      viewPage: "query",
+      url: `${this.zlService.baseUrl}/action/select`,
+      addUrl: `${this.zlService.baseUrl}/action/add`,
+      updateUrl: `${this.zlService.baseUrl}/action/update`,
+      delUrl: `${this.zlService.baseUrl}/action/delete`,
       detail: {}
     }
   },
-  created: function () {
-    let _this = this
-    let query = this.$route.query
+  // eslint-disable-next-line max-statements
+  created () {
+    const _this = this
+    const { query } = this.$route
+    const addNum = 1
     if (query) {
-      let fields = _this.fileds
-      for (let i = 0; i < fields.length; i++) {
-        debugger
-        let item = fields[i]
-        if (item.name !== 'menuId' && item.name !== 'menuName') {
-          fields.splice(i, 1)
-          i--
+      const fields = _this.fileds
+      for (let len = 0; len < fields.length; len += addNum) {
+        const item = fields[len]
+        if (item.name !== "menuId" && item.name !== "menuName") {
+          fields.splice(
+            len,
+            addNum
+          )
+          len -= addNum
         }
       }
       Object.keys(query).forEach((key) => {
-        for (let i = 0; i < fields.length; i++) {
-          let filed = fields[i]
-          if (filed.name === 'menuId' && key === 'id') {
+        const one = 1
+        for (let number = 0; number < fields.length; number += one) {
+          const filed = fields[number]
+          if (filed.name === "menuId" && key === "id") {
             _this.menuId = query[key]
-            _this.$set(filed, 'defaultValue', query[key])
-            _this.$set(filed, 'readOnly', true)
+            _this.$set(
+              filed,
+              "defaultValue",
+              query[key]
+            )
+            _this.$set(
+              filed,
+              "readOnly",
+              true
+            )
             _this.reqData.menuId = query[key]
-          }else if(filed.name === 'menuName' && key === 'name'){
+          } else if (filed.name === "menuName" && key === "name") {
             _this.menuName = query[key]
-            _this.$set(filed, 'defaultValue', query[key])
-            _this.$set(filed, 'readOnly', true)
+            _this.$set(
+              filed,
+              "defaultValue",
+              query[key]
+            )
+            _this.$set(
+              filed,
+              "readOnly",
+              true
+            )
             _this.reqData.menuName = query[key]
           }
         }
@@ -139,92 +158,109 @@ export default {
     }
   },
   methods: {
-    add: function () {
-      this.viewPage = 'add'
-    }
-    ,
-    save: function () {
-      let _this = this
-      let form = _this.common.getComponent(this, 'add')
-      let reqData = form.reqData
+    add () {
+      this.viewPage = "add"
+    },
+    save () {
+      const _this = this
+      const form = _this.common.getComponent(
+        this,
+        "add"
+      )
+      const { reqData } = form
       this.zlaxios.request({
         url: this.addUrl,
         method: form.method,
         data: reqData,
-        success: function () {
+        success () {
           form.reset()
           _this.toBack()
-        },
-        error: function (error) {
-          console.log(error)
         }
       })
     },
-    toBack: function () {
-      this.viewPage = 'query'
-      let table = this.common.getComponent(this, 'table')
+    toBack () {
+      this.viewPage = "query"
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
       table.query()
     },
-    update: function (){
-      let table = this.common.getComponent(this, 'table')
-      let selData = table.selData
+    update () {
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
+      const { selData } = table
       if (selData) {
-        let updateTable = this.common.getComponent(this, 'updateTable')
+        const updateTable = this.common.getComponent(
+          this,
+          "updateTable"
+        )
         updateTable.setReqData(selData)
-        this.viewPage = 'update'
-      }else{
+        this.viewPage = "update"
+      } else {
         alert("请选择一条记录")
       }
     },
-    saveUpData: function (){
-      let _this = this
-      let form = this.common.getComponent(this, 'updateTable')
-      let reqData = form.reqData
+    saveUpData () {
+      const _this = this
+      const form = this.common.getComponent(
+        this,
+        "updateTable"
+      )
+      const { reqData } = form
       this.zlaxios.request({
         url: _this.updateUrl,
         method: form.method,
         data: reqData,
-        success: function () {
+        success () {
           _this.toBack()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    viewDetail: function (){
-      let table = this.common.getComponent(this, 'table')
-      let selData = table.selData
+    viewDetail () {
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
+      const { selData } = table
       if (selData) {
         this.detail = selData
-        this.viewPage = 'detail'
-      }else{
+        this.viewPage = "detail"
+      } else {
         alert("请选择一条记录")
       }
     },
-    delData: function (){
-      let _this = this
-      let table = this.common.getComponent(this, 'table')
-      let selData = table.selData
+    delData () {
+      const _this = this
+      const table = this.common.getComponent(
+        this,
+        "table"
+      )
+      const { selData } = table
       if (selData) {
         this.zlaxios.request({
           url: _this.delUrl,
-          method: 'POST',
+          method: "POST",
           config: {
             params: {
               id: table.selData.id
             }
           },
-          success: function () {
+          success () {
             alert("删除成功")
             table.query()
             table.selNum = -1
           },
-          error: function (error) {
-            console.log(error)
+          error (error) {
+            alert(error)
           }
         })
-      }else{
+      } else {
         alert("请选择一条记录")
       }
     }

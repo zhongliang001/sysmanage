@@ -16,7 +16,7 @@
       </zl-f-table>
       <zl-query-table :isShow="isShow" ref="dictDetail" method="post" :titles="detailTitles" :url="detailUrl">
       </zl-query-table>
-      <div  class="form-buttons">
+      <div class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toQuery"></zl-button>
       </div>
     </zl-page>
@@ -35,7 +35,7 @@
         <zl-item type="text" field-name="数据字典类型" name="dictType" required="true"/>
         <zl-item ref="dictDesc" type="text" field-name="数据字典描述" name="dictDesc" :readOnly="true" required="true"/>
       </zl-form>
-      <div  class="form-buttons">
+      <div class="form-buttons">
         <zl-button type="button" name="查询" @click.native="query"></zl-button>
         <zl-button type="button" name="下一步" @click.native="next"></zl-button>
         <zl-button type="button" name="返回" @click.native="toQuery"></zl-button>
@@ -51,7 +51,7 @@
         <zl-button type="button" name="修改" @click.native="updateDict"></zl-button>
         <zl-button type="button" name="删除" @click.native="delDict"></zl-button>
       </zl-query-table>
-      <div  class="form-buttons">
+      <div class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toAddPage"></zl-button>
       </div>
     </zl-page>
@@ -62,7 +62,7 @@
         <zl-item type="text" field-name="字典码" name="enName" required="true"/>
         <zl-item type="text" field-name="中文名" name="cnName" required="true"/>
       </zl-form>
-      <div  class="form-buttons">
+      <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"></zl-button>
         <zl-button type="button" name="返回" @click.native="toNextPage"></zl-button>
       </div>
@@ -74,7 +74,7 @@
         <zl-item type="text" field-name="字典码" name="enName" required="true"/>
         <zl-item type="text" field-name="中文名" name="cnName" required="true"/>
       </zl-form>
-      <div  class="form-buttons">
+      <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="saveUpdateDict"></zl-button>
         <zl-button type="button" name="返回" @click.native="toNextPage"></zl-button>
       </div>
@@ -84,17 +84,18 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from "vue"
+
 export default {
-  name: 'Dict',
-  data: function () {
+  name: "Dict",
+  data () {
     return {
       viewPage: "query",
       fileds: [
         {
-          type: 'text',
+          type: "text",
           cnName: "数据字典类型",
-          name:"dictType"
+          name: "dictType"
         }
       ],
       titles: [
@@ -111,10 +112,12 @@ export default {
         {
           cnName: "编号",
           name: "id"
-        }, {
+        },
+        {
           cnName: "字典码",
           name: "enName"
-        }, {
+        },
+        {
           cnName: "中文名",
           name: "cnName"
         },
@@ -127,231 +130,298 @@ export default {
           name: "dictDesc"
         }
       ],
-      url: this.zlService.baseUrl + '/dict/selectGroups',
-      detailUrl: this.zlService.baseUrl + '/dict/select',
-      addUrl: this.zlService.baseUrl + '/dict/save',
-      addQueryUrl: this.zlService.baseUrl + '/dict/selectGroup',
-      delDictUrl: this.zlService.baseUrl + '/dict/delDict',
-      delUrl: this.zlService.baseUrl + '/dict/delete',
-      updateUrl: this.zlService.baseUrl + '/dict/update',
-      updateDictUrl: this.zlService.baseUrl + '/dict/updateDict',
-      reloadUrl: this.zlService.baseUrl + '/dict/reloadRedisDict',
+      url: `${this.zlService.baseUrl}/dict/selectGroups`,
+      detailUrl: `${this.zlService.baseUrl}/dict/select`,
+      addUrl: `${this.zlService.baseUrl}/dict/save`,
+      addQueryUrl: `${this.zlService.baseUrl}/dict/selectGroup`,
+      delDictUrl: `${this.zlService.baseUrl}/dict/delDict`,
+      delUrl: `${this.zlService.baseUrl}/dict/delete`,
+      updateUrl: `${this.zlService.baseUrl}/dict/update`,
+      updateDictUrl: `${this.zlService.baseUrl}/dict/updateDict`,
+      reloadUrl: `${this.zlService.baseUrl}/dict/reloadRedisDict`,
       reqData: {},
       reqData2: {},
       isShow: false
     }
   },
   methods: {
-    view: function () {
-      let _this = this
-      let table = _this.common.getComponent(this, 'dict')
+    view () {
+      const _this = this
+      const table = _this.common.getComponent(
+        this,
+        "dict"
+      )
       this.reqData = table.selData
-      this.viewPage = 'detail'
-      let detailTable = _this.common.getComponent(this, 'dictDetail')
+      this.viewPage = "detail"
+      const detailTable = _this.common.getComponent(
+        this,
+        "dictDetail"
+      )
       detailTable.setReqData(this.reqData)
       detailTable.query()
     },
-    add: function () {
-      this.viewPage = 'add'
+    add () {
+      this.viewPage = "add"
     },
-    del: function (){
-      let _this = this
-      let table = _this.common.getComponent(this, 'dict')
-      let sel = table.selData
-      if(sel){
+    del () {
+      const _this = this
+      const table = _this.common.getComponent(
+        this,
+        "dict"
+      )
+      const sel = table.selData
+      if (sel) {
         this.zlaxios.request({
-          url:_this.delUrl,
-          method: 'POST',
-          config:{
-            params:{
+          url: _this.delUrl,
+          method: "POST",
+          config: {
+            params: {
               dictType: sel.dictType
             }
           },
-          success: function () {
+          success () {
             alert("删除成功")
             table.query()
             table.selNum = -1
           },
-          error: function (error) {
-            console.log(error)
+          error (error) {
+            alert(error)
           }
         })
       }
     },
-    reload:function (){
-      let _this = this
+    reload () {
+      const _this = this
       this.zlaxios.request({
-        url:_this.reloadUrl,
-        method: 'POST',
-        success: function (response) {
+        url: _this.reloadUrl,
+        method: "POST",
+        success (response) {
           alert("重载数据字典缓存成功")
           Vue.prototype.dictData = response.data
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    update: function () {
-      let _this = this
-      let table = _this.common.getComponent(this, 'dict')
-      if(JSON.stringify(table.selData)==='{}'){
-        alert("请选择一条记录");
+    update () {
+      const _this = this
+      const table = _this.common.getComponent(
+        this,
+        "dict"
+      )
+      if (JSON.stringify(table.selData) === "{}") {
+        alert("请选择一条记录")
         return
       }
-      this.viewPage = 'update'
-      let updateTable = _this.common.getComponent(this, 'updateTable')
-      updateTable.setReqData( table.selData)
+      this.viewPage = "update"
+      const updateTable = _this.common.getComponent(
+        this,
+        "updateTable"
+      )
+      updateTable.setReqData(table.selData)
     },
-    saveUpdate: function (){
-      let _this = this
-      let updateTable = _this.common.getComponent(this, 'updateTable')
+    saveUpdate () {
+      const _this = this
+      const updateTable = _this.common.getComponent(
+        this,
+        "updateTable"
+      )
       this.zlaxios.request({
         url: _this.updateUrl,
         method: updateTable.method,
         data: updateTable.reqData,
-        success: function () {
-            _this.toQuery();
-            let table = _this.common.getComponent(this, 'dict')
-            table.query()
+        success () {
+          _this.toQuery()
+          const table = _this.common.getComponent(
+            this,
+            "dict"
+          )
+          table.query()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    query: function () {
-      let _this = this
-      let isExists = _this.common.getComponent(this, 'isExists')
-      let reqData = isExists.reqData
+    query () {
+      const _this = this
+      const isExists = _this.common.getComponent(
+        this,
+        "isExists"
+      )
+      const { reqData } = isExists
       this.zlaxios.request({
         url: _this.addQueryUrl,
         method: isExists.method,
         data: reqData,
-        success: function (response) {
-          if (response.data[0]) {
-            isExists.reqData = response.data[0]
-            isExists.setData('dictDesc', response.data[0].dictDesc)
-            isExists.changeReadOnly('dictDesc', true)
+        success (response) {
+          const zero = 0
+          if (response.data[zero]) {
+            isExists.reqData = response.data[zero]
+            isExists.setData(
+              "dictDesc",
+              response.data[zero].dictDesc
+            )
+            isExists.changeReadOnly(
+              "dictDesc",
+              true
+            )
           } else {
-            isExists.changeReadOnly('dictDesc', false)
+            isExists.changeReadOnly(
+              "dictDesc",
+              false
+            )
           }
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    next: function () {
-      let _this = this
-      let isExists = _this.common.getComponent(this, 'isExists')
-      let checkAll = isExists.checkAll()
+    next () {
+      const _this = this
+      const isExists = _this.common.getComponent(
+        this,
+        "isExists"
+      )
+      const checkAll = isExists.checkAll()
       if (checkAll) {
-        let reqData = isExists.reqData
+        const { reqData } = isExists
         this.zlaxios.request({
           url: _this.addQueryUrl,
           method: isExists.method,
           data: reqData,
-          success: function (response) {
-            if (response.data[0] && !(isExists.reqData.dictType === response.data[0].dictType && isExists.reqData.dictDesc === response.data[0].dictDesc)) {
-                alert('新增的数据字典类型已经存在，但与你录入的数据字典类型与数据字典类型描述不一致, 请重新查询后再进行下一步!')
+          success (response) {
+            const zero = 0
+            if (response.data[zero] && !(isExists.reqData.dictType === response.data[zero].dictType && isExists.reqData.dictDesc === response.data[zero].dictDesc)) {
+              alert("新增的数据字典类型已经存在，但与你录入的数据字典类型与数据字典类型描述不一致, 请重新查询后再进行下一步!")
             } else {
               _this.toNext(isExists.reqData)
             }
-
           },
-          error: function (error) {
-            console.log(error)
+          error (error) {
+            alert(error)
           }
         })
       }
     },
-    toNext: function (reqData) {
-      let _this = this
+    toNext (reqData) {
+      const _this = this
       this.reqData2 = reqData
-      let dictNextDetail = this.common.getComponent(_this, 'dictNextDetail')
+      const dictNextDetail = this.common.getComponent(
+        _this,
+        "dictNextDetail"
+      )
       dictNextDetail.setReqData(this.reqData2)
       dictNextDetail.query()
-      _this.viewPage = 'nextPage'
+      _this.viewPage = "nextPage"
     },
-    addDict: function () {
-      let _this = this
-      let addDict = this.common.getComponent(_this,'addDict')
-      let isExists = _this.common.getComponent(this, 'isExists')
-      addDict.setData('dictType', isExists.reqData.dictType)
-      addDict.setData('dictDesc', isExists.reqData.dictDesc)
-      _this.viewPage = 'addDict'
+    addDict () {
+      const _this = this
+      const addDict = this.common.getComponent(
+        _this,
+        "addDict"
+      )
+      const isExists = _this.common.getComponent(
+        this,
+        "isExists"
+      )
+      addDict.setData(
+        "dictType",
+        isExists.reqData.dictType
+      )
+      addDict.setData(
+        "dictDesc",
+        isExists.reqData.dictDesc
+      )
+      _this.viewPage = "addDict"
     },
-    save: function () {
-      let _this = this
-      let form = _this.common.getComponent(this,'addDict')
-      let reqData = form.reqData
+    save () {
+      const _this = this
+      const form = _this.common.getComponent(
+        this,
+        "addDict"
+      )
+      const { reqData } = form
       this.zlaxios.request({
         url: this.addUrl,
         method: form.method,
         data: reqData,
-        success: function () {
+        success () {
           _this.toNextPage()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    updateDict:function(){
-      let _this = this
-      let dictNextDetail = this.common.getComponent(_this,'dictNextDetail')
-      let updateDict = this.common.getComponent(_this,'updateDict')
+    updateDict () {
+      const _this = this
+      const dictNextDetail = this.common.getComponent(
+        _this,
+        "dictNextDetail"
+      )
+      const updateDict = this.common.getComponent(
+        _this,
+        "updateDict"
+      )
       updateDict.setReqData(dictNextDetail.selData)
-      this.viewPage = 'updateDict'
+      this.viewPage = "updateDict"
     },
-    saveUpdateDict: function (){
-      let _this = this
-      let updateDict = this.common.getComponent(_this,'updateDict')
+    saveUpdateDict () {
+      const _this = this
+      const updateDict = this.common.getComponent(
+        _this,
+        "updateDict"
+      )
       this.zlaxios.request({
         url: this.addUrl,
         method: updateDict.method,
         data: updateDict.reqData,
-        success: function () {
+        success () {
           _this.toNextPage()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    delDict: function (){
-      let _this = this
-      let nextPageTable = this.common.getComponent(_this,'dictNextDetail')
-      let sel = nextPageTable.selData
-      if(sel){
+    delDict () {
+      const _this = this
+      const nextPageTable = this.common.getComponent(
+        _this,
+        "dictNextDetail"
+      )
+      const sel = nextPageTable.selData
+      if (sel) {
         this.zlaxios.request({
-          url:_this.delDictUrl,
-          method: 'POST',
-          config:{
-            params:{
+          url: _this.delDictUrl,
+          method: "POST",
+          config: {
+            params: {
               id: sel.id
             }
           },
-          success: function () {
+          success () {
             alert("删除成功")
             nextPageTable.query()
             nextPageTable.selNum = -1
           },
-          error: function (error) {
-            console.log(error)
+          error (error) {
+            alert(error)
           }
         })
       }
     },
-    toQuery: function (){
-      this.viewPage = 'query'
+    toQuery () {
+      this.viewPage = "query"
     },
-    toAddPage: function (){
-      this.viewPage = 'add'
+    toAddPage () {
+      this.viewPage = "add"
     },
-    toNextPage: function (){
-      this.viewPage = 'nextPage'
+    toNextPage () {
+      this.viewPage = "nextPage"
     }
   }
 }
