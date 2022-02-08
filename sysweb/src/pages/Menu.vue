@@ -1,7 +1,7 @@
 <template>
   <div>
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="table" :column="2" re="menu" method="post" :url="url" :fileds="fileds" :titles="titles">
+      <zl-query-table ref="table" :column="2" re="menu" method="post" :url="url" :fields="fields" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add" oper="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="查看" @click.native="view"></zl-button>
@@ -60,7 +60,7 @@ export default {
   name: 'Menu',
   data () {
     return {
-      fileds: [
+      fields: [
         {
           type: 'text',
           cnName: '菜单名',
@@ -112,7 +112,7 @@ export default {
     sel: {
       handler (newVal) {
         const _this = this
-        const addMenu = _this.common.getComponent(
+        const addMenu = _this.commonUtil.getComponent(
           this,
           'addMenu'
         )
@@ -142,7 +142,7 @@ export default {
     },
     view () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -151,11 +151,11 @@ export default {
       // FTable.resetData(form.selData)
     },
     update () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
-      const updateMenu = this.common.getComponent(
+      const updateMenu = this.commonUtil.getComponent(
         this,
         'updateMenu'
       )
@@ -167,7 +167,7 @@ export default {
     },
     save () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'addMenu'
       )
@@ -186,7 +186,7 @@ export default {
     },
     updateData () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'updateMenu'
       )
@@ -204,7 +204,7 @@ export default {
       })
     },
     delData () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -227,7 +227,7 @@ export default {
       })
     },
     actionConfig () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )

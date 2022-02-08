@@ -46,7 +46,7 @@ export default {
   methods: {
     onclick () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'register'
       )
@@ -66,7 +66,7 @@ export default {
       }
     },
     validate () {
-      const form = this.common.getComponent(
+      const form = this.commonUtil.getComponent(
         this,
         'register'
       )

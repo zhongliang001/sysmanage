@@ -164,7 +164,7 @@ export default {
     },
     save () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'add'
       )
@@ -181,20 +181,20 @@ export default {
     },
     toBack () {
       this.viewPage = 'query'
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
       table.query()
     },
     update () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
       const { selData } = table
       if (selData) {
-        const updateTable = this.common.getComponent(
+        const updateTable = this.commonUtil.getComponent(
           this,
           'updateTable'
         )
@@ -206,7 +206,7 @@ export default {
     },
     saveUpData () {
       const _this = this
-      const form = this.common.getComponent(
+      const form = this.commonUtil.getComponent(
         this,
         'updateTable'
       )
@@ -224,7 +224,7 @@ export default {
       })
     },
     viewDetail () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -238,7 +238,7 @@ export default {
     },
     delData () {
       const _this = this
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )

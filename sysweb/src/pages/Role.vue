@@ -138,11 +138,11 @@ export default {
       this.viewPage = 'add'
     },
     update () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
-      const updateForm = this.common.getComponent(
+      const updateForm = this.commonUtil.getComponent(
         this,
         'updateForm'
       )
@@ -151,7 +151,7 @@ export default {
     },
     del () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -178,7 +178,7 @@ export default {
     },
     view () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -187,7 +187,7 @@ export default {
     },
     save () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'addForm'
       )
@@ -209,7 +209,7 @@ export default {
     },
     saveUpdate () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'updateForm'
       )
@@ -231,7 +231,7 @@ export default {
     toBack () {
       this.viewPage = 'query'
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -239,15 +239,15 @@ export default {
       table.selNum = -1
     },
     right () {
-      const table = this.common.getComponent(
+      const table = this.commonUtil.getComponent(
         this,
         'table'
       )
-      const menuTable = this.common.getComponent(
+      const menuTable = this.commonUtil.getComponent(
         this,
         'menuTable'
       )
-      const qTable = this.common.getComponent(
+      const qTable = this.commonUtil.getComponent(
         menuTable,
         'qTable'
       )
@@ -256,11 +256,11 @@ export default {
       menuTable.query()
     },
     saveRight () {
-      const menuTable = this.common.getComponent(
+      const menuTable = this.commonUtil.getComponent(
         this,
         'menuTable'
       )
-      const qTable = this.common.getComponent(
+      const qTable = this.commonUtil.getComponent(
         menuTable,
         'qTable'
       )
