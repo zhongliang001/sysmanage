@@ -147,13 +147,13 @@ export default {
   methods: {
     view () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'dict'
       )
       this.reqData = table.selData
       this.viewPage = 'detail'
-      const detailTable = _this.common.getComponent(
+      const detailTable = _this.commonUtil.getComponent(
         this,
         'dictDetail'
       )
@@ -165,7 +165,7 @@ export default {
     },
     del () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'dict'
       )
@@ -206,7 +206,7 @@ export default {
     },
     update () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'dict'
       )
@@ -215,7 +215,7 @@ export default {
         return
       }
       this.viewPage = 'update'
-      const updateTable = _this.common.getComponent(
+      const updateTable = _this.commonUtil.getComponent(
         this,
         'updateTable'
       )
@@ -223,7 +223,7 @@ export default {
     },
     saveUpdate () {
       const _this = this
-      const updateTable = _this.common.getComponent(
+      const updateTable = _this.commonUtil.getComponent(
         this,
         'updateTable'
       )
@@ -233,7 +233,7 @@ export default {
         data: updateTable.reqData,
         success () {
           _this.toQuery()
-          const table = _this.common.getComponent(
+          const table = _this.commonUtil.getComponent(
             this,
             'dict'
           )
@@ -246,7 +246,7 @@ export default {
     },
     query () {
       const _this = this
-      const isExists = _this.common.getComponent(
+      const isExists = _this.commonUtil.getComponent(
         this,
         'isExists'
       )
@@ -281,7 +281,7 @@ export default {
     },
     next () {
       const _this = this
-      const isExists = _this.common.getComponent(
+      const isExists = _this.commonUtil.getComponent(
         this,
         'isExists'
       )
@@ -309,7 +309,7 @@ export default {
     toNext (reqData) {
       const _this = this
       this.reqData2 = reqData
-      const dictNextDetail = this.common.getComponent(
+      const dictNextDetail = this.commonUtil.getComponent(
         _this,
         'dictNextDetail'
       )
@@ -319,11 +319,11 @@ export default {
     },
     addDict () {
       const _this = this
-      const addDict = this.common.getComponent(
+      const addDict = this.commonUtil.getComponent(
         _this,
         'addDict'
       )
-      const isExists = _this.common.getComponent(
+      const isExists = _this.commonUtil.getComponent(
         this,
         'isExists'
       )
@@ -339,7 +339,7 @@ export default {
     },
     save () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'addDict'
       )
@@ -358,11 +358,11 @@ export default {
     },
     updateDict () {
       const _this = this
-      const dictNextDetail = this.common.getComponent(
+      const dictNextDetail = this.commonUtil.getComponent(
         _this,
         'dictNextDetail'
       )
-      const updateDict = this.common.getComponent(
+      const updateDict = this.commonUtil.getComponent(
         _this,
         'updateDict'
       )
@@ -371,7 +371,7 @@ export default {
     },
     saveUpdateDict () {
       const _this = this
-      const updateDict = this.common.getComponent(
+      const updateDict = this.commonUtil.getComponent(
         _this,
         'updateDict'
       )
@@ -389,7 +389,7 @@ export default {
     },
     delDict () {
       const _this = this
-      const nextPageTable = this.common.getComponent(
+      const nextPageTable = this.commonUtil.getComponent(
         _this,
         'dictNextDetail'
       )

@@ -23,40 +23,48 @@ const router = new VueRouter({
   routes
 })
 
-let ok = false
+// let ok = false
+//
+// const timeout = 500
+// const st = setInterval(
+//   inintData,
+//   timeout
+// )
 
-Vue.prototype.zlaxios.request({
-  url: `${zlService.baseUrl}/dict/dictTree`,
-  success (response) {
-    const dictData = response.data
-    if (dictData) {
-      Vue.prototype.dictData = dictData
+const inintData = async function () {
+  await Vue.prototype.zlaxios.request({
+    url: `${zlService.baseUrl}/dict/dictTree`,
+    success (response) {
+      const dictData = response.data
+      if (dictData) {
+        Vue.prototype.dictData = dictData
+      }
+      // ok = true
+    },
+    failed () {
+      alert('查询数据字典失败')
     }
-    ok = true
-  },
-  failed () {
-    alert('查询数据字典失败')
-  }
-})
-const timeout = 500
-const st = setInterval(
-  inintData,
-  timeout
-)
-
-function inintData () {
-  if (ok) {
-    new Vue({
-      router,
-      render: (rh) => rh(App)
-    }).$mount('#app')
-
-    if (typeof (Vue) === 'function') {
-      Vue.prototype.zlService = zlService
-    }
-    clearInterval(st)
-  }
+  })
 }
+
+inintData()
+  .then(r => {
+    return r
+  })
+
+// function async inintData () {
+//   if (ok) {
+new Vue({
+  router,
+  render: (rh) => rh(App)
+}).$mount('#app')
+
+if (typeof (Vue) === 'function') {
+  Vue.prototype.zlService = zlService
+}
+//     clearInterval(st)
+//   }
+// }
 
 /*
  * Vue.prototype.zlaxios.request({

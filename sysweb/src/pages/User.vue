@@ -137,7 +137,7 @@ export default {
     },
     save () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'addTable'
       )
@@ -158,7 +158,7 @@ export default {
     },
     update () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -167,7 +167,7 @@ export default {
         return
       }
       this.viewPage = 'update'
-      const updateTable = _this.common.getComponent(
+      const updateTable = _this.commonUtil.getComponent(
         this,
         'updateTable'
       )
@@ -175,7 +175,7 @@ export default {
     },
     saveUpdate () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'updateTable'
       )
@@ -196,7 +196,7 @@ export default {
     },
     del () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -225,7 +225,7 @@ export default {
     },
     view () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -235,7 +235,7 @@ export default {
     toBack () {
       this.viewPage = 'query'
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -244,7 +244,7 @@ export default {
     },
     toConfig () {
       const _this = this
-      const table = _this.common.getComponent(
+      const table = _this.commonUtil.getComponent(
         this,
         'table'
       )
@@ -253,7 +253,7 @@ export default {
         alert('请选择一条记录')
         return
       }
-      const configTable = _this.common.getComponent(
+      const configTable = _this.commonUtil.getComponent(
         this,
         'configTable'
       )
@@ -279,7 +279,7 @@ export default {
     },
     configRole () {
       const _this = this
-      const form = _this.common.getComponent(
+      const form = _this.commonUtil.getComponent(
         this,
         'configTable'
       )
