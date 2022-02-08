@@ -57,51 +57,51 @@
 <script>
 
 export default {
-  name: "Menu",
+  name: 'Menu',
   data () {
     return {
       fileds: [
         {
-          type: "text",
-          cnName: "菜单名",
-          name: "name"
+          type: 'text',
+          cnName: '菜单名',
+          name: 'name'
         },
         {
-          type: "text",
-          cnName: "菜单编号",
-          name: "id"
+          type: 'text',
+          cnName: '菜单编号',
+          name: 'id'
         },
         {
-          type: "text",
-          cnName: "菜单路径",
-          name: "path"
+          type: 'text',
+          cnName: '菜单路径',
+          name: 'path'
         }
       ],
       titles: [
         {
-          cnName: "菜单编号",
-          name: "id"
+          cnName: '菜单编号',
+          name: 'id'
         },
         {
-          cnName: "菜单名",
-          name: "name"
+          cnName: '菜单名',
+          name: 'name'
         },
         {
-          cnName: "菜单路径",
-          name: "path"
+          cnName: '菜单路径',
+          name: 'path'
         },
         {
-          cnName: "菜单文件",
-          name: "filePath"
+          cnName: '菜单文件',
+          name: 'filePath'
         },
         {
-          cnName: "父菜单编号",
-          name: "parentId"
+          cnName: '父菜单编号',
+          name: 'parentId'
         }
       ],
       url: `${this.zlService.baseUrl}/menu/select`,
       reqData: {},
-      viewPage: "query",
+      viewPage: 'query',
       sel: {
         data: {}
       },
@@ -114,10 +114,10 @@ export default {
         const _this = this
         const addMenu = _this.common.getComponent(
           this,
-          "addMenu"
+          'addMenu'
         )
         addMenu.setData(
-          "parentId",
+          'parentId',
           newVal.data.id
         )
       },
@@ -126,11 +126,11 @@ export default {
   },
   methods: {
     add () {
-      this.viewPage = "add"
+      this.viewPage = 'add'
       const _this = this
       this.zlaxios.request({
         url: `${_this.zlService.baseUrl}/menu/selectMenu`,
-        method: "POST",
+        method: 'POST',
         success (response) {
           const zero = 0
           _this.tree = response.data[zero]
@@ -144,32 +144,32 @@ export default {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       this.reqData = table.selData
-      this.viewPage = "detail"
+      this.viewPage = 'detail'
       // FTable.resetData(form.selData)
     },
     update () {
       const table = this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       const updateMenu = this.common.getComponent(
         this,
-        "updateMenu"
+        'updateMenu'
       )
       updateMenu.setReqData(table.selData)
-      this.viewPage = "update"
+      this.viewPage = 'update'
     },
     toBack () {
-      this.viewPage = "query"
+      this.viewPage = 'query'
     },
     save () {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "addMenu"
+        'addMenu'
       )
       const { reqData } = form
       this.zlaxios.request({
@@ -188,7 +188,7 @@ export default {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "updateMenu"
+        'updateMenu'
       )
       const { reqData } = form
       this.zlaxios.request({
@@ -206,18 +206,18 @@ export default {
     delData () {
       const table = this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       this.zlaxios.request({
         url: `${this.zlService.baseUrl}/menu/delete`,
-        method: "POST",
+        method: 'POST',
         config: {
           params: {
             id: table.selData.id
           }
         },
         success () {
-          alert("删除成功")
+          alert('删除成功')
           table.query()
           table.selNum = -1
         },
@@ -229,16 +229,16 @@ export default {
     actionConfig () {
       const table = this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       const { selData } = table
       if (selData) {
         this.$router.push({
-          path: "Action",
+          path: 'Action',
           query: table.selData
         })
       } else {
-        alert("请选择一条记录")
+        alert('请选择一条记录')
       }
     }
   }

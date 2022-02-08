@@ -4,9 +4,9 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   mounted () {
-    this.$router.push({ name: "Login" })
+    this.$router.push({ name: 'Login' })
   }
 }
 </script>

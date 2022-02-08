@@ -65,59 +65,59 @@
 
 <script>
 export default {
-  name: "User",
+  name: 'User',
   data () {
     return {
-      viewPage: "query",
+      viewPage: 'query',
       fileds: [
         {
-          type: "text",
-          cnName: "用户id",
-          name: "id"
+          type: 'text',
+          cnName: '用户id',
+          name: 'id'
         },
         {
-          type: "text",
-          cnName: "用户名",
-          name: "username"
+          type: 'text',
+          cnName: '用户名',
+          name: 'username'
         },
         {
-          type: "select",
-          cnName: "证件类型",
-          name: "certType",
-          dictName: "CERT_TYPE"
+          type: 'select',
+          cnName: '证件类型',
+          name: 'certType',
+          dictName: 'CERT_TYPE'
         },
         {
-          type: "text",
-          cnName: "证件号码",
-          name: "certNo"
+          type: 'text',
+          cnName: '证件号码',
+          name: 'certNo'
         }
       ],
       titles: [
         {
-          cnName: "用户id",
-          name: "id"
+          cnName: '用户id',
+          name: 'id'
         },
         {
-          cnName: "用户名",
-          name: "username"
+          cnName: '用户名',
+          name: 'username'
         },
         {
-          type: "select",
-          cnName: "证件类型",
-          name: "certType",
-          dictName: "CERT_TYPE"
+          type: 'select',
+          cnName: '证件类型',
+          name: 'certType',
+          dictName: 'CERT_TYPE'
         },
         {
-          cnName: "证件号码",
-          name: "certNo"
+          cnName: '证件号码',
+          name: 'certNo'
         }
       ],
       rules: {
         username: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         },
         realName: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         }
       },
       url: `${this.zlService.baseUrl}/user/select`,
@@ -133,13 +133,13 @@ export default {
   },
   methods: {
     add () {
-      this.viewPage = "add"
+      this.viewPage = 'add'
     },
     save () {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "addTable"
+        'addTable'
       )
       if (form.checkAll()) {
         const { reqData } = form
@@ -160,16 +160,16 @@ export default {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
-      if (JSON.stringify(table.selData) === "{}") {
-        alert("请选择一条记录")
+      if (JSON.stringify(table.selData) === '{}') {
+        alert('请选择一条记录')
         return
       }
-      this.viewPage = "update"
+      this.viewPage = 'update'
       const updateTable = _this.common.getComponent(
         this,
-        "updateTable"
+        'updateTable'
       )
       updateTable.setReqData(table.selData)
     },
@@ -177,7 +177,7 @@ export default {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "updateTable"
+        'updateTable'
       )
       if (form.checkAll()) {
         const { reqData } = form
@@ -198,23 +198,23 @@ export default {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
-      if (JSON.stringify(table.selData) === "{}") {
-        alert("请选择一条记录")
+      if (JSON.stringify(table.selData) === '{}') {
+        alert('请选择一条记录')
         return
       }
       const sel = table.selData
       this.zlaxios.request({
         url: _this.deleteUrl,
-        method: "POST",
+        method: 'POST',
         config: {
           params: {
             id: sel.id
           }
         },
         success () {
-          alert("删除成功")
+          alert('删除成功')
           table.query()
           table.selNum = -1
         },
@@ -227,17 +227,17 @@ export default {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       this.reqData = table.selData
-      this.viewPage = "view"
+      this.viewPage = 'view'
     },
     toBack () {
-      this.viewPage = "query"
+      this.viewPage = 'query'
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       table.query()
       table.selNum = -1
@@ -246,23 +246,23 @@ export default {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       this.reqData = table.selData
-      if (JSON.stringify(table.selData) === "{}") {
-        alert("请选择一条记录")
+      if (JSON.stringify(table.selData) === '{}') {
+        alert('请选择一条记录')
         return
       }
       const configTable = _this.common.getComponent(
         this,
-        "configTable"
+        'configTable'
       )
       configTable.setReqData(table.selData)
       const sel = table.selData
-      this.viewPage = "config"
+      this.viewPage = 'config'
       this.zlaxios.request({
         url: _this.chooseUrl,
-        method: "POST",
+        method: 'POST',
         config: {
           params: {
             userId: sel.id
@@ -281,16 +281,16 @@ export default {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "configTable"
+        'configTable'
       )
       const { reqData } = form
       reqData.list = this.chooesedData
       this.zlaxios.request({
         url: _this.configUrl,
-        method: "POST",
+        method: 'POST',
         data: reqData,
         success () {
-          alert("新增成功")
+          alert('新增成功')
         },
         error (error) {
           alert(error)
