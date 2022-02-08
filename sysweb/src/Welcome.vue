@@ -10,11 +10,11 @@
 
 <script>
 export default {
-  name: "Welcome",
+  name: 'Welcome',
   data () {
     return {
-      url: "/menu/selectMenu",
-      method: "post",
+      url: '/menu/selectMenu',
+      method: 'post',
       menu: []
     }
   },

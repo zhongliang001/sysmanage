@@ -1,10 +1,10 @@
-import Vue from "vue"
-import App from "./App.vue"
-import zolui from "zolui"
-import VueRouter from "vue-router"
-import zlService from "./lib/zlservice"
-import routes from "./routers"
-import "./scss/custom.scss"
+import Vue from 'vue'
+import App from './App.vue'
+import zolui from 'zolui'
+import VueRouter from 'vue-router'
+import zlService from './lib/zlservice'
+import routes from './routers'
+import './scss/custom.scss'
 
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
@@ -12,7 +12,8 @@ VueRouter.prototype.push = function push (location) {
   return originalPush.call(
     this,
     location
-  ).catch((err) => err)
+  )
+    .catch((err) => err)
 }
 
 Vue.config.devtools = true
@@ -34,7 +35,7 @@ Vue.prototype.zlaxios.request({
     ok = true
   },
   failed () {
-    alert("查询数据字典失败")
+    alert('查询数据字典失败')
   }
 })
 const timeout = 500
@@ -48,9 +49,9 @@ function inintData () {
     new Vue({
       router,
       render: (rh) => rh(App)
-    }).$mount("#app")
+    }).$mount('#app')
 
-    if (typeof (Vue) === "function") {
+    if (typeof (Vue) === 'function') {
       Vue.prototype.zlService = zlService
     }
     clearInterval(st)

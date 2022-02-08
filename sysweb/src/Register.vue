@@ -28,17 +28,17 @@
 <script>
 
 export default {
-  name: "Register",
+  name: 'Register',
   data () {
     return {
-      url: "/user/register",
-      method: "post",
+      url: '/user/register',
+      method: 'post',
       rules: {
         username: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         },
         realName: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         }
       }
     }
@@ -48,7 +48,7 @@ export default {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "register"
+        'register'
       )
       if (form.checkAll()) {
         const { reqData } = form
@@ -68,19 +68,19 @@ export default {
     validate () {
       const form = this.common.getComponent(
         this,
-        "register"
+        'register'
       )
       const { reqData } = form
       const { password } = reqData
       const { repassword } = reqData
       if (password !== repassword) {
-        alert("两次输入的密码不一样")
+        alert('两次输入的密码不一样')
         return false
       }
       return true
     },
     onLogin () {
-      this.$router.push({ name: "Login" })
+      this.$router.push({ name: 'Login' })
     }
   }
 }

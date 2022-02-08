@@ -26,17 +26,17 @@
 <script>
 
 export default {
-  name: "Login",
+  name: 'Login',
   data () {
     return {
-      url: "/oauth/token",
-      method: "post",
+      url: '/oauth/token',
+      method: 'post',
       rules: {
         username: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         },
         password: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         }
       }
     }
@@ -46,7 +46,7 @@ export default {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "login"
+        'login'
       )
       if (form.checkAll()) {
         const { reqData } = form
@@ -55,13 +55,13 @@ export default {
           method: _this.method,
           config: {
             auth: {
-              username: "app",
-              password: "123456"
+              username: 'app',
+              password: '123456'
             },
             params: reqData
           },
           success () {
-            _this.$router.push({ name: "Welcome" })
+            _this.$router.push({ name: 'Welcome' })
           },
           failed (error) {
             alert(error.response.data.error_description)
@@ -70,7 +70,7 @@ export default {
       }
     },
     onRegister () {
-      this.$router.push({ name: "Register" })
+      this.$router.push({ name: 'Register' })
     }
   }
 }

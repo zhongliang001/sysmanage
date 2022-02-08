@@ -58,70 +58,70 @@
 
 <script>
 export default {
-  name: "Role",
+  name: 'Role',
   data () {
     return {
-      viewPage: "query",
+      viewPage: 'query',
       fileds: [
         {
-          type: "text",
-          cnName: "角色id",
-          name: "id"
+          type: 'text',
+          cnName: '角色id',
+          name: 'id'
         },
         {
-          type: "text",
-          cnName: "角色名",
-          name: "name"
+          type: 'text',
+          cnName: '角色名',
+          name: 'name'
         }
       ],
       rules: {
         name: {
-          ruleName: ["isRequired"]
+          ruleName: ['isRequired']
         }
       },
       titles: [
         {
-          cnName: "角色id",
-          name: "id"
+          cnName: '角色id',
+          name: 'id'
         },
         {
-          cnName: "角色名",
-          name: "name"
+          cnName: '角色名',
+          name: 'name'
         },
         {
-          cnName: "角色描述",
-          name: "remark"
+          cnName: '角色描述',
+          name: 'remark'
         }
       ],
       rightTitles: [
         {
-          cnName: "菜单编号",
-          name: "id"
+          cnName: '菜单编号',
+          name: 'id'
         },
         {
-          cnName: "菜单名",
-          name: "name"
+          cnName: '菜单名',
+          name: 'name'
         },
         {
-          cnName: "菜单路径",
-          name: "path"
+          cnName: '菜单路径',
+          name: 'path'
         },
         {
-          cnName: "菜单文件",
-          name: "filePath"
+          cnName: '菜单文件',
+          name: 'filePath'
         },
         {
-          cnName: "父菜单编号",
-          name: "parentId"
+          cnName: '父菜单编号',
+          name: 'parentId'
         },
         {
-          cnName: "操作",
-          name: "actionDtos",
-          type: "checkbox",
-          checkCnName: "name",
-          checkName: "menuId",
-          value: "oper",
-          checkFlag: "hasRight"
+          cnName: '操作',
+          name: 'actionDtos',
+          type: 'checkbox',
+          checkCnName: 'name',
+          checkName: 'menuId',
+          value: 'oper',
+          checkFlag: 'hasRight'
         }
       ],
       reqData: {},
@@ -135,38 +135,38 @@ export default {
   },
   methods: {
     add () {
-      this.viewPage = "add"
+      this.viewPage = 'add'
     },
     update () {
       const table = this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       const updateForm = this.common.getComponent(
         this,
-        "updateForm"
+        'updateForm'
       )
       updateForm.setReqData(table.selData)
-      this.viewPage = "update"
+      this.viewPage = 'update'
     },
     del () {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       const sel = table.selData
       if (sel) {
         this.zlaxios.request({
           url: _this.delUrl,
-          method: "POST",
+          method: 'POST',
           config: {
             params: {
               id: sel.id
             }
           },
           success () {
-            alert("删除成功")
+            alert('删除成功')
             table.query()
             table.selNum = -1
           },
@@ -180,16 +180,16 @@ export default {
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       this.reqData = table.selData
-      this.viewPage = "view"
+      this.viewPage = 'view'
     },
     save () {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "addForm"
+        'addForm'
       )
       if (form.checkAll()) {
         const { reqData } = form
@@ -211,7 +211,7 @@ export default {
       const _this = this
       const form = _this.common.getComponent(
         this,
-        "updateForm"
+        'updateForm'
       )
       if (form.checkAll()) {
         const { reqData } = form
@@ -229,11 +229,11 @@ export default {
       }
     },
     toBack () {
-      this.viewPage = "query"
+      this.viewPage = 'query'
       const _this = this
       const table = _this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       table.query()
       table.selNum = -1
@@ -241,33 +241,33 @@ export default {
     right () {
       const table = this.common.getComponent(
         this,
-        "table"
+        'table'
       )
       const menuTable = this.common.getComponent(
         this,
-        "menuTable"
+        'menuTable'
       )
       const qTable = this.common.getComponent(
         menuTable,
-        "qTable"
+        'qTable'
       )
       qTable.setReqData(table.selData)
-      this.viewPage = "right"
+      this.viewPage = 'right'
       menuTable.query()
     },
     saveRight () {
       const menuTable = this.common.getComponent(
         this,
-        "menuTable"
+        'menuTable'
       )
       const qTable = this.common.getComponent(
         menuTable,
-        "qTable"
+        'qTable'
       )
       const _this = this
       this.zlaxios.request({
         url: _this.addRightUrl,
-        method: "post",
+        method: 'post',
         data: {
           menuRightDtos: menuTable.data,
           roleId: qTable.reqData.id
