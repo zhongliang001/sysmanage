@@ -1,7 +1,7 @@
 <template>
   <div>
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="table" method="post" :column="2" :fileds="fileds" :url="url" :titles="titles">
+      <zl-query-table ref="table" method="post" :column="2" :fields="fields" :url="url" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="删除" @click.native="del"></zl-button>
@@ -40,18 +40,20 @@
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="right">
-      <zl-query-table ref="menuTable" :column="2" re="menu" method="post" :url="rightUrl" :pagination="false"
-                      :titles="rightTitles">
-        <template slot="condition">
-          <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
-          <zl-item type="text" field-name="角色名" name="name" :readOnly="true"/>
-        </template>
-      </zl-query-table>
-      <div class="form-buttons">
-        <zl-button type="button" name="保存" @click.native="saveRight"></zl-button>
-        <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
-      </div>
+    <zl-page :viewPage="viewPage" page="right" ref="roleRight">
+      <zl-panel title="角色权限配置" :column="2" :view="true">
+        <zl-query-table ref="menuTable" :column="2" re="menu" method="post" :url="rightUrl" :pagination="false"
+                        :titles="rightTitles">
+          <template slot="condition">
+            <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
+            <zl-item type="text" field-name="角色名" name="name" :readOnly="true"/>
+          </template>
+        </zl-query-table>
+        <div class="form-buttons">
+          <zl-button type="button" name="保存" @click.native="saveRight"></zl-button>
+          <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
+        </div>
+      </zl-panel>
     </zl-page>
   </div>
 </template>
@@ -62,7 +64,7 @@ export default {
   data () {
     return {
       viewPage: 'query',
-      fileds: [
+      fields: [
         {
           type: 'text',
           cnName: '角色id',
@@ -241,17 +243,14 @@ export default {
     right () {
       const table = this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
       const menuTable = this.commonUtil.getComponent(
         this,
-        'menuTable'
+        'menuTable', true
       )
-      const qTable = this.commonUtil.getComponent(
-        menuTable,
-        'qTable'
-      )
-      qTable.setReqData(table.selData)
+      const roleRight = this.commonUtil.getComponent(this, 'roleRight', true)
+      roleRight.data = table.selData
       this.viewPage = 'right'
       menuTable.query()
     },

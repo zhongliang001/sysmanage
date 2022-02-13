@@ -9,28 +9,30 @@
         <zl-button type="button" name="菜单操作配置" @click.native="actionConfig"></zl-button>
       </zl-query-table>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="detail">
-      <zl-f-table ref="fTable" :column="2" :req-data="reqData">
-        <zl-item type="text" field-name="菜单编号" name="id"/>
-        <zl-item type="text" field-name="菜单名" name="name"/>
+    <zl-page :viewPage="viewPage" page="detail" ref="menuDetail">
+      <zl-panel title="菜单详情" :column="2" :view="true">
+        <zl-item type="text" field-name="菜单编号" name="menuId"/>
+        <zl-item type="text" field-name="菜单名" name="menuName"/>
         <zl-item type="text" field-name="父菜单编号" name="parentId"/>
         <zl-item type="text" field-name="菜单路径" name="path"/>
-        <zl-item type="text" field-name="菜单文件" name="filePath"/>
-      </zl-f-table>
+        <zl-item type="text" field-name="菜单文件" name="filePath" :readOnly="true"/>
+      </zl-panel>
       <div class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="add">
+    <zl-page :viewPage="viewPage" page="add" ref="addPage">
       <div style="display:block; float:left; width:200px; height: 100%">
-        <zl-tree :tree="tree" :sel="sel"/>
+        <zl-tree :tree="tree" :sel="sel" branchName="menuName"/>
       </div>
       <div style="width:80%;  float:left;">
         <zl-form ref="addMenu" :column="2" method="post" url="/menu/save">
-          <zl-item type="text" field-name="父菜单编号" name="parentId"/>
-          <zl-item type="text" field-name="菜单名" name="name"/>
-          <zl-item type="text" field-name="菜单路径" name="path"/>
-          <zl-item type="text" field-name="菜单文件" name="filePath"/>
+          <zl-panel title="菜单新增" :column="2">
+            <zl-item type="text" field-name="父菜单编号" name="parentId"/>
+            <zl-item type="text" field-name="菜单名" name="menuName"/>
+            <zl-item type="text" field-name="菜单路径" name="path"/>
+            <zl-item type="text" field-name="菜单文件" name="filePath"/>
+          </zl-panel>
         </zl-form>
         <div class="form-buttons">
           <zl-button type="button" name="保存" @click.native="save"></zl-button>
@@ -38,13 +40,15 @@
         </div>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="update">
-      <zl-form ref="updateMenu" :column="2" method="post" url="/menu/update">
-        <zl-item type="text" field-name="菜单编号" name="id" :readOnly="true"/>
-        <zl-item type="text" field-name="父菜单编号" name="parentId"/>
-        <zl-item type="text" field-name="菜单名" name="name"/>
-        <zl-item type="text" field-name="菜单路径" name="path"/>
-        <zl-item type="text" field-name="菜单文件" name="filePath"/>
+    <zl-page :viewPage="viewPage" page="update" ref="updateMenuPage">
+      <zl-form ref="updateMenu" method="post" :url="updateUrl">
+        <zl-panel title="菜单修改" :column="2">
+          <zl-item type="text" field-name="菜单编号" name="menuId" :readOnly="true"/>
+          <zl-item type="text" field-name="父菜单编号" name="parentId"/>
+          <zl-item type="text" field-name="菜单名" name="menuName"/>
+          <zl-item type="text" field-name="菜单路径" name="path"/>
+          <zl-item type="text" field-name="菜单文件" name="filePath"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="updateData"></zl-button>
@@ -64,12 +68,12 @@ export default {
         {
           type: 'text',
           cnName: '菜单名',
-          name: 'name'
+          name: 'menuName'
         },
         {
           type: 'text',
           cnName: '菜单编号',
-          name: 'id'
+          name: 'menuId'
         },
         {
           type: 'text',
@@ -80,11 +84,11 @@ export default {
       titles: [
         {
           cnName: '菜单编号',
-          name: 'id'
+          name: 'menuId'
         },
         {
           cnName: '菜单名',
-          name: 'name'
+          name: 'menuName'
         },
         {
           cnName: '菜单路径',
@@ -100,7 +104,8 @@ export default {
         }
       ],
       url: `${this.zlService.baseUrl}/menu/select`,
-      reqData: {},
+      updateUrl: `${this.zlService.baseUrl}/menu/update`,
+      // reqData: {},
       viewPage: 'query',
       sel: {
         data: {}
@@ -112,14 +117,11 @@ export default {
     sel: {
       handler (newVal) {
         const _this = this
-        const addMenu = _this.commonUtil.getComponent(
+        const addPage = _this.commonUtil.getComponent(
           this,
-          'addMenu'
+          'addPage', true
         )
-        addMenu.setData(
-          'parentId',
-          newVal.data.id
-        )
+        addPage.data = newVal.data
       },
       deep: true
     }
@@ -132,8 +134,7 @@ export default {
         url: `${_this.zlService.baseUrl}/menu/selectMenu`,
         method: 'POST',
         success (response) {
-          const zero = 0
-          _this.tree = response.data[zero]
+          _this.tree = response.data[0]
         },
         error (error) {
           alert(error)
@@ -144,26 +145,42 @@ export default {
       const _this = this
       const table = _this.commonUtil.getComponent(
         this,
-        'table'
+        'table',
+        true
       )
-      this.reqData = table.selData
+      const reqData = table.selData
+      const menuDetail = this.commonUtil.getComponent(
+        this,
+        'menuDetail',
+        true
+      )
       this.viewPage = 'detail'
-      // FTable.resetData(form.selData)
+      menuDetail.data = reqData
     },
     update () {
       const table = this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
-      const updateMenu = this.commonUtil.getComponent(
+      const updateMenuPage = this.commonUtil.getComponent(
         this,
-        'updateMenu'
+        'updateMenuPage',
+        true
       )
-      updateMenu.setReqData(table.selData)
+      updateMenuPage.data = table.selData
       this.viewPage = 'update'
     },
     toBack () {
       this.viewPage = 'query'
+    },
+    toBackAndQuery () {
+      this.viewPage = 'query'
+      const table = this.commonUtil.getComponent(
+        this,
+        'table',
+        true
+      )
+      table.query()
     },
     save () {
       const _this = this
@@ -188,20 +205,9 @@ export default {
       const _this = this
       const form = _this.commonUtil.getComponent(
         this,
-        'updateMenu'
+        'updateMenu', true
       )
-      const { reqData } = form
-      this.zlaxios.request({
-        url: this.zlService.baseUrl + form.url,
-        method: form.method,
-        data: reqData,
-        success () {
-          _this.toBack()
-        },
-        error (error) {
-          alert(error)
-        }
-      })
+      form.submit(this.toBackAndQuery)
     },
     delData () {
       const table = this.commonUtil.getComponent(
@@ -213,7 +219,7 @@ export default {
         method: 'POST',
         config: {
           params: {
-            id: table.selData.id
+            menuId: table.selData.menuId
           }
         },
         success () {
@@ -229,9 +235,10 @@ export default {
     actionConfig () {
       const table = this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
       const { selData } = table
+      console.log(selData)
       if (selData) {
         this.$router.push({
           path: 'Action',
