@@ -73,7 +73,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public int save(Menu menu){
         ResultDto<String> menu1 = sequenceFeign.getSequnces("MENU_TMP");
-        menu.setId(menu1.getData());
+        menu.setMenuId(menu1.getData());
         return menuMapper.save(menu);
     }
 

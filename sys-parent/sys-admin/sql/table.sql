@@ -13,8 +13,6 @@ create table dict
     order_id    char(2) comment '排序编号'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment '数据字典表';
-select *
-from dict;
 
 
 create table user
@@ -40,8 +38,8 @@ create table user
 
 create table menu
 (
-    id        varchar(32) not null primary key comment '菜单id',
-    name      varchar(64) comment '菜单名',
+    menu_id        varchar(32) not null primary key comment '菜单id',
+    menu_name      varchar(64) comment '菜单名',
     path      varchar(256) comment '菜单路由',
     parent_id varchar(32) comment '父菜单id',
     file_path varchar(32) comment '组件文件'

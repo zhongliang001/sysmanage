@@ -54,7 +54,7 @@ public class MenuControllerTest {
                 .accept(MediaType.APPLICATION_JSON_UTF8))
 //                .param("name", "Tom"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").exists())
 //                .andExpect(MockMvcResultMatchers.status().isOk()) //400错误请求
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

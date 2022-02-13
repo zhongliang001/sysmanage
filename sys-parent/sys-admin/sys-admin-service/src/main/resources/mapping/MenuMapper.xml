@@ -2,25 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.sysadminservice.menu.mapper.MenuMapper">
     <resultMap id="menu" type="com.zl.domain.Menu">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <id column="menu_id" jdbcType="VARCHAR" property="menuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
     </resultMap>
 
     <resultMap id="menuDto" type="com.zl.dto.MenuDto" extends="menu">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <id column="menu_id" jdbcType="VARCHAR" property="menuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
-        <collection column="{menuId=id, actions=actions}" property="actionDtos" javaType="java.util.List" ofType="com.zl.domain.ActionDto" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByMenuIdWithRole" />
-        <collection column="{parentId=id, actions=actions}" property="children" javaType="java.util.List" ofType="com.zl.domain.Menu" select="selectMenu" />
+        <collection column="{menuId=menu_id, actions=actions}" property="actionDtos" javaType="java.util.List"
+                    ofType="com.zl.domain.ActionDto"
+                    select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByMenuIdWithRole"/>
+        <collection column="{parentId=menu_id, actions=actions}" property="children" javaType="java.util.List"
+                    ofType="com.zl.domain.Menu" select="selectMenu"/>
     </resultMap>
-    <select id="selectMenu" resultMap="menuDto" >
+    <select id="selectMenu" resultMap="menuDto">
         select
-        m.id, m.name, m.path, m.file_path, m.parent_id, #{actions} actions
+        m.menu_id, m.menu_name, m.path, m.file_path, m.parent_id, #{actions} actions
         from
         menu m
         <where>
@@ -32,54 +35,65 @@
             </if>
             and exists (
             select 1 from role_right r left join action a on r.action_id = a.id where r.role_id in
-            (#{actions}) and a.menu_id = m.id and a.oper ='visit'
-                    )
+            (#{actions}) and a.menu_id = m.menu_id and a.oper ='visit'
+            )
         </where>
     </select>
 
     <select id="select" resultMap="menu" parameterType="java.util.Map">
         select
-        id, name, path, file_path, parent_id
+        menu_id, menu_name, path, file_path, parent_id
         from
         menu
         <where>
             <if test="parentId != null">
                 parent_id = #{parentId}
             </if>
-            <if test="name != null">
-               and name = #{name}
+            <if test="menuName != null">
+                and menu_name = #{menuName}
             </if>
         </where>
     </select>
 
     <insert id="save" parameterType="com.zl.domain.Menu">
-        insert into menu ( id, name, path, file_path, parent_id)
-        values ( #{id}, #{name}, #{path}, #{filePath}, #{parentId})
+        insert into menu (menu_id, menu_name, path, file_path, parent_id)
+        values (#{menuId}, #{menuName}, #{path}, #{filePath}, #{parentId})
     </insert>
 
     <update id="update" parameterType="com.zl.domain.Menu">
-        update menu set
-            name =  #{name}, path = #{path},file_path = #{filePath}, parent_id = #{parentId} where id = #{id}
+        update menu
+        set menu_name = #{menuName},
+            path      = #{path},
+            file_path = #{filePath},
+            parent_id = #{parentId}
+        where menu_id = #{menuId}
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        delete from menu where id = #{id}
+        delete
+        from menu
+        where menu_id = #{menuId}
     </delete>
 
     <resultMap id="menuRight" type="com.zl.dto.MenuRightDto">
-        <id column="id" jdbcType="VARCHAR" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <id column="menu_id" jdbcType="VARCHAR" property="menuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
-        <collection column="{menuId=id,roleId=roleId}" property="actionDtos" javaType="java.util.List" ofType="com.zl.dto.ActionDto" select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByRole" />
+        <collection column="{menuId=menu_id,roleId=roleId}" property="actionDtos" javaType="java.util.List"
+                    ofType="com.zl.dto.ActionDto"
+                    select="com.zl.sysadminservice.action.mapper.ActionMapper.selectByRole"/>
     </resultMap>
 
-    <select id="selectByRole"  resultMap="menuRight" parameterType="java.util.Map">
-        select
-            id, name, path, file_path, parent_id, #{id} as roleId
-        from
-            menu
+    <select id="selectByRole" resultMap="menuRight" parameterType="java.util.Map">
+        select menu_id,
+               menu_name,
+               path,
+               file_path,
+               parent_id,
+               #{id} as roleId
+        from menu
     </select>
 
 

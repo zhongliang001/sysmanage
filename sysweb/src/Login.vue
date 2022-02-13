@@ -5,10 +5,12 @@
         <h4 class="title">
           密码登录
         </h4>
-        <zl-form custom-class="form-horizontal" ref="login" :column="1" :method="method" :url="url">
-          <zl-item type="text" field-name="用户名" name="username" :rules="rules.username"/>
-          <zl-item type="password" field-name="密 码" name="password" :rules="rules.password"/>
-          <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" hidden="true"/>
+        <zl-form custom-class="form-horizontal" ref="login"  :method="method" :url="url">
+          <zl-panel :column="1">
+            <zl-item type="text" field-name="用户名" name="username" :rules="rules.username"/>
+            <zl-item type="password" field-name="密 码" name="password" :rules="rules.password"/>
+            <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" hidden="true"/>
+          </zl-panel>
         </zl-form>
         <div >
           <zl-button type="submit" name="登录"
