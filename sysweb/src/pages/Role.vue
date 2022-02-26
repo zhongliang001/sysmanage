@@ -9,29 +9,34 @@
         <zl-button type="button" name="角色权限配置" @click.native="right"></zl-button>
       </zl-query-table>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="add">
-      <zl-form ref="addForm" :column="2" :url="addUrl" method="post">
-        <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
-        <zl-item type="text" field-name="角色描述" name="remark"/>
+    <zl-page :viewPage="viewPage" page="add" ref="addPage">
+      <zl-form ref="addForm" :url="addUrl" method="post">
+        <zl-panel title="新增角色" :column="2">
+          <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
+          <zl-item type="text" field-name="角色描述" name="remark"/>
+        </zl-panel>
+        /
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="update">
+    <zl-page :viewPage="viewPage" page="update" ref="updatePage">
       <zl-form ref="updateForm" :column="2" method="post" :url="updateUrl">
-        <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
-        <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
-        <zl-item type="text" field-name="角色描述" name="remark"/>
+        <zl-panel title="修改角色" :column="2">
+          <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
+          <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
+          <zl-item type="text" field-name="角色描述" name="remark"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="saveUpdate"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="view">
-      <zl-f-table ref="fTable" :column="2" :req-data="reqData">
+    <zl-page :viewPage="viewPage" page="view" ref="detailPage">
+      <zl-f-table ref="fTable" :column="2">
         <zl-item type="text" field-name="角色id" name="id"/>
         <zl-item type="text" field-name="角色名" name="name"/>
         <zl-item type="text" field-name="角色描述" name="remark"/>
@@ -49,11 +54,12 @@
             <zl-item type="text" field-name="角色名" name="name" :readOnly="true"/>
           </template>
         </zl-query-table>
-        <div class="form-buttons">
-          <zl-button type="button" name="保存" @click.native="saveRight"></zl-button>
-          <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
-        </div>
       </zl-panel>
+      <div class="form-buttons">
+        <zl-button type="button" name="保存" @click.native="saveRight"></zl-button>
+        <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
+      </div>
+
     </zl-page>
   </div>
 </template>
@@ -98,11 +104,11 @@ export default {
       rightTitles: [
         {
           cnName: '菜单编号',
-          name: 'id'
+          name: 'menuId'
         },
         {
           cnName: '菜单名',
-          name: 'name'
+          name: 'menuName'
         },
         {
           cnName: '菜单路径',
@@ -126,7 +132,6 @@ export default {
           checkFlag: 'hasRight'
         }
       ],
-      reqData: {},
       url: `${this.zlService.baseUrl}/role/select`,
       addUrl: `${this.zlService.baseUrl}/role/add`,
       updateUrl: `${this.zlService.baseUrl}/role/update`,
@@ -142,14 +147,14 @@ export default {
     update () {
       const table = this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
-      const updateForm = this.commonUtil.getComponent(
+      const updatePage = this.commonUtil.getComponent(
         this,
-        'updateForm'
+        'updatePage', true
       )
-      updateForm.setReqData(table.selData)
       this.viewPage = 'update'
+      updatePage.data = table.selData
     },
     del () {
       const _this = this
@@ -182,60 +187,38 @@ export default {
       const _this = this
       const table = _this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
-      this.reqData = table.selData
-      this.viewPage = 'view'
+      const detailPage = _this.commonUtil.getComponent(this, 'detailPage', true)
+      if (JSON.stringify(table.selData) === '{}') {
+        this.viewPage = 'view'
+        detailPage.data = table.selData
+      } else {
+        alert('请选择一条记录')
+      }
     },
     save () {
       const _this = this
       const form = _this.commonUtil.getComponent(
         this,
-        'addForm'
+        'addForm', true
       )
-      if (form.checkAll()) {
-        const { reqData } = form
-        this.zlaxios.request({
-          url: _this.addUrl,
-          method: form.method,
-          data: reqData,
-          success () {
-            form.reset()
-            _this.toBack()
-          },
-          error (error) {
-            alert(error)
-          }
-        })
-      }
+      form.submit(_this.toBack)
     },
     saveUpdate () {
       const _this = this
       const form = _this.commonUtil.getComponent(
         this,
-        'updateForm'
+        'updateForm', true
       )
-      if (form.checkAll()) {
-        const { reqData } = form
-        this.zlaxios.request({
-          url: this.addUrl,
-          method: form.method,
-          data: reqData,
-          success () {
-            _this.toBack()
-          },
-          error (error) {
-            alert(error)
-          }
-        })
-      }
+      form.submit(_this.toBack)
     },
     toBack () {
       this.viewPage = 'query'
       const _this = this
       const table = _this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
       table.query()
       table.selNum = -1
@@ -250,18 +233,18 @@ export default {
         'menuTable', true
       )
       const roleRight = this.commonUtil.getComponent(this, 'roleRight', true)
-      roleRight.data = table.selData
       this.viewPage = 'right'
-      menuTable.query()
+      roleRight.data = table.selData
+      menuTable.query(table.selData)
     },
     saveRight () {
       const menuTable = this.commonUtil.getComponent(
         this,
-        'menuTable'
+        'menuTable', true
       )
       const qTable = this.commonUtil.getComponent(
         menuTable,
-        'qTable'
+        'qTable', true
       )
       const _this = this
       this.zlaxios.request({
@@ -269,7 +252,7 @@ export default {
         method: 'post',
         data: {
           menuRightDtos: menuTable.data,
-          roleId: qTable.reqData.id
+          roleId: qTable.getReqData().id
         },
         success () {
           _this.toBack()

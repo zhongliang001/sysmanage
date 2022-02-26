@@ -11,12 +11,14 @@
     </zl-page>
     <zl-page :view-page="viewPage" page="add" ref="addPage">
       <zl-form ref="add" :url="addUrl" :column="2" method="post">
-        <zl-item type="text" field-name="菜单id" name="menuId" :default-value="query.menuId"
-                 :read-only="query.menuId !== undefined&& query.menuId !== null && menuId !==''"/>
-        <zl-item type="text" field-name="菜单名" name="menuName" :default-value="query.menuName"
-                 :read-only="query.menuName !== undefined && query.menuName !== null && query.menuName !==''"/>
-        <zl-item type="text" field-name="操作名" name="name"/>
-        <zl-item type="text" field-name="操作" name="oper"/>
+        <zl-panel title="新增操作" :column="2">
+          <zl-item type="text" field-name="菜单id" name="menuId" :default-value="query.menuId"
+                   :read-only="query.menuId !== undefined&& query.menuId !== null && menuId !==''"/>
+          <zl-item type="text" field-name="菜单名" name="menuName" :default-value="query.menuName"
+                   :read-only="query.menuName !== undefined && query.menuName !== null && query.menuName !==''"/>
+          <zl-item type="text" field-name="操作名" name="name"/>
+          <zl-item type="text" field-name="操作" name="oper"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"/>
@@ -26,13 +28,13 @@
     <zl-page :view-page="viewPage" page="update" ref="updatePage">
       <zl-form ref="updateTable" :url="updateUrl" method="post">
         <zl-panel title="操作修改" :column="2">
-        <zl-item type="text" field-name="菜单名" name="menuName"
-                 :read-only="true"/>
-        <zl-item type="text" field-name="菜单id" name="menuId"
-                 :read-only="true"/>
-        <zl-item type="text" field-name="操作名" name="name"/>
-        <zl-item type="text" field-name="操作" name="oper"/>
-        <zl-item type="text" field-name="操作id" name="id" hidden="true"/>
+          <zl-item type="text" field-name="菜单名" name="menuName"
+                   :read-only="true"/>
+          <zl-item type="text" field-name="菜单id" name="menuId"
+                   :read-only="true"/>
+          <zl-item type="text" field-name="操作名" name="name"/>
+          <zl-item type="text" field-name="操作" name="oper"/>
+          <zl-item type="text" field-name="操作id" name="id" hidden="true"/>
         </zl-panel>
       </zl-form>
       <div class="form-buttons">
@@ -40,13 +42,13 @@
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :view-page="viewPage" page="detail">
-      <zl-f-table ref="fTable" :column="2" :view="true" :req-data="detail">
+    <zl-page :view-page="viewPage" page="detail" ref="detail">
+      <zl-panel title="操作详情" :column="2" :view="true">
         <zl-item type="text" field-name="操作id" name="id"/>
         <zl-item type="text" field-name="菜单id" name="menuId"/>
         <zl-item type="text" field-name="操作名" name="name"/>
         <zl-item type="text" field-name="操作" name="oper"/>
-      </zl-f-table>
+      </zl-panel>
       <div class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
@@ -115,28 +117,25 @@ export default {
       const queryPage = _this.commonUtil.getComponent(_this, 'queryPage', true)
       queryPage.data = query
       _this.query = query
+      _this.fields[0].readOnly = true
+      _this.fields[1].readOnly = true
     })
   },
   methods: {
     add () {
+      const { query } = this.$route
+      const _this = this
+      const addPage = _this.commonUtil.getComponent(_this, 'addPage', true)
       this.viewPage = 'add'
+      addPage.data = query
     },
     save () {
       const _this = this
       const form = _this.commonUtil.getComponent(
         this,
-        'add'
+        'add', true
       )
-      const { reqData } = form
-      this.zlaxios.request({
-        url: this.addUrl,
-        method: form.method,
-        data: reqData,
-        success () {
-          form.reset()
-          _this.toBack()
-        }
-      })
+      form.submit(this.toBack)
     },
     toBack () {
       this.viewPage = 'query'
@@ -157,8 +156,8 @@ export default {
           this,
           'updatePage', true
         )
-        updatePage.data = selData
         this.viewPage = 'update'
+        updatePage.data = selData
       } else {
         alert('请选择一条记录')
       }
@@ -173,12 +172,18 @@ export default {
     viewDetail () {
       const table = this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
+      // eslint-disable-next-line no-debugger
+      debugger
       const { selData } = table
       if (selData) {
-        this.detail = selData
+        const detail = this.commonUtil.getComponent(
+          this,
+          'detail', true
+        )
         this.viewPage = 'detail'
+        detail.data = selData
       } else {
         alert('请选择一条记录')
       }
@@ -187,7 +192,7 @@ export default {
       const _this = this
       const table = this.commonUtil.getComponent(
         this,
-        'table'
+        'table', true
       )
       const { selData } = table
       if (selData) {

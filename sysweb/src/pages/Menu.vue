@@ -167,8 +167,8 @@ export default {
         'updateMenuPage',
         true
       )
-      updateMenuPage.data = table.selData
       this.viewPage = 'update'
+      updateMenuPage.data = table.selData
     },
     toBack () {
       this.viewPage = 'query'

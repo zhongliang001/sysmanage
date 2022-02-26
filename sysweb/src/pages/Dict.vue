@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%">
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="dict" method="post" :fileds="fileds" :url="url" :titles="titles">
+      <zl-query-table ref="dict" method="post" :fields="fields" :url="url" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="删除" @click.native="del"></zl-button>
@@ -9,31 +9,35 @@
         <zl-button type="button" name="重载缓存" @click.native="reload"></zl-button>
       </zl-query-table>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="detail">
-      <zl-f-table ref="fTable" :column="2" :req-data="reqData">
-        <zl-item type="text" field-name="数据字典类型" name="dictType"/>
-        <zl-item type="text" field-name="数据字典描述" name="dictDesc"/>
-      </zl-f-table>
-      <zl-query-table :isShow="isShow" ref="dictDetail" method="post" :titles="detailTitles" :url="detailUrl">
-      </zl-query-table>
-      <div class="form-buttons">
-        <zl-button type="button" name="返回" @click.native="toQuery"></zl-button>
-      </div>
+    <zl-page :viewPage="viewPage" page="detail" ref="detail">
+        <zl-query-table ref="dictDetail" method="post" :titles="detailTitles" :url="detailUrl">
+          <template slot="condition">
+            <zl-item type="text" field-name="数据字典类型" name="dictType"/>
+            <zl-item type="text" field-name="数据字典描述" name="dictDesc"/>
+          </template>
+        </zl-query-table>
+        <div class="form-buttons">
+          <zl-button type="button" name="返回" @click.native="toQuery"></zl-button>
+        </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="update" :url="updateUrl">
-      <zl-form ref="updateTable" :url="url" :column="2" method="post">
+    <zl-page :viewPage="viewPage" page="update" ref="update">
+      <zl-form ref="updateForm" :url="updateUrl" :column="2" method="post">
+        <zl-panel title="修改字典" :column="2" >
         <zl-item type="text" field-name="数据字典类型" name="dictType" required="true" :readOnly="true"/>
-        <zl-item ref="dictDesc" type="text" field-name="数据字典描述" name="dictDesc" required="true"/>
+        <zl-item type="text" field-name="数据字典描述" name="dictDesc" required="true"/>
+        </zl-panel>
       </zl-form>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="saveUpdate"></zl-button>
         <zl-button type="button" name="返回" @click.native="toQuery"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="add" :url="addQueryUrl">
-      <zl-form ref="isExists" :url="url" :column="2" method="post">
-        <zl-item type="text" field-name="数据字典类型" name="dictType" required="true"/>
-        <zl-item ref="dictDesc" type="text" field-name="数据字典描述" name="dictDesc" :readOnly="true" required="true"/>
+    <zl-page :viewPage="viewPage" page="add" :url="addQueryUrl" ref="isExists">
+      <zl-form ref="isExistsForm" :url="url" method="post">
+        <zl-panel title="新增字典" :column="2">
+          <zl-item type="text" field-name="数据字典类型" name="dictType" required="true"/>
+          <zl-item type="text" field-name="数据字典描述" name="dictDesc" required="true"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="查询" @click.native="query"></zl-button>
@@ -41,12 +45,12 @@
         <zl-button type="button" name="返回" @click.native="toQuery"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="nextPage">
-      <zl-f-table ref="nextPageTable" :column="2" :req-data="reqData2">
-        <zl-item type="text" field-name="数据字典类型" name="dictType"/>
-        <zl-item type="text" field-name="数据字典描述" name="dictDesc"/>
-      </zl-f-table>
-      <zl-query-table :isShow="isShow" ref="dictNextDetail" method="post" :titles="detailTitles" :url="detailUrl">
+    <zl-page :viewPage="viewPage" page="nextPage" ref="dictNext">
+      <zl-query-table ref="dictNextDetail" method="post" :titles="detailTitles" :url="detailUrl">
+        <template slot="condition">
+          <zl-item type="text" field-name="数据字典类型" name="dictType"/>
+          <zl-item type="text" field-name="数据字典描述" name="dictDesc"/>
+        </template>
         <zl-button type="button" name="新增" @click.native="addDict"></zl-button>
         <zl-button type="button" name="修改" @click.native="updateDict"></zl-button>
         <zl-button type="button" name="删除" @click.native="delDict"></zl-button>
@@ -55,24 +59,29 @@
         <zl-button type="button" name="返回" @click.native="toAddPage"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="addDict">
-      <zl-form ref="addDict" :url="addUrl" :column="2" method="post">
-        <zl-item type="text" field-name="数据字典类型" name="dictType" :readOnly="true"/>
-        <zl-item type="text" field-name="数据字典描述" name="dictDesc" :readOnly="true"/>
-        <zl-item type="text" field-name="字典码" name="enName" required="true"/>
-        <zl-item type="text" field-name="中文名" name="cnName" required="true"/>
+    <zl-page :viewPage="viewPage" page="addDict" ref="addDict">
+      <zl-form ref="addDictForm" :url="addUrl" :column="2" method="post">
+        <zl-panel title="新增字典详情" :column="2" >
+          <zl-item type="text" field-name="数据字典类型" name="dictType" :readOnly="true"/>
+          <zl-item type="text" field-name="数据字典描述" name="dictDesc" :readOnly="true"/>
+          <zl-item type="text" field-name="字典码" name="enName" required="true"/>
+          <zl-item type="text" field-name="中文名" name="cnName" required="true"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"></zl-button>
         <zl-button type="button" name="返回" @click.native="toNextPage"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="updateDict">
-      <zl-form ref="updateDict" :url="updateDictUrl" :column="2" method="post">
-        <zl-item type="text" field-name="数据字典类型" name="dictType" :readOnly="true"/>
-        <zl-item type="text" field-name="数据字典描述" name="dictDesc" :readOnly="true"/>
-        <zl-item type="text" field-name="字典码" name="enName" required="true"/>
-        <zl-item type="text" field-name="中文名" name="cnName" required="true"/>
+    <zl-page :viewPage="viewPage" page="updateDict" ref="updateDict">
+      <zl-form ref="updateDictForm" :url="updateDictUrl" method="post">
+        <zl-panel title="修改字典详情" :column="2" >
+          <zl-item type="text" field-name="数据字典类型" name="dictType" :readOnly="true"/>
+          <zl-item type="text" field-name="数据字典描述" name="dictDesc" :readOnly="true"/>
+          <zl-item type="text" field-name="字典码" name="enName" required="true"/>
+          <zl-item type="text" field-name="中文名" name="cnName" required="true"/>
+          <zl-item type="text" field-name="数据字典id" name="id" :hidden="true"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="saveUpdateDict"></zl-button>
@@ -91,7 +100,7 @@ export default {
   data () {
     return {
       viewPage: 'query',
-      fileds: [
+      fields: [
         {
           type: 'text',
           cnName: '数据字典类型',
@@ -139,8 +148,6 @@ export default {
       updateUrl: `${this.zlService.baseUrl}/dict/update`,
       updateDictUrl: `${this.zlService.baseUrl}/dict/updateDict`,
       reloadUrl: `${this.zlService.baseUrl}/dict/reloadRedisDict`,
-      reqData: {},
-      reqData2: {},
       isShow: false
     }
   },
@@ -149,16 +156,20 @@ export default {
       const _this = this
       const table = _this.commonUtil.getComponent(
         this,
-        'dict'
+        'dict',
+        true
       )
-      this.reqData = table.selData
       this.viewPage = 'detail'
-      const detailTable = _this.commonUtil.getComponent(
+      const detail = _this.commonUtil.getComponent(
         this,
-        'dictDetail'
+        'detail', true
       )
-      detailTable.setReqData(this.reqData)
-      detailTable.query()
+      detail.data = table.selData
+      const dictDetail = _this.commonUtil.getComponent(
+        this,
+        'dictDetail', true
+      )
+      dictDetail.data = []
     },
     add () {
       this.viewPage = 'add'
@@ -167,7 +178,8 @@ export default {
       const _this = this
       const table = _this.commonUtil.getComponent(
         this,
-        'dict'
+        'dict',
+        true
       )
       const sel = table.selData
       if (sel) {
@@ -208,67 +220,50 @@ export default {
       const _this = this
       const table = _this.commonUtil.getComponent(
         this,
-        'dict'
+        'dict', true
       )
       if (JSON.stringify(table.selData) === '{}') {
         alert('请选择一条记录')
         return
       }
       this.viewPage = 'update'
-      const updateTable = _this.commonUtil.getComponent(
+      const update = _this.commonUtil.getComponent(
         this,
-        'updateTable'
+        'update', true
       )
-      updateTable.setReqData(table.selData)
+      update.data = table.selData
     },
     saveUpdate () {
       const _this = this
-      const updateTable = _this.commonUtil.getComponent(
+      const updateForm = _this.commonUtil.getComponent(
         this,
-        'updateTable'
+        'updateForm', true
       )
-      this.zlaxios.request({
-        url: _this.updateUrl,
-        method: updateTable.method,
-        data: updateTable.reqData,
-        success () {
-          _this.toQuery()
-          const table = _this.commonUtil.getComponent(
-            this,
-            'dict'
-          )
-          table.query()
-        },
-        error (error) {
-          alert(error)
-        }
-      })
+      // eslint-disable-next-line no-debugger
+      debugger
+      updateForm.submit(_this.toQuery)
     },
     query () {
       const _this = this
-      const isExists = _this.commonUtil.getComponent(
+      const isExistsForm = _this.commonUtil.getComponent(
         this,
-        'isExists'
+        'isExistsForm', true
       )
-      const { reqData } = isExists
+      const reqData = isExistsForm.getReqData()
       this.zlaxios.request({
         url: _this.addQueryUrl,
-        method: isExists.method,
+        method: isExistsForm.method,
         data: reqData,
         success (response) {
           const zero = 0
           if (response.data[zero]) {
-            isExists.reqData = response.data[zero]
-            isExists.setData(
-              'dictDesc',
-              response.data[zero].dictDesc
+            const isExists = _this.commonUtil.getComponent(
+              _this,
+              'isExists', true
             )
-            isExists.changeReadOnly(
-              'dictDesc',
-              true
-            )
+            isExists.data = response.data[zero]
           } else {
-            isExists.changeReadOnly(
+            isExistsForm.changeReadOnly(
               'dictDesc',
               false
             )
@@ -281,23 +276,23 @@ export default {
     },
     next () {
       const _this = this
-      const isExists = _this.commonUtil.getComponent(
+      const isExistsForm = _this.commonUtil.getComponent(
         this,
-        'isExists'
+        'isExistsForm', true
       )
-      const checkAll = isExists.checkAll()
+      const checkAll = isExistsForm.checkAll()
       if (checkAll) {
-        const { reqData } = isExists
+        const reqData = isExistsForm.getReqData()
         this.zlaxios.request({
           url: _this.addQueryUrl,
-          method: isExists.method,
+          method: isExistsForm.method,
           data: reqData,
           success (response) {
             const zero = 0
-            if (response.data[zero] && !(isExists.reqData.dictType === response.data[zero].dictType && isExists.reqData.dictDesc === response.data[zero].dictDesc)) {
+            if (response.data[zero] && !(reqData.dictType === response.data[zero].dictType && reqData.dictDesc === response.data[zero].dictDesc)) {
               alert('新增的数据字典类型已经存在，但与你录入的数据字典类型与数据字典类型描述不一致, 请重新查询后再进行下一步!')
             } else {
-              _this.toNext(isExists.reqData)
+              _this.toNext(reqData)
             }
           },
           error (error) {
@@ -308,90 +303,71 @@ export default {
     },
     toNext (reqData) {
       const _this = this
-      this.reqData2 = reqData
+      // this.reqData2 = reqData
+      const dictNext = this.commonUtil.getComponent(
+        _this,
+        'dictNext', true
+      )
+      dictNext.data = reqData
       const dictNextDetail = this.commonUtil.getComponent(
         _this,
-        'dictNextDetail'
+        'dictNextDetail', true
       )
-      dictNextDetail.setReqData(this.reqData2)
-      dictNextDetail.query()
+      dictNextDetail.data = []
       _this.viewPage = 'nextPage'
     },
     addDict () {
       const _this = this
       const addDict = this.commonUtil.getComponent(
         _this,
-        'addDict'
+        'addDict', true
       )
-      const isExists = _this.commonUtil.getComponent(
+      const isExistsForm = _this.commonUtil.getComponent(
         this,
-        'isExists'
+        'isExistsForm', true
       )
-      addDict.setData(
-        'dictType',
-        isExists.reqData.dictType
-      )
-      addDict.setData(
-        'dictDesc',
-        isExists.reqData.dictDesc
-      )
+      // eslint-disable-next-line no-debugger
+      debugger
+      addDict.data = isExistsForm.getReqData()
       _this.viewPage = 'addDict'
     },
     save () {
       const _this = this
       const form = _this.commonUtil.getComponent(
         this,
-        'addDict'
+        'addDictForm', true
       )
-      const { reqData } = form
-      this.zlaxios.request({
-        url: this.addUrl,
-        method: form.method,
-        data: reqData,
-        success () {
-          _this.toNextPage()
-        },
-        error (error) {
-          alert(error)
-        }
-      })
+      form.submit(this.next)
     },
-    updateDict () {
+    updateDict: function () {
       const _this = this
       const dictNextDetail = this.commonUtil.getComponent(
         _this,
-        'dictNextDetail'
+        'dictNextDetail', true
       )
       const updateDict = this.commonUtil.getComponent(
         _this,
-        'updateDict'
+        'updateDict', true
       )
-      updateDict.setReqData(dictNextDetail.selData)
+      // eslint-disable-next-line no-debugger
+      debugger
+      updateDict.data = dictNextDetail.selData
       this.viewPage = 'updateDict'
     },
     saveUpdateDict () {
       const _this = this
-      const updateDict = this.commonUtil.getComponent(
+      const updateDictForm = this.commonUtil.getComponent(
         _this,
-        'updateDict'
+        'updateDictForm',
+        true
       )
-      this.zlaxios.request({
-        url: this.addUrl,
-        method: updateDict.method,
-        data: updateDict.reqData,
-        success () {
-          _this.toNextPage()
-        },
-        error (error) {
-          alert(error)
-        }
-      })
+      updateDictForm.submit(this.next)
     },
     delDict () {
       const _this = this
       const nextPageTable = this.commonUtil.getComponent(
         _this,
-        'dictNextDetail'
+        'dictNextDetail', true
       )
       const sel = nextPageTable.selData
       if (sel) {
