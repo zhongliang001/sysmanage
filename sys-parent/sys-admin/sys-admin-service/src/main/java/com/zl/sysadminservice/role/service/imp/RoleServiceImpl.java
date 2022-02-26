@@ -9,6 +9,7 @@ import com.zl.domain.Role;
 import com.zl.sys.sequence.feign.client.SequenceFeign;
 import com.zl.sysadminservice.role.mapper.RoleMapper;
 import com.zl.sysadminservice.role.service.RoleService;
+import com.zl.sysadminservice.roleright.mapper.RoleRightMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -31,6 +32,9 @@ public class RoleServiceImpl implements RoleService {
      */
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private RoleRightMapper roleRightMapper;
 
     /**
      * 序列表号生成Feign
@@ -109,6 +113,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int delete(String id) {
         try {
+            roleRightMapper.deleteByRoleId(id);
             return roleMapper.delete(id);
         } catch (Exception e) {
             e.printStackTrace();

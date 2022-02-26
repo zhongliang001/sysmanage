@@ -28,6 +28,7 @@ security:
     - /sys-uua/login
     - /sys-admin-service/dict/dictTree
     - /sys-admin-service/user/register
-
+    - /sys-sequence-service/v2/api-docs
+    - /sys-admin-service/v2/api-docs
 swagger:
   enabled: false
