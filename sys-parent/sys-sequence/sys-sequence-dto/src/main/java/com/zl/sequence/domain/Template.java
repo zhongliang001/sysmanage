@@ -1,62 +1,76 @@
-package com.zl.sequence;
-
-import java.io.Serializable;
+package com.zl.sequence.domain;
 
 /**
- * <p>
- *     序列模板类
- * </p>
- * @author zhongliang
+ * Table: template
  */
-public class Template implements Serializable {
-
+public class Template {
     /**
-     * 模板编号
+     * Column: id
+     * Type: VARCHAR(32)
+     * Remark: 主键id
      */
     private String id;
 
     /**
-     * 模板名
+     * Column: name
+     * Type: VARCHAR(32)
+     * Remark: 模板名
      */
     private String name;
 
     /**
-     * 模板
+     * Column: temp
+     * Type: VARCHAR(64)
+     * Remark: 模板
      */
     private String temp;
 
     /**
-     * 序列起始值
+     * Column: start
+     * Type: INT
+     * Remark: 起始数据
      */
     private Integer start;
 
     /**
-     *  序列结束值
+     * Column: end
+     * Type: INT
+     * Remark: 结束数据
      */
     private Integer end;
 
     /**
-     * 序列长度
+     * Column: length
+     * Type: VARCHAR(20)
+     * Remark: 长度
      */
-    private Integer length;
+    private String length;
 
     /**
-     * 创建时间
+     * Column: create_time
+     * Type: VARCHAR(20)
+     * Remark: 创建时间
      */
     private String createTime;
 
     /**
-     * 创建人
+     * Column: create_user
+     * Type: VARCHAR(32)
+     * Remark: 创建人
      */
     private String createUser;
 
     /**
-     * 更新时间
+     * Column: update_time
+     * Type: VARCHAR(20)
+     * Remark: 更新时间
      */
     private String updateTime;
 
     /**
-     * 更新人
+     * Column: update_user
+     * Type: VARCHAR(32)
+     * Remark: 更新人
      */
     private String updateUser;
 
@@ -65,7 +79,7 @@ public class Template implements Serializable {
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getName() {
@@ -73,7 +87,7 @@ public class Template implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
     public String getTemp() {
@@ -81,7 +95,7 @@ public class Template implements Serializable {
     }
 
     public void setTemp(String temp) {
-        this.temp = temp;
+        this.temp = temp == null ? null : temp.trim();
     }
 
     public Integer getStart() {
@@ -100,12 +114,12 @@ public class Template implements Serializable {
         this.end = end;
     }
 
-    public Integer getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
+    public void setLength(String length) {
+        this.length = length == null ? null : length.trim();
     }
 
     public String getCreateTime() {
@@ -113,7 +127,7 @@ public class Template implements Serializable {
     }
 
     public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+        this.createTime = createTime == null ? null : createTime.trim();
     }
 
     public String getCreateUser() {
@@ -121,7 +135,7 @@ public class Template implements Serializable {
     }
 
     public void setCreateUser(String createUser) {
-        this.createUser = createUser;
+        this.createUser = createUser == null ? null : createUser.trim();
     }
 
     public String getUpdateTime() {
@@ -129,7 +143,7 @@ public class Template implements Serializable {
     }
 
     public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+        this.updateTime = updateTime == null ? null : updateTime.trim();
     }
 
     public String getUpdateUser() {
@@ -137,7 +151,6 @@ public class Template implements Serializable {
     }
 
     public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
+        this.updateUser = updateUser == null ? null : updateUser.trim();
     }
-
 }
