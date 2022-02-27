@@ -2,9 +2,7 @@ package com.zl.syssequence.controller;
 
 import com.zl.common.dto.ResultDto;
 import com.zl.common.error.TradeCodeDict;
-import com.zl.common.exception.ZlException;
 import com.zl.common.util.ResultUtil;
-import com.zl.sequence.Template;
 import com.zl.syssequence.format.FormatEnum;
 import com.zl.syssequence.format.FormatInterface;
 import com.zl.syssequence.service.SequenceService;
@@ -37,17 +35,15 @@ public class SequenceController {
 
     @PostMapping("/getsequnces")
     public ResultDto<String> getSequnces(@RequestBody String name){
-        List<Template> templates = templateService.select(name);
-        if (templates.isEmpty()) {
-            throw new ZlException(TradeCodeDict.NO_TEMPLATE_CODE);
-        }
-        Template template = templates.get(0);
-        String temp = template.getTemp();
+        String temp = templateService.getTemplate(name);
         // aa${ss}${D(yyyy-mm-dd)}-${S{NNN[]}}
         return ResultUtil.genenrate(fomartSeqence(temp), TradeCodeDict.SUCCESS_QUERRY_CODE);
     }
 
     public String fomartSeqence(String temp){
+        if (temp == null) {
+            return null;
+        }
         String seq = "";
         List<String> tps = new ArrayList<>();
         String[] split = temp.split("\\$\\{|}");

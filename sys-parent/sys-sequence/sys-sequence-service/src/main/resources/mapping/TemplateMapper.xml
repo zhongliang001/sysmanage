@@ -1,24 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.syssequence.template.mapper.TemplateMapper">
-    <resultMap id="template" type="com.zl.sequence.Template">
-        <id property="id" jdbcType="VARCHAR" column="id"/>
-        <result property="name" jdbcType="VARCHAR" column="name"/>
-        <result property="temp" jdbcType="VARCHAR" column="temp"/>
-        <result property="start" jdbcType="INTEGER" column="start"/>
-        <result property="end" jdbcType="INTEGER" column="end"/>
-        <result property="length" jdbcType="INTEGER" column="length"/>
-        <result property="createTime" jdbcType="VARCHAR" column="create_time"/>
-        <result property="createUser" jdbcType="VARCHAR" column="create_user"/>
-        <result property="updateTime" jdbcType="VARCHAR" column="update_time"/>
-        <result property="updateUser" jdbcType="VARCHAR" column="update_user"/>
+  <resultMap id="BaseResultMap" type="com.zl.sequence.domain.Template">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="temp" jdbcType="VARCHAR" property="temp" />
+    <result column="start" jdbcType="INTEGER" property="start" />
+    <result column="end" jdbcType="INTEGER" property="end" />
+    <result column="length" jdbcType="VARCHAR" property="length" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from template
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zl.sequence.domain.Template">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into template (id, `name`, `temp`,
+      `start`, `end`, `length`,
+      create_time, create_user, update_time,
+      update_user)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{temp,jdbcType=VARCHAR},
+      #{start,jdbcType=INTEGER}, #{end,jdbcType=INTEGER}, #{length,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR},
+      #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zl.sequence.domain.Template">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update template
+    set `name` = #{name,jdbcType=VARCHAR},
+      `temp` = #{temp,jdbcType=VARCHAR},
+      `start` = #{start,jdbcType=INTEGER},
+      `end` = #{end,jdbcType=INTEGER},
+      `length` = #{length,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select id, `name`, `temp`, `start`, `end`, `length`, create_time, create_user, update_time,
+    update_user
+    from template
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select id, `name`, `temp`, `start`, `end`, `length`, create_time, create_user, update_time,
+    update_user
+    from template
+  </select>
+    <resultMap id="template" type="com.zl.sequence.domain.Template">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="temp" jdbcType="VARCHAR" property="temp" />
+        <result column="start" jdbcType="INTEGER" property="start" />
+        <result column="end" jdbcType="INTEGER" property="end" />
+        <result column="length" jdbcType="INTEGER" property="length" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+        <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
     </resultMap>
 
-    <select id="select" resultMap="template" parameterType="java.lang.String">
-        select * from template where name = #{name}
+    <select id="select" parameterType="java.util.Map" resultMap="template">
+        select * from template
+      <where>
+        <if test="id != null and id !=''">
+          id= #{id}
+        </if>
+        <if test="name != null and name !=''">
+          and name= #{name}
+        </if>
+        <if test="temp != null and temp !=''">
+          and temp #{temp}
+        </if>
+      </where>
     </select>
 
-    <insert id="add" parameterType="com.zl.sequence.Template">
+    <insert id="add" parameterType="com.zl.sequence.domain.Template">
         insert into template (
             id, name, temp, start, end, length, create_time, create_user, update_time, update_user
         ) VALUES (

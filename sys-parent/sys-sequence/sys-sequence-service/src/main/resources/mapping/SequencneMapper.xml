@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zl.syssequence.mapper.SequenceMapper">
-    <resultMap id="sequence" type="com.zl.sequence.Sequence">
+    <resultMap id="sequence" type="com.zl.sequence.domain.Sequence">
         <id column="name" jdbcType="VARCHAR" property="name"/>
         <result column="value" jdbcType="INTEGER" property="value"/>
     </resultMap>

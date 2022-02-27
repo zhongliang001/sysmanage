@@ -9,7 +9,7 @@
           <zl-panel :column="1">
             <zl-item type="text" field-name="用户名" name="username" :rules="rules.username"/>
             <zl-item type="password" field-name="密 码" name="password" :rules="rules.password"/>
-            <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" hidden="true"/>
+            <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" :hidden="true"/>
           </zl-panel>
         </zl-form>
         <div >
