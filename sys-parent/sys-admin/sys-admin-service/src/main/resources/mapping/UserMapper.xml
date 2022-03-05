@@ -112,48 +112,52 @@
         </where>
     </select>
     <update id="update" parameterType="com.zl.domain.User" >
-        update user set
-        <if test="password != null and password != ''">
-            password = #{password},
-        </if>
-        <if test="realName != null and realName != ''">
-            real_name = #{realName},
-        </if>
-        <if test="sex != null and sex != ''">
-            sex = #{sex},
-        </if>
-        <if test="phoneNo != null and phoneNo != ''">
-            phone_no = #{phoneNo},
-        </if>
-        <if test="certType != null and certType != ''">
-            cert_type = #{certType},
-        </if>
-        <if test="certNo != null and certNo != ''">
-            cert_no = #{certNo},
-        </if>
-        <if test="birthday != null and birthday != ''">
-            birthday = #{birthday},
-        </if>
-        <if test="lastLoginTime != null and lastLoginTime != ''">
-            last_login_time = #{lastLoginTime},
-        </if>
-        <if test="errLoginTimes != null and errLoginTimes != ''">
-            err_login_times = #{errLoginTimes},
-        </if>
-        <if test="forbiddenLoginTime != null and forbiddenLoginTime != ''">
-            forbidden_login_time = #{forbiddenLoginTime},
-        </if>
-        <if test="forbiddenLoginPeriod != null and forbiddenLoginPeriod != ''">
-            forbidden_login_period = #{forbiddenLoginPeriod},
-        </if>
-        <if test="forbiddenReason != null and forbiddenReason != ''">
-            forbidden_reason = #{forbiddenReason},
-        </if>
-        <if test="lastModifyPwd != null and lastModifyPwd != ''">
-            last_modify_pwd = #{lastModifyPwd}
-        </if>
-        where
+        update user
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="realName != null and realName != ''">
+                real_name = #{realName},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="phoneNo != null and phoneNo != ''">
+                phone_no = #{phoneNo},
+            </if>
+            <if test="certType != null and certType != ''">
+                cert_type = #{certType},
+            </if>
+            <if test="certNo != null and certNo != ''">
+                cert_no = #{certNo},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday = #{birthday},
+            </if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="errLoginTimes != null and errLoginTimes != ''">
+                err_login_times = #{errLoginTimes},
+            </if>
+            <if test="forbiddenLoginTime != null and forbiddenLoginTime != ''">
+                forbidden_login_time = #{forbiddenLoginTime},
+            </if>
+            <if test="forbiddenLoginPeriod != null and forbiddenLoginPeriod != ''">
+                forbidden_login_period = #{forbiddenLoginPeriod},
+            </if>
+            <if test="forbiddenReason != null and forbiddenReason != ''">
+                forbidden_reason = #{forbiddenReason},
+            </if>
+            <if test="lastModifyPwd != null and lastModifyPwd != ''">
+                last_modify_pwd = #{lastModifyPwd}
+            </if>
+        </set>
+        <where>
             id = #{id}
+        </where>
+
     </update>
 
     <delete id="delete" parameterType="java.lang.String">

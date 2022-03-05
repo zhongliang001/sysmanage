@@ -1,5 +1,7 @@
-let zlService={
-    baseUrl: 'http://127.0.0.1:8092/sys-admin-service',
-    oauthUrl: 'http://127.0.0.1:8092/sys-uua'
+const baseURL = process.env.VUE_APP_BASE_API
+const zlService = {
+  baseUrl: baseURL + '/sys-admin-service',
+  oauthUrl: baseURL + '/sys-uua',
+  seqUrl: baseURL + '/sys-sequence-service'
 }
 export default zlService

@@ -20,7 +20,11 @@ import org.springframework.context.annotation.Configuration;
 public class SysSequenceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SysSequenceApplication.class, args);
+        try {
+            SpringApplication.run(SysSequenceApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

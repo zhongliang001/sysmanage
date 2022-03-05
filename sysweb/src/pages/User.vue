@@ -1,7 +1,7 @@
 <template>
   <div>
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="table" method="post" :column="2" :fileds="fileds" :url="url" :titles="titles">
+      <zl-query-table ref="table" method="post" :column="2" :fields="fields" :url="url" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="删除" @click.native="del"></zl-button>
@@ -9,53 +9,61 @@
         <zl-button type="button" name="配置角色" @click.native="toConfig"></zl-button>
       </zl-query-table>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="add">
-      <zl-form  ref="addTable" :column="2" :url="addUrl" method="post">
-        <zl-item type="text" name="username" field-name="用户名" required="true" :rules="rules.username"/>
-        <zl-item type="text" name="realName" field-name="真实姓名" required="true" :rules="rules.realName"/>
-        <zl-item type="select" name="certType" field-name="证件类型" dict-name="CERT_TYPE" required="true"/>
-        <zl-item type="text" name="certNo" field-name="证件号码" required="true"/>
-        <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" required="true"/>
-        <zl-item type="text" name="phoneNo" field-name="手机号码" required="true"/>
+    <zl-page :viewPage="viewPage" page="add" ref="addPage">
+      <zl-form ref="addForm" :url="addUrl" method="post">
+        <zl-panel title="新增用户" :column="2">
+          <zl-item type="text" name="username" field-name="用户名" required="true" :rules="rules.username"/>
+          <zl-item type="text" name="realName" field-name="真实姓名" required="true" :rules="rules.realName"/>
+          <zl-item type="select" name="certType" field-name="证件类型" dict-name="CERT_TYPE" required="true"/>
+          <zl-item type="text" name="certNo" field-name="证件号码" required="true"/>
+          <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" required="true"/>
+          <zl-item type="text" name="phoneNo" field-name="手机号码" required="true"/>
+        </zl-panel>
+
       </zl-form>
-      <div  class="form-buttons">
-        <zl-button  type="submit" @click.native="save" name="保存"></zl-button>
+      <div class="form-buttons">
+        <zl-button type="submit" @click.native="save" name="保存"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="update">
-      <zl-form  ref="updateTable" :column="2" :url="updateUrl" method="post">
-        <zl-item type="text" name="username" field-name="用户名" required="true" :rules="rules.username" :readOnly="true"/>
-        <zl-item type="text" name="realName" field-name="真实姓名" required="true" :rules="rules.realName"/>
-        <zl-item type="select" name="certType" field-name="证件类型" dict-name="CERT_TYPE" required="true"/>
-        <zl-item type="text" name="certNo" field-name="证件号码" required="true"/>
-        <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" required="true"/>
-        <zl-item type="text" name="phoneNo" field-name="手机号码" required="true"/>
+    <zl-page :viewPage="viewPage" page="update" ref="updatePage">
+      <zl-form ref="updateForm" :url="updateUrl" method="post">
+        <zl-panel title="修改用户" :column="2">
+          <zl-item type="text" name="username" field-name="用户名" required="true" :rules="rules.username"/>
+          <zl-item type="text" name="realName" field-name="真实姓名" required="true" :rules="rules.realName"/>
+          <zl-item type="select" name="certType" field-name="证件类型" dict-name="CERT_TYPE" required="true"/>
+          <zl-item type="text" name="certNo" field-name="证件号码" required="true"/>
+          <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" required="true"/>
+          <zl-item type="text" name="phoneNo" field-name="手机号码" required="true"/>
+          <zl-item type="text" name="id" field-name="用户id" :hidden="true"/>
+        </zl-panel>
       </zl-form>
-      <div  class="form-buttons">
-        <zl-button  type="submit" @click.native="saveUpdate" name="保存"></zl-button>
+      <div class="form-buttons">
+        <zl-button type="submit" @click.native="saveUpdate" name="保存"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="view">
-      <zl-f-table ref="fTable" view="true" :column="2" :req-data="reqData">
+    <zl-page :viewPage="viewPage" page="view" ref="detailPage">
+      <zl-panel title="用户详情" :column="2" :view="true">
         <zl-item type="text" name="username" field-name="用户名"/>
         <zl-item type="text" name="realName" field-name="真实姓名"/>
         <zl-item type="select" name="certType" field-name="证件类型" dict-name="CERT_TYPE"/>
         <zl-item type="text" name="certNo" field-name="证件号码"/>
-        <zl-item type="select" name="sex" field-name="性别" dict-name="SEX" />
+        <zl-item type="select" name="sex" field-name="性别" dict-name="SEX"/>
         <zl-item type="text" name="phoneNo" field-name="手机号码"/>
-      </zl-f-table>
-      <div  class="form-buttons">
+      </zl-panel>
+      <div class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="config">
-      <zl-form  ref="configTable"  :column="2"  :url="updateUrl" method="post">
-        <zl-item type="text" name="id" field-name="用户id" hidden="true"></zl-item>
+    <zl-page :viewPage="viewPage" page="config" ref="configPage">
+      <zl-form ref="configForm" :column="2" :url="updateUrl" method="post">
+        <zl-panel title="角色配置" :column="2" :view="true">
+        <zl-item type="text" name="id" field-name="用户id" :hidden="true"></zl-item>
         <zl-choose slot="choose" :chooesedData="chooesedData" :unchooesedData="unchooesedData"></zl-choose>
+        </zl-panel>
       </zl-form>
-      <div  class="clear form-buttons">
+      <div class="clear form-buttons">
         <zl-button type="button" name="保存" @click.native="configRole"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
@@ -65,199 +73,213 @@
 
 <script>
 export default {
-  name: "User",
-  data: function (){
+  name: 'User',
+  data () {
     return {
       viewPage: 'query',
-      fileds: [
+      fields: [
         {
           type: 'text',
-          cnName: "用户id",
-          name: "id"
-        }, {
+          cnName: '用户id',
+          name: 'id'
+        },
+        {
           type: 'text',
-          cnName: "用户名",
-          name: "username"
-        },{
+          cnName: '用户名',
+          name: 'username'
+        },
+        {
           type: 'select',
           cnName: '证件类型',
-          name: "certType",
-          dictName:'CERT_TYPE'
-        }, {
+          name: 'certType',
+          dictName: 'CERT_TYPE'
+        },
+        {
           type: 'text',
-          cnName: "证件号码",
-          name: "certNo"
+          cnName: '证件号码',
+          name: 'certNo'
         }
       ],
       titles: [
         {
-          cnName: "用户id",
-          name: "id"
-        }, {
-          cnName: "用户名",
-          name: "username"
-        },{
+          cnName: '用户id',
+          name: 'id'
+        },
+        {
+          cnName: '用户名',
+          name: 'username'
+        },
+        {
           type: 'select',
           cnName: '证件类型',
-          name: "certType",
-          dictName:'CERT_TYPE'
-        }, {
-          cnName: "证件号码",
-          name: "certNo"
+          name: 'certType',
+          dictName: 'CERT_TYPE'
+        },
+        {
+          cnName: '证件号码',
+          name: 'certNo'
         }
       ],
-      rules:{
+      rules: {
         username: {
           ruleName: ['isRequired']
         },
-        realName:{
-          ruleName:  ['isRequired']
+        realName: {
+          ruleName: ['isRequired']
         }
       },
-      url: this.zlService.baseUrl + '/user/select',
-      addUrl: this.zlService.baseUrl + '/user/add',
-      updateUrl: this.zlService.baseUrl + '/user/update',
-      deleteUrl: this.zlService.baseUrl + '/user/delete',
-      chooseUrl: this.zlService.baseUrl+'/role/queryRoleForChoose',
-      configUrl: this.zlService.baseUrl+'/userrole/config',
+      url: `${this.zlService.baseUrl}/user/select`,
+      addUrl: `${this.zlService.baseUrl}/user/add`,
+      updateUrl: `${this.zlService.baseUrl}/user/update`,
+      deleteUrl: `${this.zlService.baseUrl}/user/delete`,
+      chooseUrl: `${this.zlService.baseUrl}/role/queryRoleForChoose`,
+      configUrl: `${this.zlService.baseUrl}/userrole/config`,
       reqData: {},
-      unchooesedData:[],
-      chooesedData:[]
+      unchooesedData: [],
+      chooesedData: []
     }
   },
-  methods:{
-    add: function (){
+  methods: {
+    add () {
       this.viewPage = 'add'
     },
-    save: function (){
-      let _this = this
-      let form = _this.common.getComponent(this,'addTable')
-      if(form.checkAll()) {
-        let reqData = form.reqData
-        this.zlaxios.request({
-          url: _this.addUrl,
-          method: form.method,
-          data: reqData,
-          success: function () {
-            _this.toBack()
-          },
-          error: function (error) {
-            console.log(error)
-          }
-        })
-      }
+    save () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'addForm', true
+      )
+      form.submit(_this.toBack)
     },
-    update: function (){
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
-      if(JSON.stringify(table.selData)==='{}'){
-        alert("请选择一条记录");
+    update () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      if (JSON.stringify(table.selData) === '{}') {
+        alert('请选择一条记录')
         return
       }
       this.viewPage = 'update'
-      let updateTable = _this.common.getComponent(this, 'updateTable')
-      updateTable.setReqData( table.selData)
+      const updatePage = _this.commonUtil.getComponent(
+        this,
+        'updatePage', true
+      )
+      updatePage.data = table.selData
     },
-    saveUpdate: function (){
-      let _this = this
-      let form = _this.common.getComponent(this,'updateTable')
-      if(form.checkAll()) {
-        let reqData = form.reqData
-        this.zlaxios.request({
-          url: _this.updateUrl,
-          method: form.method,
-          data: reqData,
-          success: function () {
-            _this.toBack()
-          },
-          error: function (error) {
-            console.log(error)
-          }
-        })
-      }
+    saveUpdate () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'updateForm', true
+      )
+      form.submit(_this.toBack)
     },
-    del: function (){
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
-      if(JSON.stringify(table.selData)==='{}'){
-        alert("请选择一条记录");
+    del () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      if (JSON.stringify(table.selData) === '{}') {
+        alert('请选择一条记录')
         return
       }
-      let sel = table.selData
+      const sel = table.selData
       this.zlaxios.request({
-        url:_this.deleteUrl,
+        url: _this.deleteUrl,
         method: 'POST',
-        config:{
-          params:{
+        config: {
+          params: {
             id: sel.id
           }
         },
-        success: function () {
-          alert("删除成功")
+        success () {
+          alert('删除成功')
           table.query()
           table.selNum = -1
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    view: function () {
-      let _this = this
-      let table = _this.common.getComponent(this,'table')
-      this.reqData  = table.selData
+    view () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      const detailPage = _this.commonUtil.getComponent(
+        this,
+        'detailPage', true
+      )
       this.viewPage = 'view'
+      detailPage.data = table.selData
     },
-    toBack: function (){
+    toBack () {
       this.viewPage = 'query'
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
       table.query()
       table.selNum = -1
     },
-    toConfig: function (){
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
-      this.reqData  = table.selData
-      if(JSON.stringify(table.selData)==='{}'){
-        alert("请选择一条记录");
+    toConfig () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      this.reqData = table.selData
+      if (JSON.stringify(table.selData) === '{}') {
+        alert('请选择一条记录')
         return
       }
-      let configTable = _this.common.getComponent(this, 'configTable')
-      configTable.setReqData( table.selData)
-      let sel = table.selData
+      const configPage = _this.commonUtil.getComponent(
+        this,
+        'configPage', true
+      )
+      configPage.data = table.selData
+      const sel = table.selData
       this.viewPage = 'config'
       this.zlaxios.request({
-        url:_this.chooseUrl,
+        url: _this.chooseUrl,
         method: 'POST',
-        config:{
-          params:{
+        config: {
+          params: {
             userId: sel.id
           }
         },
-        success: function (response) {
+        success (response) {
           _this.chooesedData = response.data.chooesedData
           _this.unchooesedData = response.data.unchooesedData
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    configRole: function (){
-      let _this = this
-      let form = _this.common.getComponent(this,'configTable')
-      let reqData = form.reqData
+    configRole () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'configForm', true
+      )
+      const reqData = form.getReqData()
       reqData.list = this.chooesedData
       this.zlaxios.request({
-        url:_this.configUrl,
+        url: _this.configUrl,
         method: 'POST',
         data: reqData,
-        success: function () {
-          alert("新增成功")
+        success () {
+          alert('新增成功')
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     }

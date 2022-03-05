@@ -1,7 +1,7 @@
 <template>
   <div>
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="table" :column="2" re="menu" method="post" :url="url" :fileds="fileds" :titles="titles">
+      <zl-query-table ref="table" :column="2" re="menu" method="post" :url="url" :fields="fields" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add" oper="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="查看" @click.native="view"></zl-button>
@@ -9,28 +9,30 @@
         <zl-button type="button" name="菜单操作配置" @click.native="actionConfig"></zl-button>
       </zl-query-table>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="detail">
-      <zl-f-table ref="fTable" :column="2" :req-data="reqData">
-        <zl-item type="text" field-name="菜单编号" name="id"/>
-        <zl-item type="text" field-name="菜单名" name="name"/>
+    <zl-page :viewPage="viewPage" page="detail" ref="menuDetail">
+      <zl-panel title="菜单详情" :column="2" :view="true">
+        <zl-item type="text" field-name="菜单编号" name="menuId"/>
+        <zl-item type="text" field-name="菜单名" name="menuName"/>
         <zl-item type="text" field-name="父菜单编号" name="parentId"/>
         <zl-item type="text" field-name="菜单路径" name="path"/>
-        <zl-item type="text" field-name="菜单文件" name="filePath"/>
-      </zl-f-table>
+        <zl-item type="text" field-name="菜单文件" name="filePath" :readOnly="true"/>
+      </zl-panel>
       <div class="form-buttons">
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="add">
+    <zl-page :viewPage="viewPage" page="add" ref="addPage">
       <div style="display:block; float:left; width:200px; height: 100%">
-        <zl-tree :tree="tree" :sel="sel"/>
+        <zl-tree :tree="tree" :sel="sel" branchName="menuName"/>
       </div>
       <div style="width:80%;  float:left;">
-        <zl-form ref="addMenu" :column="2" method="post" url="/menu/save">
-          <zl-item type="text" field-name="父菜单编号" name="parentId"/>
-          <zl-item type="text" field-name="菜单名" name="name"/>
-          <zl-item type="text" field-name="菜单路径" name="path"/>
-          <zl-item type="text" field-name="菜单文件" name="filePath"/>
+        <zl-form ref="addMenu" :column="2" method="post" :url="addUrl">
+          <zl-panel title="菜单新增" :column="2">
+            <zl-item type="text" field-name="父菜单编号" name="parentId"/>
+            <zl-item type="text" field-name="菜单名" name="menuName"/>
+            <zl-item type="text" field-name="菜单路径" name="path"/>
+            <zl-item type="text" field-name="菜单文件" name="filePath"/>
+          </zl-panel>
         </zl-form>
         <div class="form-buttons">
           <zl-button type="button" name="保存" @click.native="save"></zl-button>
@@ -38,13 +40,15 @@
         </div>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="update">
-      <zl-form ref="updateMenu" :column="2" method="post" url="/menu/update">
-        <zl-item type="text" field-name="菜单编号" name="id" :readOnly="true"/>
-        <zl-item type="text" field-name="父菜单编号" name="parentId"/>
-        <zl-item type="text" field-name="菜单名" name="name"/>
-        <zl-item type="text" field-name="菜单路径" name="path"/>
-        <zl-item type="text" field-name="菜单文件" name="filePath"/>
+    <zl-page :viewPage="viewPage" page="update" ref="updateMenuPage">
+      <zl-form ref="updateMenu" method="post" :url="updateUrl">
+        <zl-panel title="菜单修改" :column="2">
+          <zl-item type="text" field-name="菜单编号" name="menuId" :readOnly="true"/>
+          <zl-item type="text" field-name="父菜单编号" name="parentId"/>
+          <zl-item type="text" field-name="菜单名" name="menuName"/>
+          <zl-item type="text" field-name="菜单路径" name="path"/>
+          <zl-item type="text" field-name="菜单文件" name="filePath"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="updateData"></zl-button>
@@ -57,30 +61,34 @@
 <script>
 
 export default {
-  name: "Menu",
-  data: function () {
+  name: 'Menu',
+  data () {
     return {
-      fileds: [{
-        type: "text",
-        cnName: "菜单名",
-        name: "name"
-      }, {
-        type: "text",
-        cnName: "菜单编号",
-        name: "id"
-      }, {
-        type: "text",
-        cnName: "菜单路径",
-        name: "path"
-      }],
+      fields: [
+        {
+          type: 'text',
+          cnName: '菜单名',
+          name: 'menuName'
+        },
+        {
+          type: 'text',
+          cnName: '菜单编号',
+          name: 'menuId'
+        },
+        {
+          type: 'text',
+          cnName: '菜单路径',
+          name: 'path'
+        }
+      ],
       titles: [
         {
           cnName: '菜单编号',
-          name: 'id'
+          name: 'menuId'
         },
         {
           cnName: '菜单名',
-          name: 'name'
+          name: 'menuName'
         },
         {
           cnName: '菜单路径',
@@ -95,8 +103,9 @@ export default {
           name: 'parentId'
         }
       ],
-      url: this.zlService.baseUrl + '/menu/select',
-      reqData: {},
+      url: `${this.zlService.baseUrl}/menu/select`,
+      updateUrl: `${this.zlService.baseUrl}/menu/update`,
+      addUrl: `${this.zlService.baseUrl}/menu/save`,
       viewPage: 'query',
       sel: {
         data: {}
@@ -106,106 +115,129 @@ export default {
   },
   watch: {
     sel: {
-      handler: function (newVal) {
-        let _this = this
-        let addMenu = _this.common.getComponent(this, 'addMenu')
-        addMenu.setData('parentId', newVal.data.id)
+      handler () {
+        const _this = this
+        const addPage = _this.commonUtil.getComponent(
+          this,
+          'addPage', true
+        )
+        addPage.data = {
+          parentId: this.sel.data.menuId
+        }
       },
       deep: true
     }
   },
   methods: {
-    add: function () {
+    add () {
       this.viewPage = 'add'
-      let _this = this
+      const _this = this
       this.zlaxios.request({
-        url: _this.zlService.baseUrl + '/menu/selectMenu',
+        url: `${_this.zlService.baseUrl}/menu/selectMenu`,
         method: 'POST',
-        success: function (response) {
+        success (response) {
           _this.tree = response.data[0]
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    view: function () {
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
-      this.reqData = table.selData
+    view () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table',
+        true
+      )
+      const reqData = table.selData
+      const menuDetail = this.commonUtil.getComponent(
+        this,
+        'menuDetail',
+        true
+      )
       this.viewPage = 'detail'
-      // fTable.resetData(form.selData)
+      menuDetail.data = reqData
     },
-    update: function () {
-      let table = this.common.getComponent(this, 'table')
-      let updateMenu = this.common.getComponent(this, 'updateMenu')
-      updateMenu.setReqData(table.selData)
+    update () {
+      const table = this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      const updateMenuPage = this.commonUtil.getComponent(
+        this,
+        'updateMenuPage',
+        true
+      )
       this.viewPage = 'update'
+      updateMenuPage.data = table.selData
     },
-    toBack: function () {
+    toBack () {
       this.viewPage = 'query'
     },
-    save: function () {
-      let _this = this
-      let form = _this.common.getComponent(this, 'addMenu')
-      let reqData = form.reqData
-      this.zlaxios.request({
-        url: this.zlService.baseUrl + form.url,
-        method: form.method,
-        data: reqData,
-        success: function () {
-          _this.toBack()
-        },
-        error: function (error) {
-          console.log(error)
-        }
-      })
+    toBackAndQuery () {
+      this.viewPage = 'query'
+      const table = this.commonUtil.getComponent(
+        this,
+        'table',
+        true
+      )
+      table.query()
     },
-    updateData: function () {
-      let _this = this
-      let form = _this.common.getComponent(this, 'updateMenu')
-      let reqData = form.reqData
-      this.zlaxios.request({
-        url: this.zlService.baseUrl + form.url,
-        method: form.method,
-        data: reqData,
-        success: function () {
-          _this.toBack()
-        },
-        error: function (error) {
-          console.log(error)
-        }
-      })
+    save () {
+      const _this = this
+      const form = this.commonUtil.getComponent(
+        _this,
+        'addMenu', true
+      )
+      form.submit(this.toBackAndQuery)
     },
-    delData: function () {
-      let table = this.common.getComponent(this, 'table')
+    updateData () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'updateMenu', true
+      )
+      form.submit(this.toBackAndQuery)
+    },
+    delData () {
+      const table = this.commonUtil.getComponent(
+        this,
+        'table'
+      )
       this.zlaxios.request({
-        url: this.zlService.baseUrl + "/menu/delete",
+        url: `${this.zlService.baseUrl}/menu/delete`,
         method: 'POST',
         config: {
           params: {
-            id: table.selData.id
+            menuId: table.selData.menuId
           }
         },
-        success: function () {
-          alert("删除成功")
+        success () {
+          alert('删除成功')
           table.query()
           table.selNum = -1
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     },
-    actionConfig: function () {
-      let table = this.common.getComponent(this, 'table')
-      let selData = table.selData
+    actionConfig () {
+      const table = this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      const { selData } = table
+      console.log(selData)
       if (selData) {
-        this.$router.push({path: 'Action', query: table.selData})
-      }else{
-        alert("请选择一条记录")
+        this.$router.push({
+          path: 'Action',
+          query: table.selData
+        })
+      } else {
+        alert('请选择一条记录')
       }
-
     }
   }
 }

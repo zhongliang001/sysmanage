@@ -5,20 +5,21 @@
         <h4 class="title">
           密码登录
         </h4>
-        <zl-form custom-class="form-horizontal" ref="login" :column="1" :method="method" :url="url">
-          <zl-item type="text" field-name="用户名" name="username" :rules="rules.username"/>
-          <zl-item type="password" field-name="密　码" name="password" :rules="rules.password"/>
-          <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" hidden="true"/>
+        <zl-form custom-class="form-horizontal" ref="login"  :method="method" :url="url">
+          <zl-panel :column="1">
+            <zl-item type="text" field-name="用户名" name="username" :rules="rules.username"/>
+            <zl-item type="password" field-name="密 码" name="password" :rules="rules.password"/>
+            <zl-item type="text" field-name="授权方式" name="grant_type" default-value="password" :hidden="true"/>
+          </zl-panel>
         </zl-form>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-          <zl-button custom-class="me-md-2" type="submit" name="登录"
+        <div >
+          <zl-button type="submit" name="登录"
                      @click.native="onclick"></zl-button>
           <zl-button type="submit" name="注册"
                      @click.native="onRegister"></zl-button>
         </div>
       </div>
       <div class="card-body ">
-
 
       </div>
     </div>
@@ -28,26 +29,30 @@
 
 export default {
   name: 'Login',
-  data: function () {
+  data () {
     return {
       url: '/oauth/token',
       method: 'post',
-      rules:{
+      rules: {
         username: {
           ruleName: ['isRequired']
         },
-        password:{
-          ruleName:  ['isRequired']
+        password: {
+          ruleName: ['isRequired']
         }
       }
     }
   },
   methods: {
-    onclick: function () {
-      let _this = this
-      let form = _this.common.getComponent(this, 'login')
-      if(form.checkAll()) {
-        let reqData = form.reqData
+    onclick () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'login',
+        true
+      )
+      if (form.checkAll()) {
+        const reqData = form.getReqData()
         this.zlaxios.request({
           url: this.zlService.oauthUrl + _this.url,
           method: _this.method,
@@ -58,17 +63,17 @@ export default {
             },
             params: reqData
           },
-          success: function () {
-            _this.$router.push({name: "Welcome"})
+          success () {
+            _this.$router.push({ name: 'Welcome' })
           },
-          failed: function (error) {
+          failed (error) {
             alert(error.response.data.error_description)
           }
         })
       }
     },
-    onRegister: function () {
-      this.$router.push({name: "Register"})
+    onRegister () {
+      this.$router.push({ name: 'Register' })
     }
   }
 }

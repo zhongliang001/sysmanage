@@ -1,7 +1,7 @@
 <template>
   <div>
     <zl-page :viewPage="viewPage" page="query">
-      <zl-query-table ref="table" method="post" :column="2" :fileds="fileds" :url="url" :titles="titles">
+      <zl-query-table ref="table" method="post" :column="2" :fields="fields" :url="url" :titles="titles">
         <zl-button type="button" name="新增" @click.native="add"></zl-button>
         <zl-button type="button" name="修改" @click.native="update"></zl-button>
         <zl-button type="button" name="删除" @click.native="del"></zl-button>
@@ -9,83 +9,91 @@
         <zl-button type="button" name="角色权限配置" @click.native="right"></zl-button>
       </zl-query-table>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="add">
-      <zl-form ref="addForm" :column="2" :url="addUrl" method="post">
-        <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
-        <zl-item type="text" field-name="角色描述" name="remark"/>
+    <zl-page :viewPage="viewPage" page="add" ref="addPage">
+      <zl-form ref="addForm" :url="addUrl" method="post">
+        <zl-panel title="新增角色" :column="2">
+          <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
+          <zl-item type="text" field-name="角色描述" name="remark"/>
+        </zl-panel>
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="update">
-        <zl-form ref="updateForm" :column="2" method="post" :url="updateUrl">
+    <zl-page :viewPage="viewPage" page="update" ref="updatePage">
+      <zl-form ref="updateForm" :column="2" method="post" :url="updateUrl">
+        <zl-panel title="修改角色" :column="2">
           <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
           <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
           <zl-item type="text" field-name="角色描述" name="remark"/>
-        </zl-form>
-        <div class="form-buttons">
-          <zl-button type="button" name="保存" @click.native="saveUpdate"></zl-button>
-          <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
-        </div>
+        </zl-panel>
+      </zl-form>
+      <div class="form-buttons">
+        <zl-button type="button" name="保存" @click.native="saveUpdate"></zl-button>
+        <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
+      </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="view">
-      <zl-f-table ref="fTable"  :column="2"  :req-data="reqData">
+    <zl-page :viewPage="viewPage" page="view" ref="detailPage">
+      <zl-f-table ref="fTable" :column="2">
         <zl-item type="text" field-name="角色id" name="id"/>
-        <zl-item type="text" field-name="角色名" name="name" />
+        <zl-item type="text" field-name="角色名" name="name"/>
         <zl-item type="text" field-name="角色描述" name="remark"/>
       </zl-f-table>
       <div class="form-buttons">
-        <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
+        <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
     </zl-page>
-    <zl-page :viewPage="viewPage" page="right">
-      <zl-query-table ref="menuTable" :column="2" re="menu" method="post" :url="rightUrl" :pagination="false" :titles="rightTitles">
-        <template slot="condition">
-          <zl-item  type="text" field-name="角色id" name="id" :readOnly="true"/>
-          <zl-item  type="text" field-name="角色名" name="name" :readOnly="true"/>
-        </template>
-      </zl-query-table>
+    <zl-page :viewPage="viewPage" page="right" ref="roleRight">
+        <zl-query-table title="角色权限配置" ref="menuTable" :column="2" method="post" :url="rightUrl" :pagination="false"
+                        :titles="rightTitles">
+          <template slot="condition">
+            <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
+            <zl-item type="text" field-name="角色名" name="name" :readOnly="true"/>
+          </template>
+        </zl-query-table>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="saveRight"></zl-button>
-        <zl-button type="button" name="返回"  @click.native="toBack"></zl-button>
+        <zl-button type="button" name="返回" @click.native="toBack"></zl-button>
       </div>
+
     </zl-page>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Role",
-  data: function () {
+  name: 'Role',
+  data () {
     return {
       viewPage: 'query',
-      fileds: [
+      fields: [
         {
           type: 'text',
-          cnName: "角色id",
-          name: "id"
-        }, {
+          cnName: '角色id',
+          name: 'id'
+        },
+        {
           type: 'text',
-          cnName: "角色名",
-          name: "name"
+          cnName: '角色名',
+          name: 'name'
         }
       ],
-      rules:{
+      rules: {
         name: {
           ruleName: ['isRequired']
         }
       },
       titles: [
         {
-          cnName: "角色id",
-          name: "id"
+          cnName: '角色id',
+          name: 'id'
         },
         {
-          cnName: "角色名",
-          name: "name"
-        }, {
+          cnName: '角色名',
+          name: 'name'
+        },
+        {
           cnName: '角色描述',
           name: 'remark'
         }
@@ -93,11 +101,11 @@ export default {
       rightTitles: [
         {
           cnName: '菜单编号',
-          name: 'id'
+          name: 'menuId'
         },
         {
           cnName: '菜单名',
-          name: 'name'
+          name: 'menuName'
         },
         {
           cnName: '菜单路径',
@@ -110,133 +118,144 @@ export default {
         {
           cnName: '父菜单编号',
           name: 'parentId'
-        },{
+        },
+        {
           cnName: '操作',
           name: 'actionDtos',
           type: 'checkbox',
           checkCnName: 'name',
           checkName: 'menuId',
           value: 'oper',
-          checkFlag:'hasRight'
+          checkFlag: 'hasRight'
         }
       ],
-      reqData: {},
-      url: this.zlService.baseUrl + '/role/select',
-      addUrl: this.zlService.baseUrl + '/role/add',
-      updateUrl: this.zlService.baseUrl + '/role/update',
-      delUrl: this.zlService.baseUrl + '/role/delete',
-      rightUrl: this.zlService.baseUrl + '/menu/selectByRole',
-      addRightUrl: this.zlService.baseUrl + '/roleright/addRoleRight',
+      url: `${this.zlService.baseUrl}/role/select`,
+      addUrl: `${this.zlService.baseUrl}/role/add`,
+      updateUrl: `${this.zlService.baseUrl}/role/update`,
+      delUrl: `${this.zlService.baseUrl}/role/delete`,
+      rightUrl: `${this.zlService.baseUrl}/menu/selectByRole`,
+      addRightUrl: `${this.zlService.baseUrl}/roleright/addRoleRight`
     }
   },
-  methods:{
-    add: function (){
+  methods: {
+    add () {
       this.viewPage = 'add'
     },
-    update: function(){
-      let table = this.common.getComponent(this,'table')
-      let updateForm = this.common.getComponent(this,'updateForm')
-      updateForm.setReqData(table.selData)
+    update () {
+      const table = this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      const updatePage = this.commonUtil.getComponent(
+        this,
+        'updatePage', true
+      )
       this.viewPage = 'update'
+      updatePage.data = table.selData
     },
-    del: function (){
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
-      let sel = table.selData
-      if(sel){
+    del () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table'
+      )
+      const sel = table.selData
+      if (sel) {
         this.zlaxios.request({
-          url:_this.delUrl,
+          url: _this.delUrl,
           method: 'POST',
-          config:{
-            params:{
+          config: {
+            params: {
               id: sel.id
             }
           },
-          success: function () {
-            alert("删除成功")
+          success () {
+            alert('删除成功')
             table.query()
             table.selNum = -1
           },
-          error: function (error) {
-            console.log(error)
+          error (error) {
+            alert(error)
           }
         })
       }
     },
-    view: function () {
-      let _this = this
-      let table = _this.common.getComponent(this,'table')
-      this.reqData  = table.selData
-      this.viewPage = 'view'
-    },
-    save: function (){
-      let _this = this
-      let form = _this.common.getComponent(this,'addForm')
-      if(form.checkAll()) {
-        let reqData = form.reqData
-        this.zlaxios.request({
-          url: _this.addUrl,
-          method: form.method,
-          data: reqData,
-          success: function () {
-            form.reset()
-            _this.toBack()
-          },
-          error: function (error) {
-            console.log(error)
-          }
-        })
+    view () {
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      const detailPage = _this.commonUtil.getComponent(this, 'detailPage', true)
+      if (JSON.stringify(table.selData) === '{}') {
+        this.viewPage = 'view'
+        detailPage.data = table.selData
+      } else {
+        alert('请选择一条记录')
       }
     },
-    saveUpdate: function (){
-      let _this = this
-      let form = _this.common.getComponent(this,'updateForm')
-      if(form.checkAll()) {
-        let reqData = form.reqData
-        this.zlaxios.request({
-          url: this.addUrl,
-          method: form.method,
-          data: reqData,
-          success: function () {
-            _this.toBack()
-          },
-          error: function (error) {
-            console.log(error)
-          }
-        })
-      }
+    save () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'addForm', true
+      )
+      form.submit(_this.toBack)
     },
-    toBack: function (){
+    saveUpdate () {
+      const _this = this
+      const form = _this.commonUtil.getComponent(
+        this,
+        'updateForm', true
+      )
+      form.submit(_this.toBack)
+    },
+    toBack () {
       this.viewPage = 'query'
-      let _this = this
-      let table = _this.common.getComponent(this, 'table')
+      const _this = this
+      const table = _this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
       table.query()
       table.selNum = -1
     },
-    right: function (){
-      let table = this.common.getComponent(this,'table')
-      let menuTable = this.common.getComponent(this,'menuTable')
-      let qTable = this.common.getComponent(menuTable,'qTable')
-      qTable.setReqData(table.selData)
+    right () {
+      const table = this.commonUtil.getComponent(
+        this,
+        'table', true
+      )
+      const menuTable = this.commonUtil.getComponent(
+        this,
+        'menuTable', true
+      )
+      const roleRight = this.commonUtil.getComponent(this, 'roleRight', true)
       this.viewPage = 'right'
-      menuTable.query()
+      roleRight.data = table.selData
+      menuTable.query(table.selData)
     },
-    saveRight: function (){
-      let menuTable = this.common.getComponent(this,'menuTable')
-      let qTable = this.common.getComponent(menuTable,'qTable')
-      let _this = this
+    saveRight () {
+      const menuTable = this.commonUtil.getComponent(
+        this,
+        'menuTable', true
+      )
+      const qTable = this.commonUtil.getComponent(
+        menuTable,
+        'qTable', true
+      )
+      const _this = this
       this.zlaxios.request({
         url: _this.addRightUrl,
         method: 'post',
         data: {
           menuRightDtos: menuTable.data,
-          roleId:qTable.reqData.id
+          roleId: qTable.getReqData().id
         },
-        success: function () {
+        success () {
           _this.toBack()
         },
-        error: function (error) {
-          console.log(error)
+        error (error) {
+          alert(error)
         }
       })
     }

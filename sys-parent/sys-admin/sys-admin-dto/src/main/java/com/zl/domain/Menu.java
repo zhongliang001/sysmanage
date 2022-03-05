@@ -9,26 +9,26 @@ import java.io.Serializable;
  * @since 1.0
  */
 public class Menu implements Serializable {
-    private String id;
-    private String name;
+    private String menuId;
+    private String menuName;
     private String path;
     private String filePath;
     private String parentId;
 
-    public String getId() {
-        return id;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 
-    public String getName() {
-        return name;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
     public String getPath() {
@@ -58,8 +58,8 @@ public class Menu implements Serializable {
     @Override
     public String toString() {
         return "Menu{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "id='" + menuId + '\'' +
+                ", name='" + menuName + '\'' +
                 ", path='" + path + '\'' +
                 ", filePath='" + filePath + '\'' +
                 ", parentId='" + parentId + '\'' +
