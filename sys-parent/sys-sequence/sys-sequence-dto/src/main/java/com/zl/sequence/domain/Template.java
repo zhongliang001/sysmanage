@@ -1,9 +1,11 @@
 package com.zl.sequence.domain;
 
+import java.io.Serializable;
+
 /**
  * Table: template
  */
-public class Template {
+public class Template implements Serializable {
     /**
      * Column: id
      * Type: VARCHAR(32)
@@ -24,20 +26,6 @@ public class Template {
      * Remark: 模板
      */
     private String temp;
-
-    /**
-     * Column: start
-     * Type: INT
-     * Remark: 起始数据
-     */
-    private Integer start;
-
-    /**
-     * Column: end
-     * Type: INT
-     * Remark: 结束数据
-     */
-    private Integer end;
 
     /**
      * Column: length
@@ -98,22 +86,6 @@ public class Template {
         this.temp = temp == null ? null : temp.trim();
     }
 
-    public Integer getStart() {
-        return start;
-    }
-
-    public void setStart(Integer start) {
-        this.start = start;
-    }
-
-    public Integer getEnd() {
-        return end;
-    }
-
-    public void setEnd(Integer end) {
-        this.end = end;
-    }
-
     public String getLength() {
         return length;
     }
@@ -152,5 +124,19 @@ public class Template {
 
     public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser == null ? null : updateUser.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Template{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", temp='" + temp + '\'' +
+                ", length='" + length + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", updateUser='" + updateUser + '\'' +
+                '}';
     }
 }

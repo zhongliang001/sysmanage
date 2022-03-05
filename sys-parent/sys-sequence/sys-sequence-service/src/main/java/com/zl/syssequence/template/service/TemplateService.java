@@ -28,4 +28,18 @@ public interface TemplateService {
     int add(Template template);
 
     String getTemplate(String name);
+
+    /**
+     * 修改模板
+     * @param template 模板
+     * @return 修改数量
+     */
+    int update(Template template);
+
+    /**
+     * 删除模板
+     * @param id 模板id
+     * @return 删除数量
+     */
+    int delete(String id);
 }

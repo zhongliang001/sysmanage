@@ -2,7 +2,6 @@ package com.zl.syssequence.service.impl;
 
 import com.zl.common.error.TradeCodeDict;
 import com.zl.common.exception.ZlException;
-import com.zl.syssequence.service.SequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,7 +15,7 @@ import java.io.Serializable;
  * @author zhongliang
  */
 @Service("SequenceRedisServiceImpl")
-public class SequenceRedisServiceImpl implements SequenceService {
+public class SequenceRedisServiceImpl extends AbstractSequenceService {
 
     @Autowired
     public RedisTemplate redisTemplate;

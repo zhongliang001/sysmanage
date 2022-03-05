@@ -1,7 +1,6 @@
 package com.zl.syssequence.service.impl;
 
 import com.zl.syssequence.mapper.SequenceMapper;
-import com.zl.syssequence.service.SequenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @author zhongliang
  */
 @Service("SequenceServiceImpl")
-public class SequenceServiceImpl implements SequenceService {
+public class SequenceServiceImpl extends AbstractSequenceService {
 
     @Autowired
     private SequenceMapper sequenceMapper;

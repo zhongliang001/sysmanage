@@ -31,4 +31,11 @@ public interface SequenceService {
      * @return 更新数量
      */
     Integer updateSeq(String name);
+
+    /**
+     * 生成流水号
+     * @param temp 模板
+     * @return 流水号
+     */
+    String fomartSeqence(String temp);
 }

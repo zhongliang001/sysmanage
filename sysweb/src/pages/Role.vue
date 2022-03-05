@@ -15,7 +15,6 @@
           <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
           <zl-item type="text" field-name="角色描述" name="remark"/>
         </zl-panel>
-        /
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"></zl-button>
