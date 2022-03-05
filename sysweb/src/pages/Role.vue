@@ -15,7 +15,6 @@
           <zl-item type="text" field-name="角色名" name="name" :rules="rules.name"/>
           <zl-item type="text" field-name="角色描述" name="remark"/>
         </zl-panel>
-        /
       </zl-form>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="save"></zl-button>
@@ -46,15 +45,13 @@
       </div>
     </zl-page>
     <zl-page :viewPage="viewPage" page="right" ref="roleRight">
-      <zl-panel title="角色权限配置" :column="2" :view="true">
-        <zl-query-table ref="menuTable" :column="2" re="menu" method="post" :url="rightUrl" :pagination="false"
+        <zl-query-table title="角色权限配置" ref="menuTable" :column="2" method="post" :url="rightUrl" :pagination="false"
                         :titles="rightTitles">
           <template slot="condition">
             <zl-item type="text" field-name="角色id" name="id" :readOnly="true"/>
             <zl-item type="text" field-name="角色名" name="name" :readOnly="true"/>
           </template>
         </zl-query-table>
-      </zl-panel>
       <div class="form-buttons">
         <zl-button type="button" name="保存" @click.native="saveRight"></zl-button>
         <zl-button type="button" name="返回" @click.native="toBack"></zl-button>

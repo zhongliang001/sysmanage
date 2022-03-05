@@ -111,23 +111,31 @@ export default {
     }
   },
   mounted: function () {
-    const { query } = this.$route
     const _this = this
     this.$nextTick(() => {
-      const queryPage = _this.commonUtil.getComponent(_this, 'queryPage', true)
-      queryPage.data = query
-      _this.query = query
+      this.initQueryData()
       _this.fields[0].readOnly = true
       _this.fields[1].readOnly = true
     })
   },
   methods: {
+    initQueryData () {
+      const { query } = this.$route
+      const _this = this
+      const queryPage = this.commonUtil.getComponent(_this, 'queryPage', true)
+      queryPage.data = query
+      _this.query = query
+      queryPage.refreshPage()
+      const table = _this.commonUtil.getComponent(_this, 'table', true)
+      table.query(query)
+    },
     add () {
       const { query } = this.$route
       const _this = this
       const addPage = _this.commonUtil.getComponent(_this, 'addPage', true)
       this.viewPage = 'add'
       addPage.data = query
+      addPage.refreshPage()
     },
     save () {
       const _this = this
@@ -139,11 +147,7 @@ export default {
     },
     toBack () {
       this.viewPage = 'query'
-      const table = this.commonUtil.getComponent(
-        this,
-        'table'
-      )
-      table.query()
+      this.initQueryData()
     },
     update () {
       const table = this.commonUtil.getComponent(

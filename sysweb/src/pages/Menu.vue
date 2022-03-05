@@ -26,7 +26,7 @@
         <zl-tree :tree="tree" :sel="sel" branchName="menuName"/>
       </div>
       <div style="width:80%;  float:left;">
-        <zl-form ref="addMenu" :column="2" method="post" url="/menu/save">
+        <zl-form ref="addMenu" :column="2" method="post" :url="addUrl">
           <zl-panel title="菜单新增" :column="2">
             <zl-item type="text" field-name="父菜单编号" name="parentId"/>
             <zl-item type="text" field-name="菜单名" name="menuName"/>
@@ -105,7 +105,7 @@ export default {
       ],
       url: `${this.zlService.baseUrl}/menu/select`,
       updateUrl: `${this.zlService.baseUrl}/menu/update`,
-      // reqData: {},
+      addUrl: `${this.zlService.baseUrl}/menu/save`,
       viewPage: 'query',
       sel: {
         data: {}
@@ -115,13 +115,15 @@ export default {
   },
   watch: {
     sel: {
-      handler (newVal) {
+      handler () {
         const _this = this
         const addPage = _this.commonUtil.getComponent(
           this,
           'addPage', true
         )
-        addPage.data = newVal.data
+        addPage.data = {
+          parentId: this.sel.data.menuId
+        }
       },
       deep: true
     }
@@ -184,22 +186,11 @@ export default {
     },
     save () {
       const _this = this
-      const form = _this.commonUtil.getComponent(
-        this,
-        'addMenu'
+      const form = this.commonUtil.getComponent(
+        _this,
+        'addMenu', true
       )
-      const { reqData } = form
-      this.zlaxios.request({
-        url: this.zlService.baseUrl + form.url,
-        method: form.method,
-        data: reqData,
-        success () {
-          _this.toBack()
-        },
-        error (error) {
-          alert(error)
-        }
-      })
+      form.submit(this.toBackAndQuery)
     },
     updateData () {
       const _this = this

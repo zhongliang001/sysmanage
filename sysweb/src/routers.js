@@ -6,6 +6,7 @@ import Dict from './pages/Dict'
 import Role from './pages/Role'
 import User from './pages/User'
 import Action from './pages/Action'
+import SeqTemplate from './pages/SeqTemplate'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
         name: '数据字典配置',
         path: '/dict',
         component: Dict
+      },
+      {
+        name: '流水号模板配置',
+        path: '/seqTemplate',
+        component: SeqTemplate
       },
       {
         name: '角色配置',
